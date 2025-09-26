@@ -1,0 +1,54 @@
+{
+  "campaigns": {
+    "cold_email_sequence": {
+      "title": "Cold Email Sequence",
+      "niche": "general",
+      "description": "Professional cold email outreach sequence template",
+      "file": "cold_email_sequence.html"
+    },
+    "fitness_outreach": {
+      "title": "Fitness Studio Outreach",
+      "niche": "fitness",
+      "description": "Targeted email sequence for fitness and wellness businesses",
+      "file": "fitness_outreach.html"
+    },
+    "healthcare_nurture": {
+      "title": "Healthcare Lead Nurture",
+      "niche": "healthcare",
+      "description": "Patient acquisition and nurture sequence for healthcare providers",
+      "file": "healthcare_nurture.html"
+    },
+    "realestate_agent": {
+      "title": "Real Estate Agent Campaign",
+      "niche": "realestate",
+      "description": "Lead generation campaign for real estate agents and agencies",
+      "file": "realestate_agent.html"
+    }
+  },
+  "funnels": {
+    "dental_consultation": {
+      "title": "Dental Consultation Funnel",
+      "niche": "healthcare",
+      "description": "Complete funnel for dental consultation bookings and patient acquisition",
+      "file": "dental_consultation.html"
+    },
+    "fitness_trial": {
+      "title": "Fitness Trial Membership",
+      "niche": "fitness",
+      "description": "Trial membership funnel for gyms and fitness studios",
+      "file": "fitness_trial.html"
+    },
+    "legal_consultation": {
+      "title": "Legal Consultation Funnel",
+      "niche": "legal",
+      "description": "Lead capture and consultation booking funnel for law firms",
+      "file": "legal_consultation.html"
+    },
+    "restaurant_catering": {
+      "title": "Restaurant Catering Funnel",
+      "niche": "restaurant",
+      "description": "Catering inquiry and booking funnel for restaurants",
+      "file": "restaurant_catering.html"
+    }
+  }
+}

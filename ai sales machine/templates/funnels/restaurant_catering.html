@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Corporate Catering Services - {{restaurant_name}}</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Arial', sans-serif; line-height: 1.6; color: #333; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+        .hero { background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="%23f39c12"/><text x="50" y="50" font-size="40" text-anchor="middle" dy=".3em" fill="white">🍽️</text></svg>'); background-size: cover; color: white; padding: 100px 0; text-align: center; }
+        .hero h1 { font-size: 3.5rem; margin-bottom: 20px; }
+        .hero p { font-size: 1.3rem; margin-bottom: 40px; }
+        .quote-form { background: white; padding: 50px; border-radius: 15px; box-shadow: 0 15px 35px rgba(0,0,0,0.2); margin: -80px auto 0; max-width: 800px; position: relative; z-index: 10; }
+        .form-section { margin-bottom: 40px; }
+        .form-group { margin-bottom: 25px; }
+        .form-group label { display: block; margin-bottom: 8px; font-weight: bold; color: #555; }
+        .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 15px; border: 2px solid #e1e5e9; border-radius: 8px; font-size: 16px; }
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: #f39c12; outline: none; }
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        .submit-btn { background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%); color: white; padding: 18px 50px; border: none; border-radius: 8px; font-size: 20px; font-weight: bold; cursor: pointer; width: 100%; }
+        .services { padding: 80px 0; background: #f8f9fa; }
+        .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 40px; margin-top: 60px; }
+        .service-card { background: white; padding: 40px; border-radius: 15px; text-align: center; box-shadow: 0 10px 25px rgba(0,0,0,0.08); transition: transform 0.3s; }
+        .service-card:hover { transform: translateY(-5px); }
+        .service-card i { font-size: 3rem; color: #f39c12; margin-bottom: 20px; }
+        .menu-preview { padding: 80px 0; }
+        .menu-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; margin-top: 40px; }
+        .menu-item { background: white; border-radius: 10px; overflow: hidden; box-shadow: 0 8px 20px rgba(0,0,0,0.1); }
+        .menu-image { height: 200px; background: linear-gradient(45deg, #f39c12, #e67e22); display: flex; align-items: center; justify-content: center; font-size: 3rem; }
+        .menu-content { padding: 25px; }
+        .testimonials { background: #2c3e50; color: white; padding: 80px 0; }
+        .testimonial-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 40px; margin-top: 50px; }
+        .testimonial { background: rgba(255,255,255,0.1); padding: 30px; border-radius: 10px; }
+        .cta-section { background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%); color: white; padding: 80px 0; text-align: center; }
+        .footer { background: #333; color: white; padding: 40px 0; text-align: center; }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <section class="hero">
+        <div class="container">
+            <h1>Corporate Catering Excellence</h1>
+            <p>Impress your team and clients with {{restaurant_name}}'s premium catering services</p>
+            <p style="font-size: 1.1rem;">From intimate meetings to large corporate events • Fresh ingredients • Professional service</p>
+        </div>
+    </section>
+
+    <div class="container">
+        <div class="quote-form">
+            <h2 style="text-align: center; margin-bottom: 30px; color: #f39c12; font-size: 2.2rem;">Get Your Custom Catering Quote</h2>
+            <p style="text-align: center; margin-bottom: 40px; color: #666;">Fill out the form below and we'll provide a detailed quote within 2 hours</p>
+            
+            <form id="cateringForm">
+                <div class="form-section">
+                    <h3 style="margin-bottom: 20px; color: #333; border-bottom: 2px solid #f39c12; padding-bottom: 10px;">Contact Information</h3>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="firstName">First Name *</label>
+                            <input type="text" id="firstName" name="firstName" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="lastName">Last Name *</label>
+                            <input type="text" id="lastName" name="lastName" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="email">Email Address *</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Phone Number *</label>
+                            <input type="tel" id="phone" name="phone" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="company">Company Name *</label>
+                        <input type="text" id="company" name="company" required>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <h3 style="margin-bottom: 20px; color: #333; border-bottom: 2px solid #f39c12; padding-bottom: 10px;">Event Details</h3>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="eventDate">Event Date *</label>
+                            <input type="date" id="eventDate" name="eventDate" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="eventTime">Event Time *</label>
+                            <input type="time" id="eventTime" name="eventTime" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="guestCount">Number of Guests *</label>
+                            <select id="guestCount" name="guestCount" required>
+                                <option value="">Select guest count</option>
+                                <option value="10-20">10-20 people</option>
+                                <option value="21-50">21-50 people</option>
+                                <option value="51-100">51-100 people</option>
+                                <option value="101-200">101-200 people</option>
+                                <option value="200+">200+ people</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="eventType">Event Type</label>
+                            <select id="eventType" name="eventType">
+                                <option value="">Select event type</option>
+                                <option value="business-meeting">Business Meeting</option>
+                                <option value="conference">Conference</option>
+                                <option value="office-party">Office Party</option>
+                                <option value="product-launch">Product Launch</option>
+                                <option value="client-event">Client Event</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="location">Event Location/Address</label>
+                        <input type="text" id="location" name="location" placeholder="We deliver throughout the metro area">
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <h3 style="margin-bottom: 20px; color: #333; border-bottom: 2px solid #f39c12; padding-bottom: 10px;">Catering Preferences</h3>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="mealType">Meal Type *</label>
+                            <select id="mealType" name="mealType" required>
+                                <option value="">Select meal type</option>
+                                <option value="breakfast">Breakfast</option>
+                                <option value="lunch">Lunch</option>
+                                <option value="dinner">Dinner</option>
+                                <option value="appetizers">Appetizers/Snacks</option>
+                                <option value="full-day">Full Day Package</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="serviceStyle">Service Style</label>
+                            <select id="serviceStyle" name="serviceStyle">
+                                <option value="">Select service style</option>
+                                <option value="buffet">Buffet Style</option>
+                                <option value="plated">Individually Plated</option>
+                                <option value="family">Family Style</option>
+                                <option value="stations">Food Stations</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="budget">Approximate Budget per Person</label>
+                        <select id="budget" name="budget">
+                            <option value="">Select budget range</option>
+                            <option value="15-25">$15-25 per person</option>
+                            <option value="25-35">$25-35 per person</option>
+                            <option value="35-50">$35-50 per person</option>
+                            <option value="50+">$50+ per person</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="dietary">Dietary Restrictions/Special Requests</label>
+                        <textarea id="dietary" name="dietary" rows="3" placeholder="Vegetarian, vegan, gluten-free, allergies, etc."></textarea>
+                    </div>
+                </div>
+
+                <button type="submit" class="submit-btn">
+                    <i class="fas fa-utensils"></i> Get My Custom Quote
+                </button>
+                <p style="text-align: center; margin-top: 15px; color: #666; font-size: 14px;">
+                    Free quote • No obligation • Response within 2 hours
+                </p>
+            </form>
+        </div>
+    </div>
+
+    <section class="services">
+        <div class="container">
+            <h2 style="text-align: center; font-size: 2.5rem; margin-bottom: 20px;">Why Choose {{restaurant_name}} Catering?</h2>
+            <p style="text-align: center; color: #666; font-size: 1.1rem; max-width: 600px; margin: 0 auto;">We make your corporate events memorable with exceptional food, professional service, and attention to detail.</p>
+            
+            <div class="services-grid">
+                <div class="service-card">
+                    <i class="fas fa-leaf"></i>
+                    <h3>Fresh, Local Ingredients</h3>
+                    <p>We source the finest local ingredients daily, ensuring every dish is fresh and flavorful for your event.</p>
+                </div>
+                <div class="service-card">
+                    <i class="fas fa-clock"></i>
+                    <h3>On-Time Delivery</h3>
+                    <p>Professional setup and punctual delivery guaranteed. We arrive early and handle everything so you can focus on your event.</p>
+                </div>
+                <div class="service-card">
+                    <i class="fas fa-users"></i>
+                    <h3>Full-Service Team</h3>
+                    <p>From setup to cleanup, our experienced catering team provides complete service for a seamless dining experience.</p>
+                </div>
+                <div class="service-card">
+                    <i class="fas fa-utensils"></i>
+                    <h3>Custom Menus</h3>
+                    <p>Tailored menus to fit your event style, dietary needs, and budget. From casual lunches to elegant dinners.</p>
+                </div>
+                <div class="service-card">
+                    <i class="fas fa-shield-alt"></i>
+                    <h3>Licensed & Insured</h3>
+                    <p>Fully licensed, insured, and health department certified. Your peace of mind is our priority.</p>
+                </div>
+                <div class="service-card">
+                    <i class="fas fa-dollar-sign"></i>
+                    <h3>Competitive Pricing</h3>
+                    <p>Premium quality at fair prices. Transparent pricing with no hidden fees or surprises.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="menu-preview">
+        <div class="container">
+            <h2 style="text-align: center; font-size: 2.5rem; margin-bottom: 20px;">Popular Catering Options</h2>
+            <p style="text-align: center; color: #666; margin-bottom: 40px;">Just a taste of what we offer - all menus are customizable to your preferences</p>
+            
+            <div class="menu-grid">
+                <div class="menu-item">
+                    <div class="menu-image">🥗</div>
+                    <div class="menu-content">
+                        <h3>Executive Lunch Package</h3>
+                        <p><strong>$18-24 per person</strong></p>
+                        <p>Gourmet sandwiches, fresh salads, seasonal fruits, dessert, and beverages. Perfect for meetings and presentations.</p>
+                    </div>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-image">🍽️</div>
+                    <div class="menu-content">
+                        <h3>Elegant Dinner Service</h3>
+                        <p><strong>$35-55 per person</strong></p>
+                        <p>Multi-course plated dinners featuring premium proteins, seasonal vegetables, artisan breads, and decadent desserts.</p>
+                    </div>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-image">🥪</div>
+                    <div class="menu-content">
+                        <h3>Breakfast Meeting Special</h3>
+                        <p><strong>$12-18 per person</strong></p>
+                        <p>Fresh pastries, breakfast sandwiches, seasonal fruit, yogurt parfaits, premium coffee and tea service.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="testimonials">
+        <div class="container">
+            <h2 style="text-align: center; font-size: 2.5rem; margin-bottom: 20px;">What Our Corporate Clients Say</h2>
+            <div class="testimonial-grid">
+                <div class="testimonial">
+                    <p>"{{restaurant_name}} catered our annual conference for 200 people. The food was exceptional and the service was flawless. Our attendees are still raving about the lunch!"</p>
+                    <strong>- Jennifer Martinez, Tech Innovations Inc.</strong>
+                </div>
+                <div class="testimonial">
+                    <p>"We use {{restaurant_name}} for all our client events. They're reliable, professional, and the food quality is consistently outstanding. Highly recommended!"</p>
+                    <strong>- Robert Chen, Pinnacle Consulting</strong>
+                </div>
+                <div class="testimonial">
+                    <p>"The team went above and beyond for our product launch. They accommodated all dietary restrictions and the presentation was beautiful. Will definitely use again!"</p>
+                    <strong>- Sarah Thompson, Creative Solutions LLC</strong>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="cta-section">
+        <div class="container">
+            <h2 style="font-size: 2.5rem; margin-bottom: 20px;">Ready to Elevate Your Next Event?</h2>
+            <p style="font-size: 1.2rem; margin-bottom: 30px;">Get your custom quote today and discover why leading companies trust {{restaurant_name}} for their corporate catering needs.</p>
+            <a href="#cateringForm" style="background: white; color: #f39c12; padding: 18px 40px; border-radius: 50px; font-size: 20px; font-weight: bold; text-decoration: none; display: inline-block;">
+                <i class="fas fa-arrow-up"></i> Get Quote Now
+            </a>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <h3>{{restaurant_name}} Catering</h3>
+            <p>{{address}}</p>
+            <p>Phone: {{phone_number}} | Email: {{email}}</p>
+            <p>&copy; 2024 {{restaurant_name}}. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.getElementById('cateringForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Thank you for your catering inquiry! We will send you a detailed quote within 2 hours.');
+            this.reset();
+        });
+
+        // Set minimum date to today
+        document.getElementById('eventDate').setAttribute('min', new Date().toISOString().split('T')[0]);
+    </script>
+</body>
+</html>

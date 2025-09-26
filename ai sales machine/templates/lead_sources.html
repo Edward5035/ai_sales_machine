@@ -1,0 +1,339 @@
+{% extends "base.html" %}
+
+{% block page_title %}Lead Sources{% endblock %}
+
+{% block content %}
+<!-- Lead Sources Header -->
+<div class="row mb-4">
+    <div class="col-12">
+        <div class="modern-card p-4">
+            <div class="row align-items-center">
+                <div class="col-lg-8">
+                    <h2 class="mb-2">
+                        <i class="fas fa-stream me-2 text-primary"></i>
+                        Lead Source Management
+                    </h2>
+                    <p class="text-muted mb-0">Monitor and analyze the performance of different lead sources to optimize your acquisition strategy.</p>
+                </div>
+                <div class="col-lg-4 text-end">
+                    <div class="d-grid gap-2">
+                        <button class="btn btn-gradient-primary" onclick="addNewSource()">
+                            <i class="fas fa-plus me-2"></i>Add Source
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Source Performance Overview -->
+<div class="row mb-4">
+    {% for source_name, leads in sources.items() %}
+    <div class="col-lg-4 col-md-6 mb-3">
+        <div class="modern-card p-4">
+            <div class="d-flex justify-content-between align-items-start mb-3">
+                <div>
+                    <h5 class="mb-1">{{ source_name.title() }}</h5>
+                    <p class="text-muted mb-0">{{ leads|length }} leads generated</p>
+                </div>
+                <div class="dropdown">
+                    <button class="btn btn-sm btn-outline-secondary" data-bs-toggle="dropdown">
+                        <i class="fas fa-ellipsis-v"></i>
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="#" onclick="viewSourceDetails('{{ source_name }}')">
+                            <i class="fas fa-eye me-2"></i>View Details
+                        </a></li>
+                        <li><a class="dropdown-item" href="#" onclick="exportSource('{{ source_name }}')">
+                            <i class="fas fa-download me-2"></i>Export Data
+                        </a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item text-danger" href="#" onclick="removeSource('{{ source_name }}')">
+                            <i class="fas fa-trash me-2"></i>Remove Source
+                        </a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- Source Metrics -->
+            <div class="row text-center mb-3">
+                <div class="col-4">
+                    <h6 class="mb-0">{{ leads|selectattr("lead_type", "equalto", "Sales-Ready Lead")|list|length }}</h6>
+                    <small class="text-muted">Sales Ready</small>
+                </div>
+                <div class="col-4">
+                    <h6 class="mb-0">{{ leads|selectattr("phone")|list|length }}</h6>
+                    <small class="text-muted">With Phone</small>
+                </div>
+                <div class="col-4">
+                    <h6 class="mb-0">{{ leads|selectattr("email")|list|length }}</h6>
+                    <small class="text-muted">With Email</small>
+                </div>
+            </div>
+            
+            <!-- Quality Score -->
+            {% set quality_score = ((leads|selectattr("lead_type", "equalto", "Sales-Ready Lead")|list|length / leads|length * 100) if leads|length > 0 else 0) | round(1) %}
+            <div class="mb-3">
+                <div class="d-flex justify-content-between align-items-center mb-1">
+                    <small class="fw-bold">Quality Score</small>
+                    <small class="fw-bold">{{ quality_score }}%</small>
+                </div>
+                <div class="progress" style="height: 6px;">
+                    <div class="progress-bar 
+                        {% if quality_score >= 70 %}bg-success
+                        {% elif quality_score >= 40 %}bg-warning
+                        {% else %}bg-danger{% endif %}" 
+                        style="width: {{ quality_score }}%"></div>
+                </div>
+            </div>
+            
+            <button class="btn btn-outline-primary btn-sm w-100" onclick="analyzeSource('{{ source_name }}')">
+                <i class="fas fa-chart-line me-1"></i>Analyze Performance
+            </button>
+        </div>
+    </div>
+    {% else %}
+    <div class="col-12">
+        <div class="modern-card p-5 text-center">
+            <i class="fas fa-search fa-4x text-muted mb-3"></i>
+            <h4 class="text-muted mb-3">No Lead Sources Yet</h4>
+            <p class="text-muted mb-4">Start generating leads to see your source performance data here.</p>
+            <a href="{{ url_for('lead_finder') }}" class="btn btn-gradient-primary">
+                <i class="fas fa-rocket me-2"></i>Find Your First Leads
+            </a>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+<!-- Source Comparison -->
+{% if sources %}
+<div class="row mb-4">
+    <div class="col-lg-8 mb-4">
+        <div class="modern-card p-4">
+            <h4 class="mb-3">
+                <i class="fas fa-chart-bar me-2 text-info"></i>
+                Source Performance Comparison
+            </h4>
+            <canvas id="sourceComparisonChart" height="300"></canvas>
+        </div>
+    </div>
+    
+    <div class="col-lg-4 mb-4">
+        <div class="modern-card p-4">
+            <h4 class="mb-3">
+                <i class="fas fa-trophy me-2 text-warning"></i>
+                Top Performing Sources
+            </h4>
+            
+            {% set sorted_sources = sources.items() | list | sort(attribute='1', reverse=True) %}
+            {% for source_name, leads in sorted_sources[:5] %}
+            <div class="d-flex justify-content-between align-items-center mb-3 p-3" 
+                 style="background: rgba(99, 102, 241, 0.05); border-radius: 8px;">
+                <div>
+                    <h6 class="mb-1">{{ source_name.title() }}</h6>
+                    <small class="text-muted">{{ leads|length }} leads</small>
+                </div>
+                <div class="text-end">
+                    {% set quality = ((leads|selectattr("lead_type", "equalto", "Sales-Ready Lead")|list|length / leads|length * 100) if leads|length > 0 else 0) | round(1) %}
+                    <span class="badge 
+                        {% if quality >= 70 %}bg-success
+                        {% elif quality >= 40 %}bg-warning
+                        {% else %}bg-secondary{% endif %}">
+                        {{ quality }}% quality
+                    </span>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+<!-- Detailed Source Analysis -->
+<div class="row">
+    <div class="col-12">
+        <div class="modern-card p-4">
+            <h4 class="mb-3">
+                <i class="fas fa-microscope me-2 text-primary"></i>
+                Detailed Source Analysis
+            </h4>
+            
+            <div class="table-responsive">
+                <table class="table table-modern" id="sourceTable">
+                    <thead>
+                        <tr>
+                            <th>Source</th>
+                            <th>Total Leads</th>
+                            <th>Sales Ready</th>
+                            <th>Quality Score</th>
+                            <th>Contact Info</th>
+                            <th>Social Media</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for source_name, leads in sources.items() %}
+                        <tr>
+                            <td>
+                                <strong>{{ source_name.title() }}</strong>
+                                <br><small class="text-muted">Active source</small>
+                            </td>
+                            <td>
+                                <span class="badge bg-primary">{{ leads|length }}</span>
+                            </td>
+                            <td>
+                                <span class="badge bg-success">{{ leads|selectattr("lead_type", "equalto", "Sales-Ready Lead")|list|length }}</span>
+                            </td>
+                            <td>
+                                {% set quality = ((leads|selectattr("lead_type", "equalto", "Sales-Ready Lead")|list|length / leads|length * 100) if leads|length > 0 else 0) | round(1) %}
+                                <div class="d-flex align-items-center">
+                                    <div class="progress me-2" style="width: 60px; height: 8px;">
+                                        <div class="progress-bar 
+                                            {% if quality >= 70 %}bg-success
+                                            {% elif quality >= 40 %}bg-warning
+                                            {% else %}bg-danger{% endif %}" 
+                                            style="width: {{ quality }}%"></div>
+                                    </div>
+                                    <span>{{ quality }}%</span>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="d-flex">
+                                    {% if leads|selectattr("phone")|list|length > 0 %}
+                                        <i class="fas fa-phone text-success me-1" title="Phone available"></i>
+                                    {% endif %}
+                                    {% if leads|selectattr("email")|list|length > 0 %}
+                                        <i class="fas fa-envelope text-info me-1" title="Email available"></i>
+                                    {% endif %}
+                                    {% if leads|selectattr("website")|list|length > 0 %}
+                                        <i class="fas fa-globe text-primary me-1" title="Website available"></i>
+                                    {% endif %}
+                                </div>
+                            </td>
+                            <td>
+                                {% set social_count = leads|selectattr("facebook")|list|length + leads|selectattr("linkedin")|list|length + leads|selectattr("twitter")|list|length + leads|selectattr("instagram")|list|length %}
+                                <span class="badge bg-info">{{ social_count }} profiles</span>
+                            </td>
+                            <td>
+                                <div class="btn-group btn-group-sm">
+                                    <button class="btn btn-outline-primary" onclick="viewSourceDetails('{{ source_name }}')">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                    <button class="btn btn-outline-success" onclick="exportSource('{{ source_name }}')">
+                                        <i class="fas fa-download"></i>
+                                    </button>
+                                    <button class="btn btn-outline-info" onclick="analyzeSource('{{ source_name }}')">
+                                        <i class="fas fa-chart-line"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+{% endblock %}
+
+{% block scripts %}
+<script>
+{% if sources %}
+// Source Comparison Chart
+const sourceCtx = document.getElementById('sourceComparisonChart').getContext('2d');
+const sourceData = {
+    labels: {{ sources.keys() | list | tojson }},
+    datasets: [{
+        label: 'Total Leads',
+        data: {{ sources.values() | map('length') | list | tojson }},
+        backgroundColor: [
+            '#6366f1',
+            '#8b5cf6', 
+            '#06b6d4',
+            '#10b981',
+            '#f59e0b',
+            '#ef4444'
+        ],
+        borderWidth: 2,
+        borderColor: '#fff'
+    }]
+};
+
+const sourceChart = new Chart(sourceCtx, {
+    type: 'bar',
+    data: sourceData,
+    options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+            legend: {
+                display: false
+            }
+        },
+        scales: {
+            y: {
+                beginAtZero: true,
+                grid: {
+                    color: 'rgba(0, 0, 0, 0.1)'
+                }
+            },
+            x: {
+                grid: {
+                    color: 'rgba(0, 0, 0, 0.1)'
+                }
+            }
+        }
+    }
+});
+
+// Initialize DataTable
+$(document).ready(function() {
+    $('#sourceTable').DataTable({
+        responsive: true,
+        pageLength: 10,
+        order: [[1, 'desc']], // Sort by total leads
+        columnDefs: [
+            { orderable: false, targets: [4, 5, 6] } // Disable sorting for action columns
+        ]
+    });
+});
+{% endif %}
+
+// Source Management Functions
+function viewSourceDetails(source) {
+    alert(`Viewing details for source: ${source}`);
+}
+
+function exportSource(source) {
+    alert(`Exporting data for source: ${source}`);
+}
+
+function analyzeSource(source) {
+    alert(`Analyzing performance for source: ${source}`);
+}
+
+function removeSource(source) {
+    if (confirm(`Are you sure you want to remove the source: ${source}?`)) {
+        alert(`Source removed: ${source}`);
+    }
+}
+
+function addNewSource() {
+    const sourceName = prompt('Enter new source name:');
+    if (sourceName) {
+        alert(`New source added: ${sourceName}`);
+    }
+}
+
+// Real-time updates
+setInterval(function() {
+    if (document.hasFocus()) {
+        // Refresh source data
+        location.reload();
+    }
+}, 60000); // Update every minute
+</script>
+{% endblock %}

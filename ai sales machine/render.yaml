@@ -1,0 +1,12 @@
+services:
+  - type: web
+    name: ai-sales-machine
+    env: python
+    buildCommand: pip install --upgrade pip && pip install -r requirements.txt
+    startCommand: gunicorn --bind 0.0.0.0:$PORT --timeout 45 --graceful-timeout 15 --workers 2 --worker-class gthread --threads 4 --worker-tmp-dir /dev/shm --max-requests 100 --max-requests-jitter 10 app:app
+    plan: free
+    envVars:
+      - key: SESSION_SECRET
+        generateValue: true
+      - key: FLASK_DEBUG
+        value: "False"

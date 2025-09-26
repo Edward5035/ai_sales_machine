@@ -1,0 +1,352 @@
+{% extends "base.html" %}
+
+{% block page_title %}Email Campaign Templates{% endblock %}
+
+{% block content %}
+<!-- Campaign Templates Header -->
+<div class="row mb-4">
+    <div class="col-12">
+        <div class="modern-card p-4">
+            <div class="row align-items-center">
+                <div class="col-lg-8">
+                    <h2 class="mb-2">
+                        <i class="fas fa-bullhorn me-2 text-primary"></i>
+                        Email Campaign Templates
+                    </h2>
+                    <p class="text-muted mb-0">Choose from proven email templates designed for your specific niche. Simply select your industry and get started.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Niche Selection -->
+<div class="row mb-4">
+    <div class="col-12">
+        <div class="modern-card p-3">
+            <div class="d-flex align-items-center justify-content-between">
+                <div>
+                    <h5 class="mb-0">Choose Your Niche:</h5>
+                </div>
+                <div class="btn-group" role="group">
+                    <input type="radio" class="btn-check" name="campaignFilter" id="all-campaigns" autocomplete="off" checked>
+                    <label class="btn btn-outline-primary" for="all-campaigns">All Templates</label>
+                    
+                    <input type="radio" class="btn-check" name="campaignFilter" id="healthcare-campaigns" autocomplete="off">
+                    <label class="btn btn-outline-primary" for="healthcare-campaigns">Healthcare</label>
+                    
+                    <input type="radio" class="btn-check" name="campaignFilter" id="fitness-campaigns" autocomplete="off">
+                    <label class="btn btn-outline-primary" for="fitness-campaigns">Fitness</label>
+                    
+                    <input type="radio" class="btn-check" name="campaignFilter" id="realestate-campaigns" autocomplete="off">
+                    <label class="btn btn-outline-primary" for="realestate-campaigns">Real Estate</label>
+                    
+                    <input type="radio" class="btn-check" name="campaignFilter" id="legal-campaigns" autocomplete="off">
+                    <label class="btn btn-outline-primary" for="legal-campaigns">Legal</label>
+                    
+                    <input type="radio" class="btn-check" name="campaignFilter" id="beauty-campaigns" autocomplete="off">
+                    <label class="btn btn-outline-primary" for="beauty-campaigns">Beauty</label>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Healthcare Campaign Templates -->
+<div class="campaign-category" data-category="healthcare-campaigns">
+    <h4 class="mb-3">
+        <i class="fas fa-heartbeat me-2 text-danger"></i>
+        Healthcare Email Templates
+    </h4>
+    
+    <div class="row mb-4">
+        <div class="col-lg-6 mb-4">
+            <div class="modern-card">
+                <div class="card-header bg-gradient text-white" style="background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);">
+                    <h5 class="mb-0">
+                        <i class="fas fa-tooth me-2"></i>
+                        Healthcare Nurture Sequence
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <p class="text-muted mb-3">Professional email sequence for healthcare providers to nurture patient relationships and build trust.</p>
+                    
+                    <div class="mb-3">
+                        <strong>Perfect for:</strong>
+                        <ul class="mt-2">
+                            <li>Dental practices</li>
+                            <li>Medical clinics</li>
+                            <li>Specialists</li>
+                            <li>Healthcare consultants</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="d-flex justify-content-end">
+                        <button class="btn btn-outline-primary btn-sm me-2" onclick="previewTemplate('campaigns', 'healthcare_nurture')">
+                            <i class="fas fa-eye me-1"></i>Preview
+                        </button>
+                        <button class="btn btn-gradient-primary btn-sm" onclick="downloadTemplate('campaigns', 'healthcare_nurture')">
+                            <i class="fas fa-download me-1"></i>Download
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Fitness Campaign Templates -->
+<div class="campaign-category" data-category="fitness-campaigns">
+    <h4 class="mb-3">
+        <i class="fas fa-dumbbell me-2 text-warning"></i>
+        Fitness Email Templates
+    </h4>
+    
+    <div class="row mb-4">
+        <div class="col-lg-6 mb-4">
+            <div class="modern-card">
+                <div class="card-header bg-gradient text-white" style="background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%);">
+                    <h5 class="mb-0">
+                        <i class="fas fa-dumbbell me-2"></i>
+                        Fitness Business Outreach
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <p class="text-muted mb-3">Specialized email sequence for gym owners, personal trainers, and fitness professionals to grow their business.</p>
+                    
+                    <div class="mb-3">
+                        <strong>Perfect for:</strong>
+                        <ul class="mt-2">
+                            <li>Gym owners</li>
+                            <li>Personal trainers</li>
+                            <li>Fitness studios</li>
+                            <li>Wellness coaches</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="d-flex justify-content-end">
+                        <button class="btn btn-outline-primary btn-sm me-2" onclick="previewTemplate('campaigns', 'fitness_outreach')">
+                            <i class="fas fa-eye me-1"></i>Preview
+                        </button>
+                        <button class="btn btn-gradient-primary btn-sm" onclick="downloadTemplate('campaigns', 'fitness_outreach')">
+                            <i class="fas fa-download me-1"></i>Download
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Real Estate Campaign Templates -->
+<div class="campaign-category" data-category="realestate-campaigns">
+    <h4 class="mb-3">
+        <i class="fas fa-home me-2 text-info"></i>
+        Real Estate Email Templates
+    </h4>
+    
+    <div class="row mb-4">
+        <div class="col-lg-6 mb-4">
+            <div class="modern-card">
+                <div class="card-header bg-gradient text-white" style="background: linear-gradient(135deg, #17a2b8 0%, #138496 100%);">
+                    <h5 class="mb-0">
+                        <i class="fas fa-home me-2"></i>
+                        Real Estate Agent Outreach
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <p class="text-muted mb-3">Professional email sequence designed for real estate agents to dominate their local market and generate qualified leads.</p>
+                    
+                    <div class="mb-3">
+                        <strong>Perfect for:</strong>
+                        <ul class="mt-2">
+                            <li>Real estate agents</li>
+                            <li>Property managers</li>
+                            <li>Real estate teams</li>
+                            <li>Investment advisors</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="d-flex justify-content-end">
+                        <button class="btn btn-outline-primary btn-sm me-2" onclick="previewTemplate('campaigns', 'realestate_agent')">
+                            <i class="fas fa-eye me-1"></i>Preview
+                        </button>
+                        <button class="btn btn-gradient-primary btn-sm" onclick="downloadTemplate('campaigns', 'realestate_agent')">
+                            <i class="fas fa-download me-1"></i>Download
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- General Campaign Templates -->
+<div class="campaign-category" data-category="general-campaigns">
+    <h4 class="mb-3">
+        <i class="fas fa-envelope me-2 text-primary"></i>
+        General Email Templates
+    </h4>
+    
+    <div class="row mb-4">
+        <div class="col-lg-6 mb-4">
+            <div class="modern-card">
+                <div class="card-header bg-gradient text-white" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                    <h5 class="mb-0">
+                        <i class="fas fa-paper-plane me-2"></i>
+                        Cold Email Sequence
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <p class="text-muted mb-3">Proven cold outreach sequence that works across all industries for lead generation and partnerships.</p>
+                    
+                    <div class="mb-3">
+                        <strong>Perfect for:</strong>
+                        <ul class="mt-2">
+                            <li>Any business type</li>
+                            <li>Lead generation</li>
+                            <li>Partnership outreach</li>
+                            <li>Service inquiries</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="d-flex justify-content-end">
+                        <button class="btn btn-outline-primary btn-sm me-2" onclick="previewTemplate('campaigns', 'cold_email_sequence')">
+                            <i class="fas fa-eye me-1"></i>Preview
+                        </button>
+                        <button class="btn btn-gradient-primary btn-sm" onclick="downloadTemplate('campaigns', 'cold_email_sequence')">
+                            <i class="fas fa-download me-1"></i>Download
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Resource Preview Modal -->
+<div class="modal fade" id="resourcePreviewModal" tabindex="-1" aria-labelledby="resourcePreviewModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="resourcePreviewModalLabel">
+                    <i class="fas fa-eye me-2"></i>Resource Preview
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body p-0">
+                <iframe id="resourcePreviewFrame" src="" style="width: 100%; height: 70vh; border: none;"></iframe>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                    <i class="fas fa-times me-1"></i>Close
+                </button>
+                <button type="button" class="btn btn-gradient-primary" id="downloadFromPreview">
+                    <i class="fas fa-download me-1"></i>Download Resource
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+<script>
+// Filter campaign templates by niche
+document.querySelectorAll('input[name="campaignFilter"]').forEach(radio => {
+    radio.addEventListener('change', function() {
+        const categories = document.querySelectorAll('.campaign-category');
+        
+        if (this.id === 'all-campaigns') {
+            categories.forEach(cat => cat.style.display = 'block');
+        } else {
+            categories.forEach(cat => {
+                const categoryId = cat.dataset.category;
+                cat.style.display = categoryId === this.id || categoryId === 'general-campaigns' ? 'block' : 'none';
+            });
+        }
+    });
+});
+
+// Preview template function (handles both HTML templates and txt resources)
+function previewTemplate(templateType, templateName) {
+    // Use new resource routes for txt resources
+    const previewUrl = `/preview-resource/${templateType}/${templateName}`;
+    
+    // Set up the iframe preview modal
+    const iframe = document.getElementById('resourcePreviewFrame');
+    const modal = new bootstrap.Modal(document.getElementById('resourcePreviewModal'));
+    const modalTitle = document.getElementById('resourcePreviewModalLabel');
+    const downloadBtn = document.getElementById('downloadFromPreview');
+    
+    // Update modal title
+    const displayName = templateName.replace('_', ' ').replace(/\b\w/g, l => l.toUpperCase());
+    modalTitle.innerHTML = `<i class="fas fa-eye me-2"></i>${displayName} - ${templateType.charAt(0).toUpperCase() + templateType.slice(1)} Template`;
+    
+    // Set iframe source
+    iframe.src = previewUrl;
+    
+    // Set up download button for this specific resource
+    downloadBtn.onclick = () => downloadTemplate(templateType, templateName);
+    
+    // Show modal
+    modal.show();
+    
+    // Clear iframe when modal is hidden to prevent resource leaks
+    document.getElementById('resourcePreviewModal').addEventListener('hidden.bs.modal', function () {
+        iframe.src = '';
+    }, { once: true });
+}
+
+// Download template function (handles both HTML templates and txt resources)
+function downloadTemplate(templateType, templateName) {
+    // Use new resource routes for txt resources
+    const downloadUrl = `/download-resource/${templateType}/${templateName}`;
+    
+    const a = document.createElement('a');
+    a.href = downloadUrl;
+    a.download = `${templateName}_${templateType}.txt`;
+    a.style.display = 'none';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    
+    const displayName = templateName.replace('_', ' ').replace(/\b\w/g, l => l.toUpperCase());
+    showNotification(`${displayName} resource downloaded successfully!`, 'success');
+}
+
+// Show notification helper
+function showNotification(message, type = 'info') {
+    const notification = document.createElement('div');
+    notification.className = `alert alert-${type} position-fixed`;
+    notification.style.cssText = `
+        top: 20px; 
+        right: 20px; 
+        z-index: 9999; 
+        min-width: 300px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        border-radius: 8px;
+    `;
+    notification.innerHTML = `
+        <div class="d-flex align-items-center">
+            <i class="fas fa-${type === 'success' ? 'check-circle' : 'info-circle'} me-2"></i>
+            ${message}
+        </div>
+    `;
+    
+    document.body.appendChild(notification);
+    
+    // Auto remove after 3 seconds
+    setTimeout(() => {
+        notification.style.opacity = '0';
+        notification.style.transform = 'translateX(100%)';
+        setTimeout(() => {
+            if (notification.parentNode) {
+                notification.parentNode.removeChild(notification);
+            }
+        }, 300);
+    }, 3000);
+}
+</script>
+{% endblock %}

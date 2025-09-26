@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Free Dental Consultation - {{practice_name}}</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Arial', sans-serif; line-height: 1.6; color: #333; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+        .header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 60px 0; text-align: center; }
+        .header h1 { font-size: 3rem; margin-bottom: 20px; }
+        .header p { font-size: 1.2rem; margin-bottom: 30px; }
+        .main-content { padding: 60px 0; background: #f8f9fa; }
+        .form-section { background: white; padding: 40px; border-radius: 10px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); margin-bottom: 40px; }
+        .form-group { margin-bottom: 20px; }
+        .form-group label { display: block; margin-bottom: 8px; font-weight: bold; color: #555; }
+        .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 12px; border: 2px solid #e1e5e9; border-radius: 5px; font-size: 16px; }
+        .form-group input:focus, .form-group select:focus { border-color: #667eea; outline: none; }
+        .btn { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 15px 40px; border: none; border-radius: 5px; font-size: 18px; font-weight: bold; cursor: pointer; transition: transform 0.3s; }
+        .btn:hover { transform: translateY(-2px); }
+        .benefits { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; margin: 40px 0; }
+        .benefit { background: white; padding: 30px; border-radius: 10px; text-align: center; box-shadow: 0 5px 15px rgba(0,0,0,0.08); }
+        .benefit i { font-size: 3rem; color: #667eea; margin-bottom: 20px; }
+        .testimonials { background: white; padding: 40px; border-radius: 10px; margin: 40px 0; }
+        .testimonial { padding: 20px; border-left: 4px solid #667eea; margin: 20px 0; background: #f8f9fa; }
+        .footer { background: #333; color: white; padding: 40px 0; text-align: center; }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <h1>Free Dental Consultation</h1>
+            <p>Professional dental care you can trust. Book your complimentary consultation today!</p>
+            <p><strong>Call Now: {{phone_number}}</strong></p>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <div class="container">
+            <div class="form-section">
+                <h2 style="text-align: center; margin-bottom: 30px; color: #667eea;">Schedule Your Free Consultation</h2>
+                <form id="consultationForm">
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                        <div class="form-group">
+                            <label for="firstName">First Name *</label>
+                            <input type="text" id="firstName" name="firstName" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="lastName">Last Name *</label>
+                            <input type="text" id="lastName" name="lastName" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email Address *</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Phone Number *</label>
+                        <input type="tel" id="phone" name="phone" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="service">Service Interested In</label>
+                        <select id="service" name="service">
+                            <option value="">Select a service</option>
+                            <option value="cleaning">Dental Cleaning</option>
+                            <option value="whitening">Teeth Whitening</option>
+                            <option value="implants">Dental Implants</option>
+                            <option value="orthodontics">Orthodontics</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="concerns">Tell us about your dental concerns</label>
+                        <textarea id="concerns" name="concerns" rows="4" placeholder="Describe any pain, concerns, or questions you have..."></textarea>
+                    </div>
+                    <div style="text-align: center;">
+                        <button type="submit" class="btn">
+                            <i class="fas fa-calendar-alt"></i> Book My Free Consultation
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="benefits">
+                <div class="benefit">
+                    <i class="fas fa-user-md"></i>
+                    <h3>Expert Care</h3>
+                    <p>Our experienced dental professionals provide comprehensive care using the latest techniques and technology.</p>
+                </div>
+                <div class="benefit">
+                    <i class="fas fa-shield-alt"></i>
+                    <h3>Pain-Free Experience</h3>
+                    <p>We prioritize your comfort with modern pain management techniques and a gentle approach.</p>
+                </div>
+                <div class="benefit">
+                    <i class="fas fa-clock"></i>
+                    <h3>Convenient Scheduling</h3>
+                    <p>Flexible appointment times including evenings and weekends to fit your busy schedule.</p>
+                </div>
+            </div>
+
+            <div class="testimonials">
+                <h2 style="text-align: center; margin-bottom: 30px; color: #667eea;">What Our Patients Say</h2>
+                <div class="testimonial">
+                    <p>"The best dental experience I've ever had! The staff is incredibly professional and made me feel comfortable throughout the entire process."</p>
+                    <strong>- Sarah M.</strong>
+                </div>
+                <div class="testimonial">
+                    <p>"Finally found a dentist I can trust. The free consultation was thorough and they explained everything clearly."</p>
+                    <strong>- Mike R.</strong>
+                </div>
+                <div class="testimonial">
+                    <p>"Amazing results with my teeth whitening! The transformation was incredible and the process was completely painless."</p>
+                    <strong>- Jennifer L.</strong>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <h3>{{practice_name}}</h3>
+            <p>{{address}}</p>
+            <p>Phone: {{phone_number}}</p>
+            <p>&copy; 2024 {{practice_name}}. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.getElementById('consultationForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Thank you! We will contact you within 24 hours to schedule your free consultation.');
+            this.reset();
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,418 @@
+{% extends "base.html" %}
+
+{% block page_title %}Domain Checker{% endblock %}
+
+{% block content %}
+<!-- Domain Checker Header -->
+<div class="row mb-4">
+    <div class="col-12">
+        <div class="modern-card p-4">
+            <div class="text-center">
+                <div class="mb-3">
+                    <i class="fas fa-globe-americas fa-4x text-primary mb-3"></i>
+                </div>
+                <h2 class="mb-2">🎁 Domain Checker</h2>
+                <p class="text-muted mb-0">Analyze website domains for availability, SSL certificates, server information, and performance metrics. Another powerful bonus tool!</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Domain Check Form -->
+<div class="row justify-content-center mb-4">
+    <div class="col-lg-8">
+        <div class="modern-card p-4">
+            <h4 class="mb-3">
+                <i class="fas fa-search-plus me-2 text-success"></i>
+                Domain Analysis Tool
+            </h4>
+            
+            <form method="POST" id="domainCheckerForm">
+                <div class="row">
+                    <div class="col-md-8 mb-3">
+                        <label for="domain" class="form-label">
+                            <i class="fas fa-globe me-1 text-primary"></i>
+                            Domain or Website URL
+                        </label>
+                        <input type="text" 
+                               class="form-control form-control-lg" 
+                               id="domain" 
+                               name="domain" 
+                               placeholder="Enter domain (e.g., example.com)"
+                               value="{{ result.domain if result else '' }}"
+                               required>
+                        <div class="form-text">Enter a domain name or full website URL to analyze.</div>
+                    </div>
+                    
+                    <div class="col-md-4 d-flex align-items-end mb-3">
+                        <button type="submit" class="btn btn-gradient-primary btn-lg w-100" id="checkBtn">
+                            <i class="fas fa-search me-2"></i>
+                            Check Domain
+                            <span class="spinner-border spinner-border-sm ms-2 d-none" role="status"></span>
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Domain Analysis Results -->
+{% if result %}
+<div class="row justify-content-center mb-4">
+    <div class="col-lg-10">
+        <div class="modern-card p-4">
+            <h4 class="mb-3">
+                <i class="fas fa-clipboard-list me-2 text-info"></i>
+                Domain Analysis Results
+            </h4>
+            
+            <!-- Domain Status -->
+            <div class="text-center mb-4 p-4" style="background: linear-gradient(135deg, 
+                {% if result.status == 'Active' %}#10b981 0%, #059669 100%
+                {% else %}#ef4444 0%, #dc2626 100%{% endif %}); 
+                border-radius: 16px; color: white;">
+                <h2 class="mb-2">{{ result.domain }}</h2>
+                <h5 class="mb-0">
+                    {% if result.status == 'Active' %}
+                        <i class="fas fa-check-circle me-2"></i>Domain is Active
+                    {% else %}
+                        <i class="fas fa-times-circle me-2"></i>{{ result.status }}
+                    {% endif %}
+                </h5>
+            </div>
+            
+            <!-- Detailed Information -->
+            <div class="row">
+                <div class="col-lg-6 mb-4">
+                    <div class="h-100 p-4" style="background: rgba(99, 102, 241, 0.05); border-radius: 12px;">
+                        <h5 class="mb-3">
+                            <i class="fas fa-info-circle me-2 text-primary"></i>
+                            Basic Information
+                        </h5>
+                        
+                        <div class="table-responsive">
+                            <table class="table table-borderless mb-0">
+                                <tbody>
+                                    <tr>
+                                        <td class="fw-bold" style="width: 150px;">Domain:</td>
+                                        <td><code>{{ result.domain }}</code></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="fw-bold">Status:</td>
+                                        <td>
+                                            {% if result.status == 'Active' %}
+                                                <span class="badge bg-success">{{ result.status }}</span>
+                                            {% else %}
+                                                <span class="badge bg-danger">{{ result.status }}</span>
+                                            {% endif %}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="fw-bold">Status Code:</td>
+                                        <td>
+                                            {% if result.status_code == 200 %}
+                                                <span class="badge bg-success">{{ result.status_code }}</span>
+                                            {% else %}
+                                                <span class="badge bg-secondary">{{ result.status_code }}</span>
+                                            {% endif %}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="fw-bold">Server:</td>
+                                        <td><code>{{ result.server }}</code></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="fw-bold">Response Time:</td>
+                                        <td>
+                                            {% if result.response_time == '< 1s' %}
+                                                <span class="badge bg-success">{{ result.response_time }}</span>
+                                            {% else %}
+                                                <span class="badge bg-warning">{{ result.response_time }}</span>
+                                            {% endif %}
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-6 mb-4">
+                    <div class="h-100 p-4" style="background: rgba(16, 185, 129, 0.05); border-radius: 12px;">
+                        <h5 class="mb-3">
+                            <i class="fas fa-shield-alt me-2 text-success"></i>
+                            Security & Performance
+                        </h5>
+                        
+                        <div class="mb-3">
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <span class="fw-bold">SSL Certificate</span>
+                                {% if result.ssl_enabled %}
+                                    <span class="badge bg-success">Secure</span>
+                                {% else %}
+                                    <span class="badge bg-danger">Not Secure</span>
+                                {% endif %}
+                            </div>
+                            <div class="progress" style="height: 6px;">
+                                <div class="progress-bar {{ 'bg-success' if result.ssl_enabled else 'bg-danger' }}" 
+                                     style="width: {{ 100 if result.ssl_enabled else 0 }}%"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <span class="fw-bold">Accessibility</span>
+                                {% if result.status == 'Active' %}
+                                    <span class="badge bg-success">Online</span>
+                                {% else %}
+                                    <span class="badge bg-danger">Offline</span>
+                                {% endif %}
+                            </div>
+                            <div class="progress" style="height: 6px;">
+                                <div class="progress-bar {{ 'bg-success' if result.status == 'Active' else 'bg-danger' }}" 
+                                     style="width: {{ 100 if result.status == 'Active' else 0 }}%"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <span class="fw-bold">Performance</span>
+                                {% if result.response_time == '< 1s' %}
+                                    <span class="badge bg-success">Fast</span>
+                                {% else %}
+                                    <span class="badge bg-warning">Slow</span>
+                                {% endif %}
+                            </div>
+                            <div class="progress" style="height: 6px;">
+                                <div class="progress-bar {{ 'bg-success' if result.response_time == '< 1s' else 'bg-warning' }}" 
+                                     style="width: {{ 85 if result.response_time == '< 1s' else 45 }}%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Quick Actions -->
+            <div class="mt-4">
+                <h5 class="mb-3">Quick Actions</h5>
+                <div class="row">
+                    <div class="col-lg-3 col-md-6 mb-2">
+                        <button class="btn btn-outline-primary w-100" onclick="visitDomain('{{ result.domain }}')">
+                            <i class="fas fa-external-link-alt me-2"></i>Visit Website
+                        </button>
+                    </div>
+                    <div class="col-lg-3 col-md-6 mb-2">
+                        <button class="btn btn-outline-info w-100" onclick="whoisLookup('{{ result.domain }}')">
+                            <i class="fas fa-search me-2"></i>WHOIS Lookup
+                        </button>
+                    </div>
+                    <div class="col-lg-3 col-md-6 mb-2">
+                        <button class="btn btn-outline-success w-100" onclick="dnsCheck('{{ result.domain }}')">
+                            <i class="fas fa-network-wired me-2"></i>DNS Check
+                        </button>
+                    </div>
+                    <div class="col-lg-3 col-md-6 mb-2">
+                        <button class="btn btn-outline-warning w-100" onclick="speedTest('{{ result.domain }}')">
+                            <i class="fas fa-tachometer-alt me-2"></i>Speed Test
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Recommendations -->
+            <div class="mt-4 p-3" style="background: rgba(99, 102, 241, 0.05); border-radius: 8px;">
+                <h6 class="mb-2">
+                    <i class="fas fa-lightbulb me-1 text-warning"></i>
+                    Analysis Summary
+                </h6>
+                {% if result.status == 'Active' and result.ssl_enabled %}
+                    <p class="mb-0 text-success">
+                        <i class="fas fa-check me-1"></i>
+                        This domain is well-configured with SSL security and good performance. Safe for business communication.
+                    </p>
+                {% elif result.status == 'Active' and not result.ssl_enabled %}
+                    <p class="mb-0 text-warning">
+                        <i class="fas fa-exclamation-triangle me-1"></i>
+                        Domain is active but lacks SSL certificate. Consider recommending HTTPS for better security.
+                    </p>
+                {% else %}
+                    <p class="mb-0 text-danger">
+                        <i class="fas fa-times me-1"></i>
+                        Domain appears to be inactive or unreachable. Double-check the domain name or try again later.
+                    </p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+<!-- Features -->
+<div class="row mb-4">
+    <div class="col-lg-3 col-md-6 mb-3">
+        <div class="modern-card p-4 text-center h-100">
+            <div class="mb-3">
+                <i class="fas fa-server fa-3x text-primary"></i>
+            </div>
+            <h5>Server Analysis</h5>
+            <p class="text-muted">Check server information, response times, and hosting details.</p>
+        </div>
+    </div>
+    
+    <div class="col-lg-3 col-md-6 mb-3">
+        <div class="modern-card p-4 text-center h-100">
+            <div class="mb-3">
+                <i class="fas fa-lock fa-3x text-success"></i>
+            </div>
+            <h5>SSL Security</h5>
+            <p class="text-muted">Verify SSL certificates and security configurations.</p>
+        </div>
+    </div>
+    
+    <div class="col-lg-3 col-md-6 mb-3">
+        <div class="modern-card p-4 text-center h-100">
+            <div class="mb-3">
+                <i class="fas fa-tachometer-alt fa-3x text-warning"></i>
+            </div>
+            <h5>Performance</h5>
+            <p class="text-muted">Measure website speed and response times.</p>
+        </div>
+    </div>
+    
+    <div class="col-lg-3 col-md-6 mb-3">
+        <div class="modern-card p-4 text-center h-100">
+            <div class="mb-3">
+                <i class="fas fa-chart-bar fa-3x text-info"></i>
+            </div>
+            <h5>Domain Health</h5>
+            <p class="text-muted">Overall domain health and accessibility scoring.</p>
+        </div>
+    </div>
+</div>
+
+<!-- Batch Domain Check -->
+<div class="row">
+    <div class="col-12">
+        <div class="modern-card p-4">
+            <h4 class="mb-3">
+                <i class="fas fa-layer-group me-2 text-info"></i>
+                Batch Domain Checker
+            </h4>
+            
+            <div class="row">
+                <div class="col-lg-8">
+                    <p class="text-muted mb-3">Check multiple domains at once from your lead list. Perfect for validating website information in bulk!</p>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">Domain List</label>
+                        <textarea class="form-control" rows="4" placeholder="Enter domains (one per line)&#10;example.com&#10;business.org&#10;company.net" disabled></textarea>
+                        <div class="form-text">Feature coming soon! Paste multiple domains for batch analysis.</div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-4">
+                    <div class="p-3" style="background: rgba(99, 102, 241, 0.05); border-radius: 8px;">
+                        <h6 class="mb-2">Batch Check Benefits</h6>
+                        <ul class="list-unstyled mb-0">
+                            <li class="mb-1">
+                                <i class="fas fa-check text-success me-2"></i>
+                                Check up to 100 domains
+                            </li>
+                            <li class="mb-1">
+                                <i class="fas fa-check text-success me-2"></i>
+                                Export results to CSV
+                            </li>
+                            <li class="mb-1">
+                                <i class="fas fa-check text-success me-2"></i>
+                                Detailed health reports
+                            </li>
+                            <li class="mb-1">
+                                <i class="fas fa-check text-success me-2"></i>
+                                SSL certificate monitoring
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-3">
+                <button class="btn btn-outline-primary" disabled>
+                    <i class="fas fa-rocket me-2"></i>Start Batch Check (Coming Soon)
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+// Form submission handling
+document.getElementById('domainCheckerForm').addEventListener('submit', function() {
+    const btn = document.getElementById('checkBtn');
+    const spinner = btn.querySelector('.spinner-border');
+    
+    btn.disabled = true;
+    spinner.classList.remove('d-none');
+    btn.innerHTML = '<i class="fas fa-search me-2"></i>Checking... <span class="spinner-border spinner-border-sm ms-2" role="status"></span>';
+});
+
+// Focus domain input on load
+document.addEventListener('DOMContentLoaded', function() {
+    document.getElementById('domain').focus();
+});
+
+// Auto-format domain input
+document.getElementById('domain').addEventListener('input', function(e) {
+    // Remove protocol and www if present
+    let value = e.target.value.trim();
+    value = value.replace(/^https?:\/\//, '');
+    value = value.replace(/^www\./, '');
+    value = value.split('/')[0]; // Remove path
+    e.target.value = value;
+});
+
+// Quick Actions
+function visitDomain(domain) {
+    window.open(`https://${domain}`, '_blank');
+}
+
+function whoisLookup(domain) {
+    alert(`WHOIS lookup for ${domain} - Feature coming soon!`);
+}
+
+function dnsCheck(domain) {
+    alert(`DNS check for ${domain} - Feature coming soon!`);
+}
+
+function speedTest(domain) {
+    alert(`Speed test for ${domain} - Feature coming soon!`);
+}
+
+// Example domains
+const exampleDomains = [
+    'google.com',
+    'microsoft.com',
+    'apple.com',
+    'amazon.com'
+];
+
+function setExampleDomain() {
+    const randomDomain = exampleDomains[Math.floor(Math.random() * exampleDomains.length)];
+    document.getElementById('domain').value = randomDomain;
+}
+
+// Add example button
+document.addEventListener('DOMContentLoaded', function() {
+    const domainInput = document.getElementById('domain');
+    const exampleBtn = document.createElement('button');
+    exampleBtn.type = 'button';
+    exampleBtn.className = 'btn btn-outline-secondary btn-sm mt-2';
+    exampleBtn.innerHTML = '<i class="fas fa-random me-1"></i>Try Example';
+    exampleBtn.onclick = setExampleDomain;
+    
+    domainInput.parentNode.appendChild(exampleBtn);
+});
+</script>
+{% endblock %}

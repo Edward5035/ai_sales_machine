@@ -1,0 +1,139 @@
+Extracting contact info and social media from: https://www.devonshiredental.net/
+  Checking page: https://www.devonshiredental.net/
+🚀 Attempting CloudScraper request to www.devonshiredental.net (attempt 1)
+✅ CloudScraper success: 200
+    No emails found on this page
+  Checking page: https://www.devonshiredental.net/contact
+🚀 Attempting CloudScraper request to www.devonshiredental.net (attempt 1)
+✅ CloudScraper success: 200
+    No emails found on this page
+  Checking page: https://www.devonshiredental.net/contact-us
+🚀 Attempting CloudScraper request to www.devonshiredental.net (attempt 1)
+✅ CloudScraper success: 200
+    No emails found on this page
+Added Bing result: Dentist Boston, MA - https://www.devonshiredental.net/
+Decoded Bing URL: https://www.bing.com/ck/a?!&&p=933dac1e03a5f51853e4fca31e5054ecd1986559ea7f2af2ae2267c6b04b650dJmltdHM9MTc1ODg0NDgwMA&ptn=3&ver=2&hsh=4&fclid=163b921e-3b91-69ed-1669-846d3a9368ef&u=a1aHR0cHM6Ly9kb2N0b3Iud2VibWQuY29tL3Byb3ZpZGVycy9zcGVjaWFsdHkvZGVudGlzdHJ5L21hc3NhY2h1c2V0dHMvYm9zdG9u&ntb=1 -> https://doctor.webmd.com/providers/specialty/dentistry/massachusetts/boston
+Extracting contact info and social media from: https://doctor.webmd.com/providers/specialty/dentistry/massachusetts/boston
+  Checking page: https://doctor.webmd.com/providers/specialty/dentistry/massachusetts/boston
+🚀 Attempting CloudScraper request to doctor.webmd.com (attempt 1)
+⚠️ CloudScraper got 403, trying undetected Chrome...
+🚀 Attempting undetected ChromeDriver request to doctor.webmd.com
+Failed to initialize undetected driver: Binary Location Must be a String
+🔄 Falling back to enhanced basic requests for doctor.webmd.com
+❌ Still getting 403 after all methods, attempt 1/2
+Waiting 7.93s before final retry...
+🚀 Attempting CloudScraper request to doctor.webmd.com (attempt 2)
+⚠️ CloudScraper got 403, trying undetected Chrome...
+🚀 Attempting undetected ChromeDriver request to doctor.webmd.com
+Failed to initialize undetected driver: Binary Location Must be a String
+🔄 Falling back to enhanced basic requests for doctor.webmd.com
+❌ Still getting 403 after all methods, attempt 2/2
+  Checking page: https://doctor.webmd.com/providers/specialty/dentistry/massachusetts/boston/contact
+🚀 Attempting CloudScraper request to doctor.webmd.com (attempt 1)
+⚠️ CloudScraper got 403, trying undetected Chrome...
+🚀 Attempting undetected ChromeDriver request to doctor.webmd.com
+Failed to initialize undetected driver: Binary Location Must be a String
+🔄 Falling back to enhanced basic requests for doctor.webmd.com
+❌ Still getting 403 after all methods, attempt 1/2
+Waiting 7.83s before final retry...
+🚀 Attempting CloudScraper request to doctor.webmd.com (attempt 2)
+⚠️ CloudScraper got 403, trying undetected Chrome...
+🚀 Attempting undetected ChromeDriver request to doctor.webmd.com
+Failed to initialize undetected driver: Binary Location Must be a String
+🔄 Falling back to enhanced basic requests for doctor.webmd.com
+❌ Still getting 403 after all methods, attempt 2/2
+  Checking page: https://doctor.webmd.com/providers/specialty/dentistry/massachusetts/boston/contact-us
+🚀 Attempting CloudScraper request to doctor.webmd.com (attempt 1)
+⚠️ CloudScraper got 403, trying undetected Chrome...
+🚀 Attempting undetected ChromeDriver request to doctor.webmd.com
+Failed to initialize undetected driver: Binary Location Must be a String
+🔄 Falling back to enhanced basic requests for doctor.webmd.com
+❌ Still getting 403 after all methods, attempt 1/2
+Waiting 6.09s before final retry...
+🚀 Attempting CloudScraper request to doctor.webmd.com (attempt 2)
+⚠️ CloudScraper got 403, trying undetected Chrome...
+🚀 Attempting undetected ChromeDriver request to doctor.webmd.com
+Failed to initialize undetected driver: Binary Location Must be a String
+🔄 Falling back to enhanced basic requests for doctor.webmd.com
+❌ Still getting 403 after all methods, attempt 2/2
+Added Bing result: Best Dentists Near Me in Boston, MA - https://doctor.webmd.com/providers/specialty/dentistry/massachusetts/boston
+[2025-09-26 08:08:00 +0000] [56] [CRITICAL] WORKER TIMEOUT (pid:57)
+Decoded Bing URL: https://www.bing.com/ck/a?!&&p=6efcf83e54baae7cbf64dbda9b95b58cfadb7c5271af56e6d1982699f690b88eJmltdHM9MTc1ODg0NDgwMA&ptn=3&ver=2&hsh=4&fclid=163b921e-3b91-69ed-1669-846d3a9368ef&u=a1aHR0cHM6Ly93d3cuZGVudGFscGFydG5lcnNvZmJvc3Rvbi5jb20v&ntb=1 -> https://www.dentalpartnersofboston.com/
+[2025-09-26 08:08:00 +0000] [57] [ERROR] Error handling request /search
+Traceback (most recent call last):
+  File "/opt/render/project/src/.venv/lib/python3.13/site-packages/gunicorn/workers/sync.py", line 134, in handle
+    self.handle_request(listener, req, client, addr)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/render/project/src/.venv/lib/python3.13/site-packages/gunicorn/workers/sync.py", line 177, in handle_request
+    respiter = self.wsgi(environ, resp.start_response)
+  File "/opt/render/project/src/.venv/lib/python3.13/site-packages/flask/app.py", line 1536, in __call__
+    return self.wsgi_app(environ, start_response)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/render/project/src/.venv/lib/python3.13/site-packages/flask/app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+Extracting contact info and social media from: https://www.dentalpartnersofboston.com/
+  Checking page: https://www.dentalpartnersofboston.com/
+🚀 Attempting CloudScraper request to www.dentalpartnersofboston.com (attempt 1)
+✅ CloudScraper success: 200
+    No emails found on this page
+  Checking page: https://www.dentalpartnersofboston.com/contact
+🚀 Attempting CloudScraper request to www.dentalpartnersofboston.com (attempt 1)
+✅ CloudScraper success: 200
+    No emails found on this page
+  Checking page: https://www.dentalpartnersofboston.com/contact-us
+🚀 Attempting CloudScraper request to www.dentalpartnersofboston.com (attempt 1)
+CloudScraper HTTP 404
+🚀 Attempting undetected ChromeDriver request to www.dentalpartnersofboston.com
+Failed to initialize undetected driver: Binary Location Must be a String
+🔄 Falling back to enhanced basic requests for www.dentalpartnersofboston.com
+HTTP 404 for https://www.dentalpartnersofboston.com/contact-us
+Added Bing result: Dental Partners of Boston - https://www.dentalpartnersofboston.com/
+Decoded Bing URL: https://www.bing.com/ck/a?!&&p=8cb201bcb3e7015c5bf5e02e40e61fe4ac9cdde78d81192dc84289d635d5f7feJmltdHM9MTc1ODg0NDgwMA&ptn=3&ver=2&hsh=4&fclid=163b921e-3b91-69ed-1669-846d3a9368ef&u=a1aHR0cHM6Ly93d3cuZ29kZW50YWwzNjUuY29tL2xvY2F0aW9uL2RlbnRpc3QtZG93bnRvd24tYm9zdG9uLw&ntb=1 -> https://www.godental365.com/location/dentist-downtown-boston/
+Extracting contact info and social media from: https://www.godental365.com/location/dentist-downtown-boston/
+  Checking page: https://www.godental365.com/location/dentist-downtown-boston/
+🚀 Attempting CloudScraper request to www.godental365.com (attempt 1)
+✅ CloudScraper success: 200
+    No emails found on this page
+  Checking page: https://www.godental365.com/location/dentist-downtown-boston/contact
+🚀 Attempting CloudScraper request to www.godental365.com (attempt 1)
+✅ CloudScraper success: 200
+    No emails found on this page
+  Checking page: https://www.godental365.com/location/dentist-downtown-boston/contact-us
+🚀 Attempting CloudScraper request to www.godental365.com (attempt 1)
+✅ CloudScraper success: 200
+    No emails found on this page
+Added Bing result: Dentist Downtown Boston, MA - https://www.godental365.com/location/dentist-downtown-boston/
+Decoded Bing URL: https://www.bing.com/ck/a?!&&p=519b8bb18d13fa124d521d3abaaee34f2b157e3aba25957a03a34a042d337190JmltdHM9MTc1ODg0NDgwMA&ptn=3&ver=2&hsh=4&fclid=163b921e-3b91-69ed-1669-846d3a9368ef&u=a1aHR0cHM6Ly9ib3N0b24uZ3JlYXRoaWxsZGVudGFsLmNvbS8&ntb=1 -> https://boston.greathilldental.com/
+Extracting contact info and social media from: https://boston.greathilldental.com/
+  Checking page: https://boston.greathilldental.com/
+127.0.0.1 - - [26/Sep/2025:08:08:00 +0000] "POST /search HTTP/1.1" 500 0 "-" "-"
+  File "/opt/render/project/src/.venv/lib/python3.13/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/opt/render/project/src/.venv/lib/python3.13/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/opt/render/project/src/app.py", line 123, in decorated_function
+    return f(*args, **kwargs)
+  File "/opt/render/project/src/app.py", line 2506, in search
+    leads = scraper.search_business_listings(business_type, location, num_results)
+  File "/opt/render/project/src/app.py", line 504, in search_business_listings
+    results = self._search_bing_business_listings(business_type, location, num_results)
+  File "/opt/render/project/src/app.py", line 1018, in _search_bing_business_listings
+    business_data = self._extract_enhanced_bing_result(result, business_type, location)
+  File "/opt/render/project/src/app.py", line 1089, in _extract_enhanced_bing_result
+    enhanced_contact = self._extract_enhanced_contact_info(resolved_url)
+  File "/opt/render/project/src/app.py", line 1718, in _extract_enhanced_contact_info
+    response = self._make_request_with_retry(page_url)
+  File "/opt/render/project/src/app.py", line 479, in _make_request_with_retry
+    return self._make_advanced_request(url, params, max_retries)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/render/project/src/app.py", line 356, in _make_advanced_request
+    time.sleep(random.uniform(0.8, 2.5))
+    ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/render/project/src/.venv/lib/python3.13/site-packages/gunicorn/workers/base.py", line 204, in handle_abort
+    sys.exit(1)
+    ~~~~~~~~^^^
+SystemExit: 1
+[2025-09-26 08:08:00 +0000] [57] [INFO] Worker exiting (pid: 57)
+[2025-09-26 08:08:02 +0000] [56] [ERROR] Worker (pid:57) was sent SIGKILL! Perhaps out of memory?
+[2025-09-26 08:08:02 +0000] [59] [INFO] Booting worker with pid: 59

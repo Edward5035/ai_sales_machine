@@ -1,0 +1,698 @@
+{% extends "base.html" %}
+
+{% block page_title %}Dashboard{% endblock %}
+
+{% block content %}
+<!-- Welcome Section -->
+<div class="row mb-4">
+    <div class="col-12">
+        <div class="modern-card morphism-primary p-4">
+            <div class="row align-items-center">
+                <div class="col-lg-8">
+                    <h2 class="mb-2">
+                        <i class="ph ph-wave-square me-2 text-primary"></i>
+                        Welcome Back
+                    </h2>
+                    <p class="text-muted mb-3">Your modern lead generation and outreach automation platform. Start finding qualified prospects and converting them into customers.</p>
+                    
+                    {% if stats.total_leads == 0 %}
+                    <div class="modern-card morphism-primary border-0 p-4" style="background: linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(29, 78, 216, 0.1) 100%); border: 1px solid rgba(59, 130, 246, 0.3); backdrop-filter: blur(10px);">
+                        <h5><i class="ph ph-rocket me-2 text-primary"></i>Get Started</h5>
+                        <p class="mb-3 text-muted">Start your first lead search to unlock the full power of our platform:</p>
+                        <a href="/lead-finder" class="btn btn-neon">
+                            <i class="ph ph-magnifying-glass me-2"></i>Find Your First Leads
+                        </a>
+                    </div>
+                    {% endif %}
+                </div>
+                <div class="col-lg-4 text-end">
+                    <div class="d-grid gap-2">
+                        <a href="/lead-finder" class="btn btn-gradient-primary">
+                            <i class="ph ph-plus me-2"></i>Find New Leads
+                        </a>
+                        <a href="/outreach-hub" class="btn btn-gradient-success">
+                            <i class="ph ph-paper-plane-tilt me-2"></i>Start Outreach
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Enhanced Stats Cards with Warm Colors -->
+<div class="row mb-4">
+    <div class="col-xl-2 col-lg-3 col-md-6 col-sm-6 mb-3">
+        <div class="stat-card total-leads" style="background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%); color: white;">
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <h3 class="mb-1 text-white">{{ stats.total_leads or 0 }}</h3>
+                    <p class="mb-0 opacity-75">Total Leads</p>
+                    <small class="opacity-75">+{{ stats.today_leads or 0 }} today</small>
+                </div>
+                <div class="text-end">
+                    <i class="ph ph-users ph-2x opacity-75"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-xl-2 col-lg-3 col-md-6 col-sm-6 mb-3">
+        <div class="stat-card sales-ready" style="background: linear-gradient(135deg, var(--success-color) 0%, #22c55e 100%); color: white;">
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <h3 class="mb-1 text-white">{{ stats.sales_ready or 0 }}</h3>
+                    <p class="mb-0 opacity-75">Sales Ready</p>
+                    <small class="opacity-75">{{ stats.conversion_rate or 0 }}% rate</small>
+                </div>
+                <div class="text-end">
+                    <i class="ph ph-check-circle ph-2x opacity-75"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-xl-2 col-lg-3 col-md-6 col-sm-6 mb-3">
+        <div class="stat-card prospects" style="background: linear-gradient(135deg, var(--secondary-color) 0%, var(--accent-color) 100%); color: white;">
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <h3 class="mb-1 text-white">{{ stats.with_phone or 0 }}</h3>
+                    <p class="mb-0 opacity-75">With Phone</p>
+                    <small class="opacity-75">Ready to call</small>
+                </div>
+                <div class="text-end">
+                    <i class="ph ph-phone ph-2x opacity-75"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-xl-2 col-lg-3 col-md-6 col-sm-6 mb-3">
+        <div class="stat-card email-leads" style="background: linear-gradient(135deg, var(--accent-color) 0%, var(--primary-dark) 100%); color: white;">
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <h3 class="mb-1 text-white">{{ stats.with_email or 0 }}</h3>
+                    <p class="mb-0 opacity-75">With Email</p>
+                    <small class="opacity-75">Email ready</small>
+                </div>
+                <div class="text-end">
+                    <i class="ph ph-envelope ph-2x opacity-75"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-xl-2 col-lg-3 col-md-6 col-sm-6 mb-3">
+        <div class="stat-card social-leads" style="background: linear-gradient(135deg, var(--secondary-color) 0%, var(--accent-color) 100%); color: white;">
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <h3 class="mb-1 text-white">{{ stats.social_leads or 0 }}</h3>
+                    <p class="mb-0 opacity-75">Social Profiles</p>
+                    <small class="opacity-75">Enhanced</small>
+                </div>
+                <div class="text-end">
+                    <i class="ph ph-linkedin-logo ph-2x opacity-75"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-xl-2 col-lg-3 col-md-6 col-sm-6 mb-3">
+        <div class="stat-card complete-leads" style="background: linear-gradient(135deg, #10b981 0%, #059669 100%); color: white;">
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <h3 class="mb-1 text-white">{{ stats.complete_profiles or 0 }}</h3>
+                    <p class="mb-0 opacity-75">Complete</p>
+                    <small class="opacity-75">{{ stats.completion_rate or 0 }}% done</small>
+                </div>
+                <div class="text-end">
+                    <i class="ph ph-star ph-2x opacity-75"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Performance Metrics Row -->
+<div class="row mb-4">
+    <div class="col-lg-3 col-md-6 mb-3">
+        <div class="modern-card morphism-primary p-4 h-100 text-center" style="background: linear-gradient(135deg, rgba(239, 68, 68, 0.1) 0%, rgba(220, 38, 38, 0.1) 100%); border: 1px solid rgba(239, 68, 68, 0.2);">
+            <div class="position-relative">
+                <i class="ph ph-fire ph-3x text-danger mb-3" style="filter: drop-shadow(0 0 10px rgba(239, 68, 68, 0.3));"></i>
+                <h3 class="mb-2 fw-bold">{{ stats.high_priority_leads or 0 }}</h3>
+                <p class="mb-1 text-muted fw-semibold">High Priority Leads</p>
+                <span class="badge bg-danger rounded-pill">Urgent follow-up needed</span>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-lg-3 col-md-6 mb-3">
+        <div class="modern-card morphism-success p-4 h-100 text-center" style="background: linear-gradient(135deg, rgba(16, 185, 129, 0.1) 0%, rgba(6, 182, 212, 0.1) 100%); border: 1px solid rgba(16, 185, 129, 0.2);">
+            <div class="position-relative">
+                <i class="ph ph-globe ph-3x text-primary mb-3" style="filter: drop-shadow(0 0 10px rgba(99, 102, 241, 0.3));"></i>
+                <h3 class="mb-2 fw-bold">{{ stats.with_website or 0 }}</h3>
+                <p class="mb-1 text-muted fw-semibold">With Website</p>
+                <span class="badge bg-success rounded-pill">Digital presence verified</span>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-lg-3 col-md-6 mb-3">
+        <div class="modern-card morphism-primary p-4 h-100 text-center" style="background: linear-gradient(135deg, rgba(245, 158, 11, 0.1) 0%, rgba(217, 119, 6, 0.1) 100%); border: 1px solid rgba(245, 158, 11, 0.2);">
+            <div class="position-relative">
+                <i class="ph ph-chart-line ph-3x text-warning mb-3" style="filter: drop-shadow(0 0 10px rgba(245, 158, 11, 0.3));"></i>
+                <h3 class="mb-2 fw-bold">{{ stats.conversion_rate or 0 }}%</h3>
+                <p class="mb-1 text-muted fw-semibold">Conversion Rate</p>
+                <span class="badge bg-warning rounded-pill text-dark">Sales ready conversion</span>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-lg-3 col-md-6 mb-3">
+        <div class="modern-card morphism-success p-4 h-100 text-center" style="background: linear-gradient(135deg, rgba(16, 185, 129, 0.1) 0%, rgba(34, 197, 94, 0.1) 100%); border: 1px solid rgba(16, 185, 129, 0.2);">
+            <div class="position-relative">
+                <i class="ph ph-percent ph-3x text-success mb-3" style="filter: drop-shadow(0 0 10px rgba(16, 185, 129, 0.3));"></i>
+                <h3 class="mb-2 fw-bold">{{ stats.completion_rate or 0 }}%</h3>
+                <p class="mb-1 text-muted fw-semibold">Profile Complete</p>
+                <span class="badge bg-success rounded-pill">Data completeness</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Quick Actions -->
+<div class="row mb-4">
+    <div class="col-12">
+        <div class="modern-card p-4">
+            <h4 class="mb-3">
+                <i class="ph ph-lightning me-2 text-warning"></i>
+                Quick Actions
+            </h4>
+            
+            <div class="row">
+                <div class="col-lg-4 mb-3">
+                    <div class="card border-0" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                        <div class="card-body text-white">
+                            <h5><i class="ph ph-magnifying-glass me-2"></i>Find Leads</h5>
+                            <p class="mb-3">Search for new business prospects in any niche and location.</p>
+                            <a href="/lead-finder" class="btn btn-light btn-sm">Start Search</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-4 mb-3">
+                    <div class="card border-0" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+                        <div class="card-body text-white">
+                            <h5><i class="ph ph-tag me-2"></i>Classify Leads</h5>
+                            <p class="mb-3">Organize and filter your leads by type and priority.</p>
+                            <a href="/lead-classifier" class="btn btn-light btn-sm">Classify Now</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-4 mb-3">
+                    <div class="card border-0" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+                        <div class="card-body text-white">
+                            <h5><i class="ph ph-paper-plane-tilt me-2"></i>Start Outreach</h5>
+                            <p class="mb-3">Use DFY templates to reach out to your prospects.</p>
+                            <a href="/outreach-hub" class="btn btn-light btn-sm">Launch Outreach</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Contact Enhancement Tool -->
+            {% if stats.with_email < (stats.total_leads * 0.1) and stats.with_website > 10 %}
+            <div class="row mt-3">
+                <div class="col-12">
+                    <div class="alert alert-info d-flex align-items-center" role="alert">
+                        <i class="ph ph-info me-2"></i>
+                        <div class="flex-grow-1">
+                            <strong>Improve Your Contact Coverage!</strong> 
+                            You have {{ stats.with_website }} leads with websites but only {{ stats.with_email }} with emails. 
+                            Use our enhanced extraction to find more contact information.
+                        </div>
+                        <button class="btn btn-primary btn-sm ms-3" onclick="enhanceExistingLeads()" id="enhanceBtn">
+                            <i class="ph ph-magic-wand me-1"></i>Enhance Contacts
+                            <span class="spinner-border spinner-border-sm ms-2 d-none" role="status"></span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Enhanced Recent Leads Section -->
+{% if recent_leads %}
+<div class="row">
+    <div class="col-12">
+        <div class="modern-card p-4">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <div>
+                    <h4 class="mb-1">
+                        <i class="ph ph-check-circle me-2 text-success"></i>
+                        Sales-Ready Leads
+                    </h4>
+                    <p class="text-muted mb-0">{{ recent_leads|length }} sales-ready leads with complete contact information</p>
+                </div>
+                <div class="d-flex gap-2">
+                    <button class="btn btn-outline-success btn-sm" onclick="exportSalesReadyLeads()">
+                        <i class="ph ph-download me-1"></i>Export
+                    </button>
+                    <a href="/lead-classifier" class="btn btn-outline-primary btn-sm">
+                        View All <i class="ph ph-arrow-right ms-1"></i>
+                    </a>
+                </div>
+            </div>
+            
+            <!-- Sales-Ready Leads Table -->
+            <div class="table-responsive">
+                <table class="table table-modern mb-0">
+                    <thead>
+                        <tr>
+                            <th>Business</th>
+                            <th class="text-center">Score</th>
+                            <th>Contact Info</th>
+                            <th class="text-center">Social Media</th>
+                            <th class="text-center">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for lead in recent_leads %}
+                        <tr>
+                            <td>
+                                <div>
+                                    <strong class="d-block">{{ lead.name }}</strong>
+                                    {% if lead.industry %}
+                                        <span class="badge bg-light text-dark small">{{ lead.industry }}</span>
+                                    {% endif %}
+                                    {% if lead.address %}
+                                        <br><small class="text-muted">{{ lead.address[:50] }}{% if lead.address|length > 50 %}...{% endif %}</small>
+                                    {% endif %}
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="d-flex flex-column align-items-center">
+                                    <span class="badge badge-sales-ready mb-1">🟢 Sales Ready</span>
+                                    {% set score = lead.priority_score or 0 %}
+                                    <div class="progress" style="width: 60px; height: 8px;">
+                                        <div class="progress-bar bg-success" style="width: {{ (score / 8 * 100)|round }}%"></div>
+                                    </div>
+                                    <small class="text-muted">{{ score }}/8</small>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="d-flex flex-column gap-1">
+                                    {% if lead.phone %}
+                                        <div class="d-flex align-items-center">
+                                            <i class="ph ph-phone text-success me-2"></i>
+                                            <a href="tel:{{ lead.phone }}" class="text-decoration-none small">{{ lead.phone }}</a>
+                                        </div>
+                                    {% endif %}
+                                    {% if lead.email %}
+                                        <div class="d-flex align-items-center">
+                                            <i class="ph ph-envelope text-info me-2"></i>
+                                            <span class="small">{{ lead.email[:25] }}{% if lead.email|length > 25 %}...{% endif %}</span>
+                                        </div>
+                                    {% endif %}
+                                    {% if lead.website %}
+                                        <div class="d-flex align-items-center">
+                                            <i class="ph ph-globe text-primary me-2"></i>
+                                            <a href="{{ lead.website }}" target="_blank" class="text-decoration-none small">{{ lead.domain or 'Visit Website' }}</a>
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="social-icons d-flex justify-content-center gap-1">
+                                    {% if lead.facebook %}
+                                        <a href="{{ lead.facebook }}" target="_blank" class="facebook">
+                                            <i class="ph ph-facebook-logo"></i>
+                                        </a>
+                                    {% endif %}
+                                    {% if lead.linkedin %}
+                                        <a href="{{ lead.linkedin }}" target="_blank" class="linkedin">
+                                            <i class="ph ph-linkedin-logo"></i>
+                                        </a>
+                                    {% endif %}
+                                    {% if lead.twitter %}
+                                        <a href="{{ lead.twitter }}" target="_blank" class="twitter">
+                                            <i class="ph ph-twitter-logo"></i>
+                                        </a>
+                                    {% endif %}
+                                    {% if lead.instagram %}
+                                        <a href="{{ lead.instagram }}" target="_blank" class="instagram">
+                                            <i class="ph ph-instagram-logo"></i>
+                                        </a>
+                                    {% endif %}
+                                </div>
+                                {% set social_count = [lead.facebook, lead.linkedin, lead.twitter, lead.instagram] | select | list | length %}
+                                {% if social_count > 0 %}
+                                    <small class="text-muted d-block">{{ social_count }} platform{{ 's' if social_count != 1 else '' }}</small>
+                                {% else %}
+                                    <small class="text-muted">None</small>
+                                {% endif %}
+                            </td>
+                            <td class="text-center">
+                                <div class="btn-group-vertical btn-group-sm">
+                                    {% if lead.email %}
+                                        <button class="btn btn-outline-primary btn-sm" onclick="composeEmail('{{ lead.email }}', '{{ lead.name }}')" title="Send Email">
+                                            <i class="ph ph-envelope"></i>
+                                        </button>
+                                    {% endif %}
+                                    {% if lead.phone %}
+                                        <a href="tel:{{ lead.phone }}" class="btn btn-outline-success btn-sm" title="Call">
+                                            <i class="ph ph-phone"></i>
+                                        </a>
+                                    {% endif %}
+                                    <a href="/outreach-hub?lead={{ lead.name }}" class="btn btn-outline-warning btn-sm" title="Add to Outreach">
+                                        <i class="ph ph-paper-plane-tilt"></i>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% else %}
+<!-- Empty State -->
+<div class="row">
+    <div class="col-12">
+        <div class="modern-card p-5 text-center">
+            <div class="mb-4">
+                <i class="ph ph-check-circle ph-4x text-muted"></i>
+            </div>
+            <h4 class="text-muted mb-3">No Sales-Ready Leads Yet</h4>
+            <p class="text-muted mb-4">Generate leads with complete contact information to see your sales-ready prospects here.</p>
+            <a href="/lead-finder" class="btn btn-gradient-primary btn-lg">
+                <i class="ph ph-rocket me-2"></i>Find Sales-Ready Leads
+            </a>
+        </div>
+    </div>
+</div>
+{% endif %}
+{% endblock %}
+
+{% block scripts %}
+<style>
+/* Enhanced Lead Cards Styling */
+.lead-card {
+    transition: all 0.3s ease;
+    border: 1px solid rgba(234, 105, 71, 0.1);
+    background: var(--glass-bg);
+    backdrop-filter: blur(var(--blur-strength));
+    -webkit-backdrop-filter: blur(var(--blur-strength));
+}
+
+.lead-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 24px rgba(234, 105, 71, 0.15);
+    border-color: rgba(234, 105, 71, 0.3);
+}
+
+.lead-name {
+    color: var(--text-primary);
+    font-weight: 600;
+}
+
+.priority-badge {
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 0.25rem 0.5rem;
+}
+
+.contact-item {
+    display: flex;
+    align-items: center;
+    font-size: 0.9rem;
+}
+
+.contact-text {
+    color: var(--text-secondary);
+}
+
+.social-links {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.social-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    font-size: 1.1rem;
+}
+
+.social-link.facebook {
+    background: #1877f2;
+    color: white;
+}
+
+.social-link.linkedin {
+    background: #0a66c2;
+    color: white;
+}
+
+.social-link.twitter {
+    background: #1da1f2;
+    color: white;
+}
+
+.social-link.instagram {
+    background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+    color: white;
+}
+
+.social-link.youtube {
+    background: #ff0000;
+    color: white;
+}
+
+.social-link:hover {
+    transform: scale(1.1);
+    color: white;
+}
+
+.action-buttons .btn {
+    font-size: 0.85rem;
+    padding: 0.375rem 0.75rem;
+}
+
+/* Enhanced badges */
+.badge-sales-ready {
+    background: linear-gradient(135deg, var(--success-color) 0%, #22c55e 100%);
+    color: white;
+    font-size: 0.7rem;
+    padding: 0.25rem 0.5rem;
+}
+
+.badge-prospect {
+    background: linear-gradient(135deg, var(--secondary-color) 0%, var(--accent-color) 100%);
+    color: white;
+    font-size: 0.7rem;
+    padding: 0.25rem 0.5rem;
+}
+
+.badge-website-lead {
+    background: linear-gradient(135deg, var(--accent-color) 0%, var(--primary-dark) 100%);
+    color: white;
+    font-size: 0.7rem;
+    padding: 0.25rem 0.5rem;
+}
+
+.badge-premium {
+    background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
+    color: white;
+    font-size: 0.7rem;
+    padding: 0.25rem 0.5rem;
+}
+
+.badge-social-lead {
+    background: linear-gradient(135deg, #06b6d4 0%, #0891b2 100%);
+    color: white;
+    font-size: 0.7rem;
+    padding: 0.25rem 0.5rem;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .lead-card {
+        margin-bottom: 1rem;
+    }
+    
+    .action-buttons {
+        flex-direction: column;
+    }
+    
+    .action-buttons .btn {
+        margin-bottom: 0.25rem;
+    }
+}
+</style>
+
+<script>
+// Export recent leads functionality
+function exportRecentLeads() {
+    // Use backend API to export leads
+    fetch('/api/export_recent_leads')
+        .then(response => {
+            if (response.ok) {
+                return response.blob();
+            } else {
+                throw new Error('Export failed');
+            }
+        })
+        .then(blob => {
+            // Download the CSV file
+            const url = window.URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = `recent_leads_${new Date().toISOString().split('T')[0]}.csv`;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            window.URL.revokeObjectURL(url);
+            
+            showNotification('Recent leads exported successfully!', 'success');
+        })
+        .catch(error => {
+            console.error('Export error:', error);
+            showNotification('Export failed. Please try again.', 'error');
+        });
+}
+
+// Export sales-ready leads to CSV
+function exportSalesReadyLeads() {
+    const salesReadyLeads = {{ recent_leads | tojson | safe }};
+    
+    if (salesReadyLeads.length === 0) {
+        alert('No sales-ready leads to export');
+        return;
+    }
+    
+    // Create CSV content
+    const headers = ['Name', 'Phone', 'Email', 'Website', 'Address', 'Industry', 'Lead Type', 'Priority Score', 'Social Media', 'Created'];
+    const csvContent = [
+        headers.join(','),
+        ...salesReadyLeads.map(lead => [
+            `"${lead.name || ''}"`,
+            `"${lead.phone || ''}"`,
+            `"${lead.email || ''}"`,
+            `"${lead.website || ''}"`,
+            `"${lead.address || ''}"`,
+            `"${lead.industry || ''}"`,
+            `"${lead.lead_type || ''}"`,
+            lead.priority_score || 0,
+            `"${[lead.facebook, lead.linkedin, lead.twitter, lead.instagram].filter(Boolean).length} platforms"`,
+            `"${lead.created_at || ''}"`
+        ].join(','))
+    ].join('\n');
+    
+    // Create and download file
+    const blob = new Blob([csvContent], { type: 'text/csv' });
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `sales_ready_leads_${new Date().toISOString().slice(0, 10)}.csv`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    window.URL.revokeObjectURL(url);
+}
+
+// Enhanced email composition
+function composeEmail(email, businessName) {
+    const subject = encodeURIComponent(`Business Inquiry - ${businessName}`);
+    const body = encodeURIComponent(`Hello,\\n\\nI hope this email finds you well. I am reaching out regarding your business, ${businessName}.\\n\\n[Your message here]\\n\\nBest regards,\\n[Your name]`);
+    const mailtoLink = `mailto:${email}?subject=${subject}&body=${body}`;
+    
+    // Try to open email client, fallback to copy to clipboard
+    try {
+        window.location.href = mailtoLink;
+        showNotification(`Email compose window opened for ${businessName}`, 'success');
+    } catch (error) {
+        // Fallback: copy email to clipboard
+        navigator.clipboard.writeText(email).then(() => {
+            showNotification(`Email address copied to clipboard: ${email}`, 'info');
+        }).catch(() => {
+            showNotification(`Email: ${email}`, 'info');
+        });
+    }
+}
+
+// Auto-refresh stats every 30 seconds
+setInterval(function() {
+    if (document.hasFocus()) {
+        fetch('/api/leads')
+            .then(response => response.json())
+            .then(data => {
+                // Update stats if needed
+                const totalLeads = data.length;
+                const salesReady = data.filter(lead => lead.lead_type === 'Sales-Ready Lead').length;
+                const prospects = data.filter(lead => lead.lead_type === 'Prospect Lead').length;
+                const socialLeads = data.filter(lead => 
+                    lead.facebook || lead.linkedin || lead.twitter || lead.instagram
+                ).length;
+                
+                // Update DOM elements (you can implement this based on your needs)
+            })
+            .catch(error => console.log('Stats update failed:', error));
+    }
+}, 30000);
+
+// Enhanced contact extraction for existing leads
+function enhanceExistingLeads() {
+    const btn = document.getElementById('enhanceBtn');
+    const spinner = btn.querySelector('.spinner-border');
+    const originalText = btn.innerHTML;
+    
+    btn.disabled = true;
+    spinner.classList.remove('d-none');
+    btn.innerHTML = '<i class="ph ph-magic-wand me-1"></i>Enhancing... <span class="spinner-border spinner-border-sm ms-2" role="status"></span>';
+    
+    fetch('/enhance-existing-leads', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            const message = `Enhanced ${data.improved} leads with new contact info! Processed ${data.processed} leads.`;
+            alert(message);
+            if (data.remaining > 0) {
+                btn.innerHTML = `<i class="ph ph-magic-wand me-1"></i>Enhance More (${data.remaining} left) <span class="spinner-border spinner-border-sm ms-2 d-none" role="status"></span>`;
+                btn.disabled = false;
+            } else {
+                btn.innerHTML = '<i class="ph ph-check me-1"></i>All Enhanced! <span class="spinner-border spinner-border-sm ms-2 d-none" role="status"></span>';
+                setTimeout(() => location.reload(), 2000);
+            }
+        } else {
+            alert(data.message || 'Enhancement failed');
+            btn.innerHTML = originalText;
+            btn.disabled = false;
+        }
+    })
+    .catch(error => {
+        console.error('Enhancement error:', error);
+        alert('Enhancement failed');
+        btn.innerHTML = originalText;
+        btn.disabled = false;
+    });
+}
+</script>
+{% endblock %}

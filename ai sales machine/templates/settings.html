@@ -1,0 +1,657 @@
+{% extends "base.html" %}
+
+{% block page_title %}Settings{% endblock %}
+
+{% block content %}
+<!-- Settings Header -->
+<div class="row mb-4">
+    <div class="col-12">
+        <div class="modern-card p-4">
+            <div class="row align-items-center">
+                <div class="col-lg-8">
+                    <h2 class="mb-2">
+                        <i class="fas fa-cog me-2 text-primary"></i>
+                        Account Settings
+                    </h2>
+                    <p class="text-muted mb-0">Manage your LeadFlow Pro account settings, preferences, and system configurations.</p>
+                </div>
+                <div class="col-lg-4 text-end">
+                    <div class="d-flex align-items-center">
+                        <i class="fas fa-user-circle fa-3x text-primary me-3"></i>
+                        <div>
+                            <h5 class="mb-0">{{ user.username if user else 'User' }}</h5>
+                            <small class="text-muted">Premium Account</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Settings Tabs -->
+<div class="row">
+    <div class="col-lg-3 mb-4">
+        <div class="modern-card p-3">
+            <div class="nav flex-column nav-pills" id="settings-tab" role="tablist">
+                <button class="nav-link active" id="profile-tab" data-bs-toggle="pill" data-bs-target="#profile" type="button">
+                    <i class="fas fa-user me-2"></i>Profile
+                </button>
+                <button class="nav-link" id="preferences-tab" data-bs-toggle="pill" data-bs-target="#preferences" type="button">
+                    <i class="fas fa-sliders-h me-2"></i>Preferences
+                </button>
+                <button class="nav-link" id="notifications-tab" data-bs-toggle="pill" data-bs-target="#notifications" type="button">
+                    <i class="fas fa-bell me-2"></i>Notifications
+                </button>
+                <button class="nav-link" id="security-tab" data-bs-toggle="pill" data-bs-target="#security" type="button">
+                    <i class="fas fa-shield-alt me-2"></i>Security
+                </button>
+                <button class="nav-link" id="integration-tab" data-bs-toggle="pill" data-bs-target="#integration" type="button">
+                    <i class="fas fa-plug me-2"></i>Integrations
+                </button>
+                <button class="nav-link" id="billing-tab" data-bs-toggle="pill" data-bs-target="#billing" type="button">
+                    <i class="fas fa-credit-card me-2"></i>Billing
+                </button>
+                <button class="nav-link" id="data-tab" data-bs-toggle="pill" data-bs-target="#data" type="button">
+                    <i class="fas fa-database me-2"></i>Data & Export
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-lg-9">
+        <div class="tab-content" id="settings-tabContent">
+            <!-- Profile Tab -->
+            <div class="tab-pane fade show active" id="profile">
+                <div class="modern-card p-4">
+                    <h4 class="mb-3">
+                        <i class="fas fa-user me-2 text-primary"></i>
+                        Profile Information
+                    </h4>
+                    
+                    <form id="profileForm">
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Username</label>
+                                <input type="text" class="form-control" value="{{ user.username if user else '' }}" readonly>
+                                <div class="form-text">Your username cannot be changed.</div>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Email Address</label>
+                                <input type="email" class="form-control" placeholder="your.email@company.com">
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">First Name</label>
+                                <input type="text" class="form-control" placeholder="Enter your first name">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Last Name</label>
+                                <input type="text" class="form-control" placeholder="Enter your last name">
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Company</label>
+                                <input type="text" class="form-control" placeholder="Your company name">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Job Title</label>
+                                <input type="text" class="form-control" placeholder="Your job title">
+                            </div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label class="form-label">Bio</label>
+                            <textarea class="form-control" rows="3" placeholder="Tell us about yourself..."></textarea>
+                        </div>
+                        
+                        <div class="text-end">
+                            <button type="submit" class="btn btn-gradient-primary">
+                                <i class="fas fa-save me-2"></i>Save Profile
+                            </button>
+                        </div>
+                    </form>
+                    
+                    <hr class="my-4">
+                    
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h6 class="mb-2">Account Created</h6>
+                            <p class="text-muted">{{ user.created_at[:10] if user and user.created_at else 'N/A' }}</p>
+                        </div>
+                        <div class="col-md-6">
+                            <h6 class="mb-2">Last Login</h6>
+                            <p class="text-muted">{{ user.last_login[:10] if user and user.last_login else 'N/A' }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Preferences Tab -->
+            <div class="tab-pane fade" id="preferences">
+                <div class="modern-card p-4">
+                    <h4 class="mb-3">
+                        <i class="fas fa-sliders-h me-2 text-primary"></i>
+                        Application Preferences
+                    </h4>
+                    
+                    <form id="preferencesForm">
+                        <div class="mb-4">
+                            <h6 class="mb-3">General Settings</h6>
+                            <div class="form-check form-switch mb-2">
+                                <input class="form-check-input" type="checkbox" id="darkMode">
+                                <label class="form-check-label" for="darkMode">
+                                    Enable Dark Mode
+                                </label>
+                            </div>
+                            <div class="form-check form-switch mb-2">
+                                <input class="form-check-input" type="checkbox" id="autoSave" checked>
+                                <label class="form-check-label" for="autoSave">
+                                    Auto-save lead data
+                                </label>
+                            </div>
+                            <div class="form-check form-switch mb-2">
+                                <input class="form-check-input" type="checkbox" id="compactView">
+                                <label class="form-check-label" for="compactView">
+                                    Compact table view
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <h6 class="mb-3">Lead Generation</h6>
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Default Search Results</label>
+                                    <select class="form-select">
+                                        <option value="10">10 leads</option>
+                                        <option value="20" selected>20 leads</option>
+                                        <option value="30">30 leads</option>
+                                        <option value="50">50 leads</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Auto-classify leads</label>
+                                    <select class="form-select">
+                                        <option value="enabled" selected>Enabled</option>
+                                        <option value="disabled">Disabled</option>
+                                        <option value="manual">Manual only</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <div class="form-check form-switch mb-2">
+                                <input class="form-check-input" type="checkbox" id="enhanceLeads" checked>
+                                <label class="form-check-label" for="enhanceLeads">
+                                    Auto-enhance leads with social profiles
+                                </label>
+                            </div>
+                            <div class="form-check form-switch mb-2">
+                                <input class="form-check-input" type="checkbox" id="duplicateCheck" checked>
+                                <label class="form-check-label" for="duplicateCheck">
+                                    Check for duplicate leads
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <h6 class="mb-3">Export Settings</h6>
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Default Export Format</label>
+                                    <select class="form-select">
+                                        <option value="csv" selected>CSV</option>
+                                        <option value="excel">Excel</option>
+                                        <option value="json">JSON</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Include Fields</label>
+                                    <select class="form-select">
+                                        <option value="all" selected>All fields</option>
+                                        <option value="basic">Basic info only</option>
+                                        <option value="custom">Custom selection</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="text-end">
+                            <button type="submit" class="btn btn-gradient-primary">
+                                <i class="fas fa-save me-2"></i>Save Preferences
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            
+            <!-- Notifications Tab -->
+            <div class="tab-pane fade" id="notifications">
+                <div class="modern-card p-4">
+                    <h4 class="mb-3">
+                        <i class="fas fa-bell me-2 text-primary"></i>
+                        Notification Settings
+                    </h4>
+                    
+                    <form id="notificationsForm">
+                        <div class="mb-4">
+                            <h6 class="mb-3">Email Notifications</h6>
+                            <div class="form-check form-switch mb-2">
+                                <input class="form-check-input" type="checkbox" id="emailLeads" checked>
+                                <label class="form-check-label" for="emailLeads">
+                                    New leads found
+                                </label>
+                            </div>
+                            <div class="form-check form-switch mb-2">
+                                <input class="form-check-input" type="checkbox" id="emailCampaigns" checked>
+                                <label class="form-check-label" for="emailCampaigns">
+                                    Campaign updates
+                                </label>
+                            </div>
+                            <div class="form-check form-switch mb-2">
+                                <input class="form-check-input" type="checkbox" id="emailReports">
+                                <label class="form-check-label" for="emailReports">
+                                    Weekly performance reports
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <h6 class="mb-3">Browser Notifications</h6>
+                            <div class="form-check form-switch mb-2">
+                                <input class="form-check-input" type="checkbox" id="browserScraping" checked>
+                                <label class="form-check-label" for="browserScraping">
+                                    Lead scraping completed
+                                </label>
+                            </div>
+                            <div class="form-check form-switch mb-2">
+                                <input class="form-check-input" type="checkbox" id="browserResponses">
+                                <label class="form-check-label" for="browserResponses">
+                                    New campaign responses
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <h6 class="mb-3">Alert Thresholds</h6>
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Low response rate alert (%)</label>
+                                    <input type="number" class="form-control" value="5" min="0" max="100">
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">High bounce rate alert (%)</label>
+                                    <input type="number" class="form-control" value="10" min="0" max="100">
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="text-end">
+                            <button type="submit" class="btn btn-gradient-primary">
+                                <i class="fas fa-save me-2"></i>Save Notifications
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            
+            <!-- Security Tab -->
+            <div class="tab-pane fade" id="security">
+                <div class="modern-card p-4">
+                    <h4 class="mb-3">
+                        <i class="fas fa-shield-alt me-2 text-primary"></i>
+                        Security Settings
+                    </h4>
+                    
+                    <div class="mb-4">
+                        <h6 class="mb-3">Change Password</h6>
+                        <form id="passwordForm">
+                            <div class="mb-3">
+                                <label class="form-label">Current Password</label>
+                                <input type="password" class="form-control" required>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">New Password</label>
+                                <input type="password" class="form-control" required>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Confirm New Password</label>
+                                <input type="password" class="form-control" required>
+                            </div>
+                            <button type="submit" class="btn btn-outline-primary">
+                                <i class="fas fa-key me-2"></i>Update Password
+                            </button>
+                        </form>
+                    </div>
+                    
+                    <hr>
+                    
+                    <div class="mb-4">
+                        <h6 class="mb-3">Session Management</h6>
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <div>
+                                <h6 class="mb-1">Active Sessions</h6>
+                                <p class="text-muted mb-0">Manage your active login sessions</p>
+                            </div>
+                            <button class="btn btn-outline-danger btn-sm">
+                                <i class="fas fa-sign-out-alt me-1"></i>End All Sessions
+                            </button>
+                        </div>
+                        
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <h6 class="mb-1">Current Session</h6>
+                                        <small class="text-muted">Chrome on Windows • IP: 192.168.1.100</small>
+                                    </div>
+                                    <span class="badge bg-success">Active</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <hr>
+                    
+                    <div class="mb-4">
+                        <h6 class="mb-3">Data Privacy</h6>
+                        <div class="form-check form-switch mb-2">
+                            <input class="form-check-input" type="checkbox" id="analyticsTracking" checked>
+                            <label class="form-check-label" for="analyticsTracking">
+                                Allow usage analytics
+                            </label>
+                        </div>
+                        <div class="form-check form-switch mb-2">
+                            <input class="form-check-input" type="checkbox" id="dataSharing">
+                            <label class="form-check-label" for="dataSharing">
+                                Share anonymous usage data
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Integrations Tab -->
+            <div class="tab-pane fade" id="integration">
+                <div class="modern-card p-4">
+                    <h4 class="mb-3">
+                        <i class="fas fa-plug me-2 text-primary"></i>
+                        Integrations & API
+                    </h4>
+                    
+                    <div class="mb-4">
+                        <h6 class="mb-3">Connected Services</h6>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <div class="d-flex align-items-center">
+                                                <i class="fab fa-google fa-2x text-danger me-3"></i>
+                                                <div>
+                                                    <h6 class="mb-0">Google Workspace</h6>
+                                                    <small class="text-muted">Email integration</small>
+                                                </div>
+                                            </div>
+                                            <button class="btn btn-outline-success btn-sm">Connect</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <div class="d-flex align-items-center">
+                                                <i class="fab fa-salesforce fa-2x text-primary me-3"></i>
+                                                <div>
+                                                    <h6 class="mb-0">Salesforce</h6>
+                                                    <small class="text-muted">CRM integration</small>
+                                                </div>
+                                            </div>
+                                            <button class="btn btn-outline-success btn-sm">Connect</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <hr>
+                    
+                    <div class="mb-4">
+                        <h6 class="mb-3">API Access</h6>
+                        <div class="mb-3">
+                            <label class="form-label">API Key</label>
+                            <div class="input-group">
+                                <input type="password" class="form-control" value="lf_sk_1234567890abcdef" readonly>
+                                <button class="btn btn-outline-secondary" onclick="toggleApiKey()">
+                                    <i class="fas fa-eye" id="eyeIcon"></i>
+                                </button>
+                                <button class="btn btn-outline-primary" onclick="copyApiKey()">
+                                    <i class="fas fa-copy"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="text-end">
+                            <button class="btn btn-outline-warning btn-sm me-2">Regenerate Key</button>
+                            <a href="#" class="btn btn-outline-info btn-sm">View Documentation</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Billing Tab -->
+            <div class="tab-pane fade" id="billing">
+                <div class="modern-card p-4">
+                    <h4 class="mb-3">
+                        <i class="fas fa-credit-card me-2 text-primary"></i>
+                        Billing & Subscription
+                    </h4>
+                    
+                    <div class="row mb-4">
+                        <div class="col-md-8">
+                            <div class="card bg-gradient-primary text-white">
+                                <div class="card-body">
+                                    <h5 class="card-title">LeadFlow Pro Premium</h5>
+                                    <p class="card-text">Unlimited leads, advanced analytics, and bonus tools</p>
+                                    <h3 class="mb-0">$49/month</h3>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="text-center">
+                                <h6>Next Billing Date</h6>
+                                <p class="h5 text-primary">Oct 19, 2025</p>
+                                <button class="btn btn-outline-primary btn-sm">Manage</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <h6 class="mb-3">Usage Statistics</h6>
+                        <div class="row">
+                            <div class="col-md-4 mb-3">
+                                <div class="text-center p-3 border rounded">
+                                    <h4 class="text-primary">847</h4>
+                                    <p class="mb-0">Leads Generated</p>
+                                    <small class="text-muted">This month</small>
+                                </div>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <div class="text-center p-3 border rounded">
+                                    <h4 class="text-success">1,247</h4>
+                                    <p class="mb-0">Emails Sent</p>
+                                    <small class="text-muted">This month</small>
+                                </div>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <div class="text-center p-3 border rounded">
+                                    <h4 class="text-info">15</h4>
+                                    <p class="mb-0">Active Campaigns</p>
+                                    <small class="text-muted">Currently running</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <h6 class="mb-3">Payment Method</h6>
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="d-flex align-items-center">
+                                        <i class="fab fa-cc-visa fa-2x text-primary me-3"></i>
+                                        <div>
+                                            <h6 class="mb-0">**** **** **** 4242</h6>
+                                            <small class="text-muted">Expires 12/26</small>
+                                        </div>
+                                    </div>
+                                    <button class="btn btn-outline-secondary btn-sm">Update</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Data & Export Tab -->
+            <div class="tab-pane fade" id="data">
+                <div class="modern-card p-4">
+                    <h4 class="mb-3">
+                        <i class="fas fa-database me-2 text-primary"></i>
+                        Data Management
+                    </h4>
+                    
+                    <div class="mb-4">
+                        <h6 class="mb-3">Data Export</h6>
+                        <p class="text-muted">Export all your data for backup or migration purposes.</p>
+                        <div class="row">
+                            <div class="col-md-6 mb-2">
+                                <button class="btn btn-outline-primary w-100">
+                                    <i class="fas fa-download me-2"></i>Export All Leads
+                                </button>
+                            </div>
+                            <div class="col-md-6 mb-2">
+                                <button class="btn btn-outline-info w-100">
+                                    <i class="fas fa-download me-2"></i>Export Campaign Data
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <hr>
+                    
+                    <div class="mb-4">
+                        <h6 class="mb-3">Data Import</h6>
+                        <p class="text-muted">Import leads from CSV files or other sources.</p>
+                        <div class="mb-3">
+                            <input type="file" class="form-control" accept=".csv">
+                        </div>
+                        <button class="btn btn-outline-success">
+                            <i class="fas fa-upload me-2"></i>Import Leads
+                        </button>
+                    </div>
+                    
+                    <hr>
+                    
+                    <div class="mb-4">
+                        <h6 class="mb-3 text-danger">Danger Zone</h6>
+                        <div class="border border-danger rounded p-3">
+                            <h6 class="text-danger">Delete Account</h6>
+                            <p class="text-muted mb-3">Permanently delete your account and all associated data. This action cannot be undone.</p>
+                            <button class="btn btn-outline-danger" onclick="confirmDeleteAccount()">
+                                <i class="fas fa-exclamation-triangle me-2"></i>Delete Account
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+// Form submission handlers
+document.getElementById('profileForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    alert('Profile saved successfully!');
+});
+
+document.getElementById('preferencesForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    alert('Preferences saved successfully!');
+});
+
+document.getElementById('notificationsForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    alert('Notification settings saved successfully!');
+});
+
+document.getElementById('passwordForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    alert('Password updated successfully!');
+});
+
+// API Key management
+function toggleApiKey() {
+    const input = document.querySelector('input[value="lf_sk_1234567890abcdef"]');
+    const icon = document.getElementById('eyeIcon');
+    
+    if (input.type === 'password') {
+        input.type = 'text';
+        icon.className = 'fas fa-eye-slash';
+    } else {
+        input.type = 'password';
+        icon.className = 'fas fa-eye';
+    }
+}
+
+function copyApiKey() {
+    const input = document.querySelector('input[value="lf_sk_1234567890abcdef"]');
+    navigator.clipboard.writeText(input.value).then(() => {
+        alert('API key copied to clipboard!');
+    });
+}
+
+// Account deletion
+function confirmDeleteAccount() {
+    if (confirm('Are you sure you want to delete your account? This action cannot be undone.')) {
+        if (confirm('Type "DELETE" to confirm account deletion:') === 'DELETE') {
+            alert('Account deletion initiated. Please check your email for confirmation.');
+        }
+    }
+}
+
+// Dark mode toggle
+document.getElementById('darkMode').addEventListener('change', function() {
+    if (this.checked) {
+        alert('Dark mode feature coming soon!');
+        this.checked = false;
+    }
+});
+
+// Auto-save form changes
+const formInputs = document.querySelectorAll('form input, form select, form textarea');
+formInputs.forEach(input => {
+    input.addEventListener('change', function() {
+        // Auto-save functionality (you can implement this)
+        console.log('Setting changed:', this.name, this.value);
+    });
+});
+
+// Initialize tooltips for help text
+document.addEventListener('DOMContentLoaded', function() {
+    const tooltips = document.querySelectorAll('[data-bs-toggle="tooltip"]');
+    tooltips.forEach(tooltip => {
+        new bootstrap.Tooltip(tooltip);
+    });
+});
+</script>
+{% endblock %}

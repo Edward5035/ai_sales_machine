@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Free Legal Consultation - {{ law_firm_name }}</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Arial', sans-serif; line-height: 1.6; color: #333; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+        .header { background: linear-gradient(135deg, #343a40 0%, #212529 100%); color: white; padding: 60px 0; text-align: center; }
+        .header h1 { font-size: 3rem; margin-bottom: 20px; }
+        .header p { font-size: 1.2rem; margin-bottom: 30px; }
+        .main-content { padding: 60px 0; background: #f8f9fa; }
+        .form-section { background: white; padding: 40px; border-radius: 10px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); margin-bottom: 40px; }
+        .form-group { margin-bottom: 20px; }
+        .form-group label { display: block; margin-bottom: 8px; font-weight: bold; color: #555; }
+        .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 12px; border: 2px solid #e1e5e9; border-radius: 5px; font-size: 16px; }
+        .form-group input:focus, .form-group select:focus { border-color: #343a40; outline: none; }
+        .btn { background: linear-gradient(135deg, #343a40 0%, #212529 100%); color: white; padding: 15px 40px; border: none; border-radius: 5px; font-size: 18px; font-weight: bold; cursor: pointer; transition: transform 0.3s; }
+        .btn:hover { transform: translateY(-2px); }
+        .benefits { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; margin: 40px 0; }
+        .benefit { background: white; padding: 30px; border-radius: 10px; text-align: center; box-shadow: 0 5px 15px rgba(0,0,0,0.08); }
+        .benefit i { font-size: 3rem; color: #343a40; margin-bottom: 20px; }
+        .footer { background: #333; color: white; padding: 40px 0; text-align: center; }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <h1>Free Legal Consultation</h1>
+            <p>Expert legal advice you can trust. Schedule your complimentary consultation today!</p>
+            <p><strong>Call Now: {{ phone_number }}</strong></p>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <div class="container">
+            <div class="form-section">
+                <h2 style="text-align: center; margin-bottom: 30px; color: #343a40;">Schedule Your Free Consultation</h2>
+                <form id="consultationForm">
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                        <div class="form-group">
+                            <label for="firstName">First Name *</label>
+                            <input type="text" id="firstName" name="firstName" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="lastName">Last Name *</label>
+                            <input type="text" id="lastName" name="lastName" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email Address *</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Phone Number *</label>
+                        <input type="tel" id="phone" name="phone" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="legalMatter">Type of Legal Matter</label>
+                        <select id="legalMatter" name="legalMatter">
+                            <option value="">Select legal matter type</option>
+                            <option value="personal_injury">Personal Injury</option>
+                            <option value="family_law">Family Law</option>
+                            <option value="criminal_defense">Criminal Defense</option>
+                            <option value="business_law">Business Law</option>
+                            <option value="estate_planning">Estate Planning</option>
+                            <option value="real_estate">Real Estate</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="caseDetails">Brief Description of Your Case</label>
+                        <textarea id="caseDetails" name="caseDetails" rows="4" placeholder="Please provide a brief description of your legal matter..."></textarea>
+                    </div>
+                    <div style="text-align: center;">
+                        <button type="submit" class="btn">
+                            <i class="fas fa-calendar-alt"></i> Schedule My Free Consultation
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="benefits">
+                <div class="benefit">
+                    <i class="fas fa-gavel"></i>
+                    <h3>Expert Legal Counsel</h3>
+                    <p>Our experienced attorneys provide comprehensive legal advice using proven strategies and deep legal knowledge.</p>
+                </div>
+                <div class="benefit">
+                    <i class="fas fa-shield-alt"></i>
+                    <h3>Confidential Consultation</h3>
+                    <p>All consultations are completely confidential and protected by attorney-client privilege.</p>
+                </div>
+                <div class="benefit">
+                    <i class="fas fa-handshake"></i>
+                    <h3>No Obligation</h3>
+                    <p>Our initial consultation is free with no obligation to retain our services. We're here to help you understand your options.</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 {{ law_firm_name }}. All rights reserved.</p>
+            <p>{{ address }} | {{ phone_number }} | {{ email }}</p>
+        </div>
+    </footer>
+</body>
+</html>

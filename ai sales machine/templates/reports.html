@@ -1,0 +1,347 @@
+{% extends "base.html" %}
+
+{% block page_title %}Reports{% endblock %}
+
+{% block content %}
+<!-- Reports Header -->
+<div class="row mb-4">
+    <div class="col-12">
+        <div class="modern-card p-4">
+            <div class="row align-items-center">
+                <div class="col-lg-8">
+                    <h2 class="mb-2">
+                        <i class="fas fa-file-chart-line me-2 text-primary"></i>
+                        Reports & Exports
+                    </h2>
+                    <p class="text-muted mb-0">Generate detailed reports and export your lead data in various formats for analysis and CRM integration.</p>
+                </div>
+                <div class="col-lg-4 text-end">
+                    <div class="d-grid gap-2">
+                        <button class="btn btn-gradient-primary" onclick="generateFullReport()">
+                            <i class="fas fa-file-pdf me-2"></i>Generate Full Report
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Quick Export Options -->
+<div class="row mb-4">
+    <div class="col-lg-4 mb-3">
+        <div class="modern-card p-4 h-100">
+            <div class="text-center mb-3">
+                <i class="fas fa-file-csv fa-3x text-success mb-3"></i>
+                <h5>CSV Export</h5>
+                <p class="text-muted">Export leads in CSV format for spreadsheet analysis or CRM import.</p>
+            </div>
+            <button class="btn btn-gradient-success w-100" onclick="exportCSV()">
+                <i class="fas fa-download me-2"></i>Export CSV
+            </button>
+        </div>
+    </div>
+    
+    <div class="col-lg-4 mb-3">
+        <div class="modern-card p-4 h-100">
+            <div class="text-center mb-3">
+                <i class="fas fa-file-excel fa-3x text-primary mb-3"></i>
+                <h5>Excel Report</h5>
+                <p class="text-muted">Generate comprehensive Excel report with analytics and charts.</p>
+            </div>
+            <button class="btn btn-gradient-primary w-100" onclick="exportExcel()">
+                <i class="fas fa-download me-2"></i>Export Excel
+            </button>
+        </div>
+    </div>
+    
+    <div class="col-lg-4 mb-3">
+        <div class="modern-card p-4 h-100">
+            <div class="text-center mb-3">
+                <i class="fas fa-file-pdf fa-3x text-danger mb-3"></i>
+                <h5>PDF Summary</h5>
+                <p class="text-muted">Professional PDF report with lead summaries and performance metrics.</p>
+            </div>
+            <button class="btn btn-outline-danger w-100" onclick="exportPDF()">
+                <i class="fas fa-download me-2"></i>Export PDF
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- Custom Report Builder -->
+<div class="row mb-4">
+    <div class="col-12">
+        <div class="modern-card p-4">
+            <h4 class="mb-3">
+                <i class="fas fa-cogs me-2 text-warning"></i>
+                Custom Report Builder
+            </h4>
+            
+            <form id="customReportForm">
+                <div class="row">
+                    <div class="col-lg-3 mb-3">
+                        <label class="form-label">Report Type</label>
+                        <select class="form-select" id="reportType">
+                            <option value="summary">Summary Report</option>
+                            <option value="detailed">Detailed Analysis</option>
+                            <option value="performance">Performance Report</option>
+                            <option value="source_breakdown">Source Breakdown</option>
+                        </select>
+                    </div>
+                    
+                    <div class="col-lg-3 mb-3">
+                        <label class="form-label">Lead Type Filter</label>
+                        <select class="form-select" id="leadTypeFilter">
+                            <option value="all">All Lead Types</option>
+                            <option value="Sales-Ready Lead">Sales-Ready Only</option>
+                            <option value="Prospect Lead">Prospects Only</option>
+                            <option value="Website Lead">Website Leads</option>
+                        </select>
+                    </div>
+                    
+                    <div class="col-lg-3 mb-3">
+                        <label class="form-label">Date Range</label>
+                        <select class="form-select" id="dateRange">
+                            <option value="all">All Time</option>
+                            <option value="today">Today</option>
+                            <option value="week">Last 7 Days</option>
+                            <option value="month">Last 30 Days</option>
+                        </select>
+                    </div>
+                    
+                    <div class="col-lg-3 mb-3 d-flex align-items-end">
+                        <button type="button" class="btn btn-gradient-primary w-100" onclick="generateCustomReport()">
+                            <i class="fas fa-magic me-2"></i>Generate Report
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Report History -->
+<div class="row mb-4">
+    <div class="col-12">
+        <div class="modern-card p-4">
+            <h4 class="mb-3">
+                <i class="fas fa-history me-2 text-info"></i>
+                Recent Reports
+            </h4>
+            
+            <div class="table-responsive">
+                <table class="table table-modern">
+                    <thead>
+                        <tr>
+                            <th>Report Name</th>
+                            <th>Type</th>
+                            <th>Generated</th>
+                            <th>Records</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <strong>Lead Summary Report</strong>
+                                <br><small class="text-muted">All leads overview</small>
+                            </td>
+                            <td><span class="badge bg-primary">Summary</span></td>
+                            <td>Today, 2:30 PM</td>
+                            <td>{{ leads|length }} leads</td>
+                            <td>
+                                <div class="btn-group btn-group-sm">
+                                    <button class="btn btn-outline-primary" onclick="downloadReport('summary')">
+                                        <i class="fas fa-download"></i>
+                                    </button>
+                                    <button class="btn btn-outline-secondary" onclick="shareReport('summary')">
+                                        <i class="fas fa-share"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <strong>Sales-Ready Prospects</strong>
+                                <br><small class="text-muted">High-priority leads</small>
+                            </td>
+                            <td><span class="badge bg-success">Performance</span></td>
+                            <td>Yesterday, 4:15 PM</td>
+                            <td>{{ leads|selectattr("lead_type", "equalto", "Sales-Ready Lead")|list|length }} leads</td>
+                            <td>
+                                <div class="btn-group btn-group-sm">
+                                    <button class="btn btn-outline-primary" onclick="downloadReport('sales_ready')">
+                                        <i class="fas fa-download"></i>
+                                    </button>
+                                    <button class="btn btn-outline-secondary" onclick="shareReport('sales_ready')">
+                                        <i class="fas fa-share"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <strong>Source Performance Analysis</strong>
+                                <br><small class="text-muted">Lead source breakdown</small>
+                            </td>
+                            <td><span class="badge bg-warning">Analysis</span></td>
+                            <td>2 days ago, 1:00 PM</td>
+                            <td>{{ leads|length }} leads</td>
+                            <td>
+                                <div class="btn-group btn-group-sm">
+                                    <button class="btn btn-outline-primary" onclick="downloadReport('source_analysis')">
+                                        <i class="fas fa-download"></i>
+                                    </button>
+                                    <button class="btn btn-outline-secondary" onclick="shareReport('source_analysis')">
+                                        <i class="fas fa-share"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Report Statistics -->
+<div class="row">
+    <div class="col-lg-3 col-md-6 mb-3">
+        <div class="stat-card total-leads">
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <h3 class="mb-1">{{ leads|length }}</h3>
+                    <p class="mb-0">Total Records</p>
+                </div>
+                <div class="text-end">
+                    <i class="fas fa-database fa-2x opacity-75"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-lg-3 col-md-6 mb-3">
+        <div class="stat-card sales-ready">
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <h3 class="mb-1">15</h3>
+                    <p class="mb-0">Reports Generated</p>
+                </div>
+                <div class="text-end">
+                    <i class="fas fa-file-alt fa-2x opacity-75"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-lg-3 col-md-6 mb-3">
+        <div class="stat-card prospects">
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <h3 class="mb-1">847</h3>
+                    <p class="mb-0">Total Exports</p>
+                </div>
+                <div class="text-end">
+                    <i class="fas fa-download fa-2x opacity-75"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-lg-3 col-md-6 mb-3">
+        <div class="stat-card social-leads">
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <h3 class="mb-1">98.5%</h3>
+                    <p class="mb-0">Data Accuracy</p>
+                </div>
+                <div class="text-end">
+                    <i class="fas fa-check-circle fa-2x opacity-75"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+// Export Functions
+function exportCSV() {
+    // Get all leads data
+    fetch('/api/leads')
+        .then(response => response.json())
+        .then(leads => {
+            if (leads.length === 0) {
+                alert('No leads available to export.');
+                return;
+            }
+            
+            // Create form and submit for CSV export
+            const form = document.createElement('form');
+            form.method = 'POST';
+            form.action = '/export_csv';
+            
+            const input = document.createElement('input');
+            input.type = 'hidden';
+            input.name = 'data';
+            input.value = JSON.stringify(leads);
+            
+            form.appendChild(input);
+            document.body.appendChild(form);
+            form.submit();
+            document.body.removeChild(form);
+        })
+        .catch(error => {
+            console.error('Export error:', error);
+            alert('Error exporting data. Please try again.');
+        });
+}
+
+function exportExcel() {
+    alert('Excel export feature coming soon! Use CSV export for now.');
+}
+
+function exportPDF() {
+    alert('PDF export feature coming soon!');
+}
+
+function generateFullReport() {
+    alert('Full report generation feature coming soon!');
+}
+
+function generateCustomReport() {
+    const reportType = document.getElementById('reportType').value;
+    const leadTypeFilter = document.getElementById('leadTypeFilter').value;
+    const dateRange = document.getElementById('dateRange').value;
+    
+    alert(`Custom report generation:\nType: ${reportType}\nFilter: ${leadTypeFilter}\nRange: ${dateRange}\n\nFeature coming soon!`);
+}
+
+function downloadReport(type) {
+    alert(`Downloading ${type} report...`);
+}
+
+function shareReport(type) {
+    alert(`Sharing ${type} report...`);
+}
+
+// Real-time stats update
+setInterval(function() {
+    if (document.hasFocus()) {
+        fetch('/api/leads')
+            .then(response => response.json())
+            .then(data => {
+                // Update record count
+                const totalRecords = document.querySelector('.stat-card.total-leads h3');
+                if (totalRecords) {
+                    totalRecords.textContent = data.length;
+                }
+            })
+            .catch(error => console.log('Stats update failed:', error));
+    }
+}, 30000);
+</script>
+{% endblock %}

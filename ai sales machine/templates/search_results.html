@@ -1,0 +1,308 @@
+{% extends "base.html" %}
+
+{% block page_title %}Search Results{% endblock %}
+
+{% block content %}
+<!-- Results Header -->
+<div class="modern-card p-4 mb-4">
+    <div class="row align-items-center">
+        <div class="col-lg-8">
+            <h2 class="mb-1">
+                <i class="ph ph-chart-line me-2 text-success"></i>
+                Lead Search Results
+            </h2>
+            <p class="mb-0">
+                Found <strong>{{ leads|length }}</strong> qualified leads for 
+                "<strong class="text-primary">{{ query }}</strong>" in "<strong class="text-primary">{{ location }}</strong>"
+            </p>
+        </div>
+        <div class="col-lg-4 text-end">
+            <a href="/lead-finder" class="btn btn-outline-primary me-2">
+                <i class="ph ph-magnifying-glass me-1"></i>New Search
+            </a>
+            <a href="/lead-classifier" class="btn btn-gradient-primary">
+                <i class="ph ph-tag me-1"></i>View All Leads
+            </a>
+        </div>
+    </div>
+</div>
+
+<!-- Stats and Export Bar -->
+<div class="modern-card p-3 mb-4">
+    <div class="row align-items-center">
+        <div class="col-lg-6">
+            <div class="d-flex align-items-center">
+                <button class="btn btn-gradient-success me-2" onclick="exportCSV()">
+                    <i class="ph ph-download me-1"></i>Export CSV
+                </button>
+                <button class="btn btn-outline-info me-2" onclick="selectAllLeads()">
+                    <i class="ph ph-check-square me-1"></i>Select All
+                </button>
+                <span class="text-muted">Ready for outreach</span>
+            </div>
+        </div>
+        <div class="col-lg-6 text-end">
+            <div class="lead-stats">
+                {% set sales_ready = leads|selectattr('lead_type', 'equalto', 'Sales-Ready Lead')|list|length %}
+                {% set prospects = leads|selectattr('lead_type', 'equalto', 'Prospect Lead')|list|length %}
+                {% set website_leads = leads|selectattr('lead_type', 'equalto', 'Website Lead')|list|length %}
+                {% set social_leads = leads|selectattr('facebook')|list|length + leads|selectattr('linkedin')|list|length + leads|selectattr('twitter')|list|length + leads|selectattr('instagram')|list|length %}
+                
+                <span class="badge-sales-ready me-1">{{ sales_ready }} Sales-Ready</span>
+                <span class="badge-prospect me-1">{{ prospects }} Prospects</span>
+                <span class="badge-social-lead">{{ social_leads }} With Social</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Results Table -->
+<div class="modern-card p-0">
+    <div class="table-responsive">
+        <table id="leadsTable" class="table table-modern mb-0">
+            <thead>
+                <tr>
+                    <th width="5%">
+                        <input type="checkbox" id="selectAll" class="form-check-input">
+                    </th>
+                    <th>Business Name</th>
+                    <th>Lead Type</th>
+                    <th>Contact Info</th>
+                    <th>Social Media</th>
+                    <th>Location</th>
+                    <th>Priority</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for lead in leads %}
+                <tr>
+                    <td>
+                        <input type="checkbox" class="form-check-input lead-checkbox" value="{{ loop.index0 }}">
+                    </td>
+                    <td>
+                        <div>
+                            <strong>{{ lead.name }}</strong>
+                            {% if lead.website and not 'yellowpages.com' in lead.website %}
+                                <br><small class="text-muted">{{ lead.domain }}</small>
+                            {% endif %}
+                        </div>
+                    </td>
+                    <td>
+                        {% if lead.lead_type == 'Sales-Ready Lead' %}
+                            <span class="badge-sales-ready">Sales Ready</span>
+                        {% elif lead.lead_type == 'Prospect Lead' %}
+                            <span class="badge-prospect">Prospect</span>
+                        {% elif lead.lead_type == 'Website Lead' %}
+                            <span class="badge-website-lead">Website Lead</span>
+                        {% else %}
+                            <span class="badge-social-lead">Social Lead</span>
+                        {% endif %}
+                    </td>
+                    <td>
+                        <div class="contact-info">
+                            {% if lead.phone %}
+                                <div class="mb-1">
+                                    <a href="tel:{{ lead.phone }}" class="text-decoration-none">
+                                        <i class="ph ph-phone text-success me-1"></i>
+                                        <small>{{ lead.phone }}</small>
+                                    </a>
+                                </div>
+                            {% endif %}
+                            {% if lead.email %}
+                                <div class="mb-1">
+                                    <a href="mailto:{{ lead.email }}" class="text-decoration-none">
+                                        <i class="ph ph-envelope text-info me-1"></i>
+                                        <small>{{ lead.email }}</small>
+                                    </a>
+                                </div>
+                            {% endif %}
+                            {% if lead.website and not 'yellowpages.com' in lead.website %}
+                                <div class="mb-1">
+                                    <a href="{{ lead.website }}" target="_blank" class="text-decoration-none">
+                                        <i class="ph ph-globe text-primary me-1"></i>
+                                        <small>Website</small>
+                                    </a>
+                                </div>
+                            {% endif %}
+                        </div>
+                    </td>
+                    <td>
+                        <div class="social-icons">
+                            {% if lead.facebook %}
+                                <a href="{{ lead.facebook }}" target="_blank" class="facebook me-1">
+                                    <i class="ph ph-facebook-logo"></i>
+                                </a>
+                            {% endif %}
+                            {% if lead.linkedin %}
+                                <a href="{{ lead.linkedin }}" target="_blank" class="linkedin me-1">
+                                    <i class="ph ph-linkedin-logo"></i>
+                                </a>
+                            {% endif %}
+                            {% if lead.twitter %}
+                                <a href="{{ lead.twitter }}" target="_blank" class="twitter me-1">
+                                    <i class="ph ph-twitter-logo"></i>
+                                </a>
+                            {% endif %}
+                            {% if lead.instagram %}
+                                <a href="{{ lead.instagram }}" target="_blank" class="instagram me-1">
+                                    <i class="ph ph-instagram-logo"></i>
+                                </a>
+                            {% endif %}
+                            {% if lead.youtube %}
+                                <a href="{{ lead.youtube }}" target="_blank" class="youtube me-1">
+                                    <i class="ph ph-youtube-logo"></i>
+                                </a>
+                            {% endif %}
+                        </div>
+                    </td>
+                    <td>
+                        {% if lead.address %}
+                            <small>{{ lead.address[:40] }}{% if lead.address|length > 40 %}...{% endif %}</small>
+                        {% else %}
+                            <span class="text-muted">-</span>
+                        {% endif %}
+                    </td>
+                    <td>
+                        <div class="text-center">
+                            <span class="badge bg-primary">{{ lead.priority_score or 0 }}/8</span>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="btn-group btn-group-sm">
+                            {% if lead.email %}
+                                <button class="btn btn-outline-primary" onclick="composeEmail('{{ lead.email }}', '{{ lead.name }}')">
+                                    <i class="ph ph-envelope"></i>
+                                </button>
+                            {% endif %}
+                            {% if lead.phone %}
+                                <a href="tel:{{ lead.phone }}" class="btn btn-outline-success">
+                                    <i class="ph ph-phone"></i>
+                                </a>
+                            {% endif %}
+                            {% if lead.website %}
+                                <a href="{{ lead.website }}" target="_blank" class="btn btn-outline-info">
+                                    <i class="ph ph-globe"></i>
+                                </a>
+                            {% endif %}
+                            <button class="btn btn-outline-secondary" onclick="addToOutreach('{{ lead.name }}')">
+                                <i class="ph ph-plus"></i>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Quick Actions Card -->
+<div class="modern-card p-4 mt-4">
+    <h4 class="mb-3">
+        <i class="ph ph-lightning me-2 text-warning"></i>
+        Next Steps
+    </h4>
+    
+    <div class="row">
+        <div class="col-lg-4 mb-3">
+            <div class="card border-0" style="background: linear-gradient(135deg, #10b981 0%, #059669 100%);">
+                <div class="card-body text-white">
+                    <h5><i class="ph ph-tag me-2"></i>Classify Leads</h5>
+                    <p class="mb-3">Organize and filter your leads by type and priority.</p>
+                    <a href="/lead-classifier" class="btn btn-light btn-sm">Classify Now</a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-lg-4 mb-3">
+            <div class="card border-0" style="background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);">
+                <div class="card-body text-white">
+                    <h5><i class="ph ph-paper-plane-tilt me-2"></i>Start Outreach</h5>
+                    <p class="mb-3">Use DFY templates to reach out to your prospects.</p>
+                    <a href="/outreach-hub" class="btn btn-light btn-sm">Launch Outreach</a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-lg-4 mb-3">
+            <div class="card border-0" style="background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);">
+                <div class="card-body text-white">
+                    <h5><i class="ph ph-stack me-2"></i>Use Funnels</h5>
+                    <p class="mb-3">Deploy high-converting sales funnels for your niche.</p>
+                    <a href="/funnels-library" class="btn btn-light btn-sm">Browse Funnels</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Hidden form for CSV export -->
+<form id="exportForm" method="POST" action="/export_csv" style="display: none;">
+    <input type="hidden" name="data" id="exportData">
+</form>
+{% endblock %}
+
+{% block scripts %}
+<script>
+// Initialize DataTable
+$(document).ready(function() {
+    $('#leadsTable').DataTable({
+        pageLength: 25,
+        order: [[6, 'desc']], // Sort by priority score
+        destroy: true, // Allow reinitializing the table
+        columnDefs: [
+            { orderable: false, targets: [0, 7] } // Disable sorting for checkbox and actions
+        ],
+        language: {
+            search: "Filter leads:",
+            lengthMenu: "Show _MENU_ leads per page",
+            info: "Showing _START_ to _END_ of _TOTAL_ leads"
+        }
+    });
+});
+
+// Select all functionality
+document.getElementById('selectAll').addEventListener('change', function() {
+    const checkboxes = document.querySelectorAll('.lead-checkbox');
+    checkboxes.forEach(checkbox => {
+        checkbox.checked = this.checked;
+    });
+});
+
+function selectAllLeads() {
+    const selectAll = document.getElementById('selectAll');
+    selectAll.checked = !selectAll.checked;
+    selectAll.dispatchEvent(new Event('change'));
+}
+
+// Export CSV function
+function exportCSV() {
+    const leads = {{ leads | tojson }};
+    document.getElementById('exportData').value = JSON.stringify(leads);
+    document.getElementById('exportForm').submit();
+}
+
+// Compose email function
+function composeEmail(email, businessName) {
+    const subject = encodeURIComponent(`Partnership Opportunity - ${businessName}`);
+    const body = encodeURIComponent(`Hi there,\n\nI came across ${businessName} and would love to discuss a potential partnership opportunity.\n\nBest regards,\n[Your Name]`);
+    
+    window.open(`mailto:${email}?subject=${subject}&body=${body}`);
+}
+
+// Add to outreach function
+function addToOutreach(businessName) {
+    // This could save to a CRM or outreach queue
+    alert(`${businessName} added to outreach queue!`);
+    // You can implement actual functionality here
+}
+
+// Auto-refresh data every 2 minutes if window is focused
+setInterval(function() {
+    if (document.hasFocus()) {
+        // You can implement real-time updates here
+    }
+}, 120000);
+</script>
+{% endblock %}

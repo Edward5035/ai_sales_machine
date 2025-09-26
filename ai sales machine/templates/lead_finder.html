@@ -1,0 +1,203 @@
+{% extends "base.html" %}
+
+{% block page_title %}Lead Finder{% endblock %}
+
+{% block content %}
+<!-- Search Interface -->
+<div class="row justify-content-center">
+    <div class="col-lg-8">
+        <div class="modern-card p-4 mb-4">
+            <div class="text-center mb-4">
+                <div class="mb-3">
+                    <i class="ph ph-magnifying-glass ph-3x text-primary"></i>
+                </div>
+                <h2 class="mb-2">Find Your Next Customers</h2>
+                <p class="text-muted">Search for qualified business prospects in any niche and location. Get phone numbers, emails, websites, and social media profiles.</p>
+            </div>
+            
+            {% if error %}
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <i class="ph ph-warning-circle me-2"></i>
+                {{ error }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+            {% endif %}
+
+            <form method="POST" action="/search" id="searchForm">
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="query" class="form-label">
+                            <i class="ph ph-building me-1 text-primary"></i>
+                            Business Type / Niche
+                        </label>
+                        <input type="text" 
+                               class="form-control form-control-lg" 
+                               id="query" 
+                               name="query" 
+                               placeholder="e.g., dentists, restaurants, gyms, lawyers"
+                               required>
+                        <div class="form-text">What type of business are you targeting?</div>
+                    </div>
+                    
+                    <div class="col-md-6 mb-3">
+                        <label for="location" class="form-label">
+                            <i class="ph ph-map-pin me-1 text-primary"></i>
+                            Location
+                        </label>
+                        <input type="text" 
+                               class="form-control form-control-lg" 
+                               id="location" 
+                               name="location" 
+                               placeholder="e.g., New York, NY or 10001"
+                               required>
+                        <div class="form-text">City, state, or ZIP code</div>
+                    </div>
+                </div>
+                
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="num_results" class="form-label">
+                            <i class="ph ph-list-numbers me-1 text-primary"></i>
+                            Number of Results
+                        </label>
+                        <select class="form-select form-select-lg" id="num_results" name="num_results">
+                            <option value="10">10 leads</option>
+                            <option value="20" selected>20 leads</option>
+                            <option value="30">30 leads</option>
+                            <option value="50">50 leads (max)</option>
+                        </select>
+                    </div>
+                    
+                    <div class="col-md-6 d-flex align-items-end">
+                        <button type="submit" class="btn btn-gradient-primary btn-lg w-100" id="searchBtn">
+                            <i class="ph ph-magnifying-glass me-2"></i>
+                            Find Leads
+                            <span class="spinner-border spinner-border-sm ms-2 d-none" role="status"></span>
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Features -->
+<div class="row">
+    <div class="col-lg-4 mb-4">
+        <div class="modern-card p-4 text-center h-100">
+            <div class="mb-3">
+                <i class="ph ph-phone ph-2x text-success"></i>
+            </div>
+            <h5>Contact Information</h5>
+            <p class="text-muted">Get phone numbers, emails, and business addresses for immediate outreach.</p>
+        </div>
+    </div>
+    
+    <div class="col-lg-4 mb-4">
+        <div class="modern-card p-4 text-center h-100">
+            <div class="mb-3">
+                <i class="ph ph-facebook-logo ph-2x text-primary"></i>
+            </div>
+            <h5>Social Media Profiles</h5>
+            <p class="text-muted">Discover Facebook, LinkedIn, Twitter, and Instagram profiles for multi-channel outreach.</p>
+        </div>
+    </div>
+    
+    <div class="col-lg-4 mb-4">
+        <div class="modern-card p-4 text-center h-100">
+            <div class="mb-3">
+                <i class="ph ph-chart-line ph-2x text-warning"></i>
+            </div>
+            <h5>Lead Classification</h5>
+            <p class="text-muted">Automatically classify leads as Sales-Ready, Prospects, or Social Leads based on available data.</p>
+        </div>
+    </div>
+</div>
+
+<!-- Popular Niches -->
+<div class="row">
+    <div class="col-12">
+        <div class="modern-card p-4">
+            <h4 class="mb-3">
+                <i class="ph ph-fire me-2 text-danger"></i>
+                Popular Niches
+            </h4>
+            <p class="text-muted mb-3">Get started quickly with these high-converting business types:</p>
+            
+            <div class="row">
+                <div class="col-lg-3 col-md-6 mb-2">
+                    <button class="btn btn-outline-primary w-100" onclick="setSearch('dentists', '')">
+                        <i class="ph ph-tooth me-2"></i>Dentists
+                    </button>
+                </div>
+                <div class="col-lg-3 col-md-6 mb-2">
+                    <button class="btn btn-outline-primary w-100" onclick="setSearch('restaurants', '')">
+                        <i class="ph ph-fork-knife me-2"></i>Restaurants
+                    </button>
+                </div>
+                <div class="col-lg-3 col-md-6 mb-2">
+                    <button class="btn btn-outline-primary w-100" onclick="setSearch('gyms', '')">
+                        <i class="ph ph-barbell me-2"></i>Gyms
+                    </button>
+                </div>
+                <div class="col-lg-3 col-md-6 mb-2">
+                    <button class="btn btn-outline-primary w-100" onclick="setSearch('real estate agents', '')">
+                        <i class="ph ph-house me-2"></i>Real Estate
+                    </button>
+                </div>
+            </div>
+            
+            <div class="row">
+                <div class="col-lg-3 col-md-6 mb-2">
+                    <button class="btn btn-outline-secondary w-100" onclick="setSearch('lawyers', '')">
+                        <i class="ph ph-gavel me-2"></i>Lawyers
+                    </button>
+                </div>
+                <div class="col-lg-3 col-md-6 mb-2">
+                    <button class="btn btn-outline-secondary w-100" onclick="setSearch('salons', '')">
+                        <i class="ph ph-scissors me-2"></i>Salons
+                    </button>
+                </div>
+                <div class="col-lg-3 col-md-6 mb-2">
+                    <button class="btn btn-outline-secondary w-100" onclick="setSearch('contractors', '')">
+                        <i class="ph ph-hammer me-2"></i>Contractors
+                    </button>
+                </div>
+                <div class="col-lg-3 col-md-6 mb-2">
+                    <button class="btn btn-outline-secondary w-100" onclick="setSearch('accountants', '')">
+                        <i class="ph ph-calculator me-2"></i>Accountants
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+// Set search values from popular niches
+function setSearch(business, location) {
+    document.getElementById('query').value = business;
+    if (location) {
+        document.getElementById('location').value = location;
+    }
+    document.getElementById('query').focus();
+}
+
+// Form submission handling
+document.getElementById('searchForm').addEventListener('submit', function() {
+    const btn = document.getElementById('searchBtn');
+    const spinner = btn.querySelector('.spinner-border');
+    
+    btn.disabled = true;
+    spinner.classList.remove('d-none');
+    btn.innerHTML = '<i class="ph ph-magnifying-glass me-2"></i>Searching... <span class="spinner-border spinner-border-sm ms-2" role="status"></span>';
+});
+
+// Auto-suggest locations (you can implement this with a location API)
+document.getElementById('location').addEventListener('input', function(e) {
+    // Implement location auto-suggest here if needed
+});
+</script>
+{% endblock %}

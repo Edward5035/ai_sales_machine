@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Free 7-Day Trial - {{gym_name}}</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Arial', sans-serif; line-height: 1.6; color: #333; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+        .hero { background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%); color: white; padding: 80px 0; text-align: center; }
+        .hero h1 { font-size: 3.5rem; margin-bottom: 20px; font-weight: bold; }
+        .hero p { font-size: 1.3rem; margin-bottom: 30px; }
+        .cta-button { background: white; color: #ff6b6b; padding: 18px 40px; border: none; border-radius: 50px; font-size: 20px; font-weight: bold; cursor: pointer; text-decoration: none; display: inline-block; transition: transform 0.3s; }
+        .cta-button:hover { transform: scale(1.05); }
+        .trial-form { background: white; padding: 50px; border-radius: 15px; box-shadow: 0 15px 35px rgba(0,0,0,0.1); margin: -60px auto 60px; max-width: 700px; position: relative; z-index: 10; }
+        .form-group { margin-bottom: 25px; }
+        .form-group label { display: block; margin-bottom: 8px; font-weight: bold; color: #555; }
+        .form-group input, .form-group select { width: 100%; padding: 15px; border: 2px solid #e1e5e9; border-radius: 8px; font-size: 16px; }
+        .form-group input:focus { border-color: #ff6b6b; outline: none; }
+        .submit-btn { background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%); color: white; padding: 18px 50px; border: none; border-radius: 8px; font-size: 20px; font-weight: bold; cursor: pointer; width: 100%; }
+        .features { padding: 80px 0; background: #f8f9fa; }
+        .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 40px; }
+        .feature-card { background: white; padding: 40px; border-radius: 15px; text-align: center; box-shadow: 0 10px 25px rgba(0,0,0,0.08); }
+        .feature-card i { font-size: 3rem; color: #ff6b6b; margin-bottom: 20px; }
+        .stats { background: #2c3e50; color: white; padding: 60px 0; }
+        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 40px; text-align: center; }
+        .stat { padding: 20px; }
+        .stat-number { font-size: 3rem; font-weight: bold; color: #ff6b6b; }
+        .trainer-section { padding: 80px 0; }
+        .trainer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 40px; }
+        .trainer-card { background: white; border-radius: 15px; overflow: hidden; box-shadow: 0 10px 25px rgba(0,0,0,0.08); }
+        .trainer-image { height: 250px; background: linear-gradient(45deg, #ff6b6b, #ee5a24); display: flex; align-items: center; justify-content: center; }
+        .trainer-info { padding: 30px; }
+        .footer { background: #333; color: white; padding: 40px 0; text-align: center; }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <section class="hero">
+        <div class="container">
+            <h1>Transform Your Body</h1>
+            <p>Start your fitness journey with a FREE 7-day trial at {{gym_name}}</p>
+            <p style="font-size: 1.1rem; margin-bottom: 40px;">No commitment • No hidden fees • Full access to all facilities</p>
+            <a href="#signup" class="cta-button">
+                <i class="fas fa-dumbbell"></i> Start Your Free Trial
+            </a>
+        </div>
+    </section>
+
+    <div class="container">
+        <div class="trial-form" id="signup">
+            <h2 style="text-align: center; margin-bottom: 30px; color: #ff6b6b;">Claim Your FREE 7-Day Trial</h2>
+            <form id="trialForm">
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                    <div class="form-group">
+                        <label for="firstName">First Name *</label>
+                        <input type="text" id="firstName" name="firstName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="lastName">Last Name *</label>
+                        <input type="text" id="lastName" name="lastName" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email Address *</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="phone">Phone Number *</label>
+                    <input type="tel" id="phone" name="phone" required>
+                </div>
+                <div class="form-group">
+                    <label for="goals">Fitness Goals</label>
+                    <select id="goals" name="goals">
+                        <option value="">Select your primary goal</option>
+                        <option value="weight-loss">Weight Loss</option>
+                        <option value="muscle-gain">Build Muscle</option>
+                        <option value="strength">Get Stronger</option>
+                        <option value="endurance">Improve Endurance</option>
+                        <option value="general">General Fitness</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="experience">Fitness Experience</label>
+                    <select id="experience" name="experience">
+                        <option value="">Select your experience level</option>
+                        <option value="beginner">Beginner (New to exercise)</option>
+                        <option value="intermediate">Intermediate (Some experience)</option>
+                        <option value="advanced">Advanced (Very experienced)</option>
+                    </select>
+                </div>
+                <button type="submit" class="submit-btn">
+                    <i class="fas fa-rocket"></i> Activate My Free Trial
+                </button>
+                <p style="text-align: center; margin-top: 15px; color: #666; font-size: 14px;">
+                    No credit card required • Cancel anytime during trial
+                </p>
+            </form>
+        </div>
+    </div>
+
+    <section class="features">
+        <div class="container">
+            <h2 style="text-align: center; margin-bottom: 60px; font-size: 2.5rem;">What's Included in Your Trial</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <i class="fas fa-dumbbell"></i>
+                    <h3>State-of-the-Art Equipment</h3>
+                    <p>Access to our complete range of cardio machines, free weights, and strength training equipment.</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-users"></i>
+                    <h3>Group Fitness Classes</h3>
+                    <p>Join unlimited group classes including HIIT, Yoga, Spin, Zumba, and strength training.</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-user-tie"></i>
+                    <h3>Personal Training Session</h3>
+                    <p>Complimentary one-on-one session with a certified trainer to create your personalized workout plan.</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-mobile-alt"></i>
+                    <h3>Fitness App Access</h3>
+                    <p>Track your workouts, book classes, and monitor your progress with our exclusive mobile app.</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-swimmer"></i>
+                    <h3>Pool & Spa Access</h3>
+                    <p>Relax and recover in our heated pool, sauna, and steam room after your workout.</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-clock"></i>
+                    <h3>24/7 Access</h3>
+                    <p>Work out on your schedule with round-the-clock access to our facilities.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="stats">
+        <div class="container">
+            <h2 style="text-align: center; margin-bottom: 50px; font-size: 2.5rem;">Join Thousands of Success Stories</h2>
+            <div class="stats-grid">
+                <div class="stat">
+                    <div class="stat-number">5,000+</div>
+                    <p>Active Members</p>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">95%</div>
+                    <p>Member Satisfaction</p>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">50+</div>
+                    <p>Weekly Classes</p>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">15</div>
+                    <p>Certified Trainers</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="trainer-section">
+        <div class="container">
+            <h2 style="text-align: center; margin-bottom: 60px; font-size: 2.5rem;">Meet Our Expert Trainers</h2>
+            <div class="trainer-grid">
+                <div class="trainer-card">
+                    <div class="trainer-image">
+                        <i class="fas fa-user-circle fa-5x" style="color: white; opacity: 0.8;"></i>
+                    </div>
+                    <div class="trainer-info">
+                        <h3>Mike Johnson</h3>
+                        <p><strong>Head Trainer</strong></p>
+                        <p>10+ years experience in strength training and nutrition coaching. Specialized in weight loss and muscle building programs.</p>
+                    </div>
+                </div>
+                <div class="trainer-card">
+                    <div class="trainer-image">
+                        <i class="fas fa-user-circle fa-5x" style="color: white; opacity: 0.8;"></i>
+                    </div>
+                    <div class="trainer-info">
+                        <h3>Sarah Davis</h3>
+                        <p><strong>Yoga & Wellness Coach</strong></p>
+                        <p>Certified yoga instructor and wellness expert. Focuses on flexibility, mindfulness, and holistic health approaches.</p>
+                    </div>
+                </div>
+                <div class="trainer-card">
+                    <div class="trainer-image">
+                        <i class="fas fa-user-circle fa-5x" style="color: white; opacity: 0.8;"></i>
+                    </div>
+                    <div class="trainer-info">
+                        <h3>Carlos Martinez</h3>
+                        <p><strong>HIIT Specialist</strong></p>
+                        <p>Former athlete turned fitness coach. Expert in high-intensity training and endurance building for all fitness levels.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <h3>{{gym_name}}</h3>
+            <p>{{address}}</p>
+            <p>Phone: {{phone_number}} | Email: {{email}}</p>
+            <p>&copy; 2024 {{gym_name}}. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.getElementById('trialForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Congratulations! Your free trial has been activated. Visit us today to get started!');
+            this.reset();
+        });
+
+        // Smooth scrolling for anchor link
+        document.querySelector('a[href="#signup"]').addEventListener('click', function(e) {
+            e.preventDefault();
+            document.getElementById('signup').scrollIntoView({
+                behavior: 'smooth'
+            });
+        });
+    </script>
+</body>
+</html>

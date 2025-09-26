@@ -1,0 +1,413 @@
+{% extends "base.html" %}
+
+{% block page_title %}Outreach Hub{% endblock %}
+
+{% block content %}
+<!-- Outreach Header -->
+<div class="modern-card p-4 mb-4">
+    <div class="row align-items-center">
+        <div class="col-lg-8">
+            <h2 class="mb-1">
+                <i class="fas fa-paper-plane me-2 text-primary"></i>
+                Outreach Automation Hub
+            </h2>
+            <p class="mb-0">Launch targeted outreach campaigns with proven DFY templates and one-click actions</p>
+        </div>
+        <div class="col-lg-4 text-end">
+            <div class="d-flex gap-2">
+                <a href="/lead-finder" class="btn btn-outline-primary">
+                    <i class="fas fa-plus me-1"></i>Add Leads
+                </a>
+                <button class="btn btn-gradient-success" data-bs-toggle="modal" data-bs-target="#campaignModal">
+                    <i class="fas fa-rocket me-1"></i>New Campaign
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Quick Actions -->
+<div class="row mb-4">
+    <div class="col-lg-4 mb-3">
+        <div class="modern-card p-4 text-center h-100">
+            <div class="mb-3">
+                <i class="fas fa-envelope fa-3x text-primary"></i>
+            </div>
+            <h5>Email Outreach</h5>
+            <p class="text-muted mb-3">Send personalized emails using our proven templates</p>
+            <button class="btn btn-gradient-primary" data-bs-toggle="modal" data-bs-target="#emailTemplatesModal">
+                <i class="fas fa-envelope me-1"></i>View Templates
+            </button>
+        </div>
+    </div>
+    
+    <div class="col-lg-4 mb-3">
+        <div class="modern-card p-4 text-center h-100">
+            <div class="mb-3">
+                <i class="fas fa-phone fa-3x text-success"></i>
+            </div>
+            <h5>Call Scripts</h5>
+            <p class="text-muted mb-3">Professional phone scripts that convert prospects</p>
+            <button class="btn btn-gradient-success" data-bs-toggle="modal" data-bs-target="#callScriptsModal">
+                <i class="fas fa-phone me-1"></i>View Scripts
+            </button>
+        </div>
+    </div>
+    
+    <div class="col-lg-4 mb-3">
+        <div class="modern-card p-4 text-center h-100">
+            <div class="mb-3">
+                <i class="fab fa-facebook-messenger fa-3x text-info"></i>
+            </div>
+            <h5>Social DMs</h5>
+            <p class="text-muted mb-3">LinkedIn and Facebook messages that start conversations</p>
+            <button class="btn btn-gradient-primary" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);" data-bs-toggle="modal" data-bs-target="#socialDMsModal">
+                <i class="fab fa-facebook-messenger me-1"></i>View DMs
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- Leads Ready for Outreach -->
+{% if leads %}
+<div class="modern-card p-4 mb-4">
+    <h4 class="mb-3">
+        <i class="fas fa-users me-2 text-warning"></i>
+        Leads Ready for Outreach ({{ leads|length }})
+    </h4>
+    
+    <div class="table-responsive">
+        <table class="table table-modern">
+            <thead>
+                <tr>
+                    <th>Business</th>
+                    <th>Lead Type</th>
+                    <th>Best Contact Method</th>
+                    <th>Quick Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for lead in leads[:10] %}
+                <tr>
+                    <td>
+                        <strong>{{ lead.name }}</strong>
+                        {% if lead.domain %}
+                            <br><small class="text-muted">{{ lead.domain }}</small>
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if lead.lead_type == 'Sales-Ready Lead' %}
+                            <span class="badge-sales-ready">Sales Ready</span>
+                        {% elif lead.lead_type == 'Prospect Lead' %}
+                            <span class="badge-prospect">Prospect</span>
+                        {% else %}
+                            <span class="badge-website-lead">{{ lead.lead_type }}</span>
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if lead.email and lead.phone %}
+                            <span class="badge bg-success">📧 Email + 📞 Phone</span>
+                        {% elif lead.email %}
+                            <span class="badge bg-primary">📧 Email</span>
+                        {% elif lead.phone %}
+                            <span class="badge bg-info">📞 Phone</span>
+                        {% elif lead.website %}
+                            <span class="badge bg-warning text-dark">🌐 Website Contact</span>
+                        {% else %}
+                            <span class="badge bg-secondary">🔍 Research Needed</span>
+                        {% endif %}
+                    </td>
+                    <td>
+                        <div class="btn-group btn-group-sm">
+                            {% if lead.email %}
+                                <button class="btn btn-outline-primary" onclick="quickEmail('{{ lead.email }}', '{{ lead.name }}')">
+                                    <i class="fas fa-envelope"></i> Email
+                                </button>
+                            {% endif %}
+                            {% if lead.phone %}
+                                <a href="tel:{{ lead.phone }}" class="btn btn-outline-success">
+                                    <i class="fas fa-phone"></i> Call
+                                </a>
+                            {% endif %}
+                            {% if lead.linkedin %}
+                                <a href="{{ lead.linkedin }}" target="_blank" class="btn btn-outline-info">
+                                    <i class="fab fa-linkedin"></i> LinkedIn
+                                </a>
+                            {% endif %}
+                            {% if lead.website %}
+                                <a href="{{ lead.website }}" target="_blank" class="btn btn-outline-secondary">
+                                    <i class="fas fa-globe"></i> Visit
+                                </a>
+                            {% endif %}
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    
+    {% if leads|length > 10 %}
+    <div class="text-center mt-3">
+        <a href="/lead-classifier" class="btn btn-outline-primary">
+            View All {{ leads|length }} Leads <i class="fas fa-arrow-right ms-1"></i>
+        </a>
+    </div>
+    {% endif %}
+</div>
+{% else %}
+<!-- Empty State -->
+<div class="modern-card p-5 text-center">
+    <div class="mb-4">
+        <i class="fas fa-paper-plane fa-4x text-muted"></i>
+    </div>
+    <h4 class="text-muted mb-3">No Leads for Outreach</h4>
+    <p class="text-muted mb-4">Find leads first to start your outreach campaigns.</p>
+    <a href="/lead-finder" class="btn btn-gradient-primary btn-lg">
+        <i class="fas fa-search me-2"></i>Find Leads
+    </a>
+</div>
+{% endif %}
+
+<!-- Email Templates Modal -->
+<div class="modal fade" id="emailTemplatesModal" tabindex="-1">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    <i class="fas fa-envelope me-2"></i>
+                    DFY Email Templates
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-lg-6 mb-4">
+                        <div class="border rounded p-3 h-100">
+                            <h6 class="text-primary">Cold Email Template #1: Direct Value</h6>
+                            <div class="template-content mb-3">
+                                <strong>Subject:</strong> Quick question about [Business Name]<br><br>
+                                Hi [Name],<br><br>
+                                I noticed [Business Name] provides [service] in [location]. I help businesses like yours [specific benefit].<br><br>
+                                Would you be open to a quick 10-minute call this week to explore how we could [specific outcome]?<br><br>
+                                Best regards,<br>
+                                [Your Name]
+                            </div>
+                            <button class="btn btn-outline-primary btn-sm" onclick="copyTemplate(this)">
+                                <i class="fas fa-copy me-1"></i>Copy Template
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="col-lg-6 mb-4">
+                        <div class="border rounded p-3 h-100">
+                            <h6 class="text-primary">Cold Email Template #2: Problem-Solution</h6>
+                            <div class="template-content mb-3">
+                                <strong>Subject:</strong> Helping [Business Type] get more customers<br><br>
+                                Hi [Name],<br><br>
+                                Most [business type] struggle with [common problem]. I've helped 50+ businesses solve this exact problem.<br><br>
+                                Would you be interested in a free 15-minute consultation to see how this could work for [Business Name]?<br><br>
+                                Let me know!<br>
+                                [Your Name]
+                            </div>
+                            <button class="btn btn-outline-primary btn-sm" onclick="copyTemplate(this)">
+                                <i class="fas fa-copy me-1"></i>Copy Template
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="col-lg-6 mb-4">
+                        <div class="border rounded p-3 h-100">
+                            <h6 class="text-primary">Cold Email Template #3: Social Proof</h6>
+                            <div class="template-content mb-3">
+                                <strong>Subject:</strong> How [Similar Business] increased revenue by [X]%<br><br>
+                                Hi [Name],<br><br>
+                                I just helped [Similar Business] increase their monthly revenue by [amount] in [timeframe].<br><br>
+                                I noticed [Business Name] offers [service], and I believe we could achieve similar results for you.<br><br>
+                                Worth a quick call?<br>
+                                [Your Name]
+                            </div>
+                            <button class="btn btn-outline-primary btn-sm" onclick="copyTemplate(this)">
+                                <i class="fas fa-copy me-1"></i>Copy Template
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="col-lg-6 mb-4">
+                        <div class="border rounded p-3 h-100">
+                            <h6 class="text-primary">Cold Email Template #4: Local Angle</h6>
+                            <div class="template-content mb-3">
+                                <strong>Subject:</strong> Local [industry] business partnership<br><br>
+                                Hi [Name],<br><br>
+                                I'm reaching out to local [business type] owners in [location] about a proven system that's helping businesses get more customers.<br><br>
+                                Last month, I helped [number] local businesses in [area] get [result].<br><br>
+                                Would you be open to a quick conversation?<br>
+                                [Your Name]
+                            </div>
+                            <button class="btn btn-outline-primary btn-sm" onclick="copyTemplate(this)">
+                                <i class="fas fa-copy me-1"></i>Copy Template
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Call Scripts Modal -->
+<div class="modal fade" id="callScriptsModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    <i class="fas fa-phone me-2"></i>
+                    DFY Call Scripts
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-lg-6 mb-4">
+                        <div class="border rounded p-3 h-100">
+                            <h6 class="text-success">Permission-Based Opening Script</h6>
+                            <div class="template-content mb-3">
+                                <strong>Opening:</strong><br>
+                                "Hi [Name], this is [Your Name] from [Company]. I know you're probably busy, so I'll be quick. Do you have 30 seconds for me to tell you why I'm calling?"<br><br>
+                                
+                                <strong>Value Prop:</strong><br>
+                                "I help [business type] in [location] [specific benefit]. Based on what I see with [Business Name], I think there might be an opportunity to [outcome]."<br><br>
+                                
+                                <strong>Question:</strong><br>
+                                "Is this something that would be valuable to you?"
+                            </div>
+                            <button class="btn btn-outline-success btn-sm" onclick="copyTemplate(this)">
+                                <i class="fas fa-copy me-1"></i>Copy Script
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="col-lg-6 mb-4">
+                        <div class="border rounded p-3 h-100">
+                            <h6 class="text-success">Direct Value Script</h6>
+                            <div class="template-content mb-3">
+                                <strong>Opening:</strong><br>
+                                "Hi [Name], this is [Your Name]. I'm calling because I just helped [similar business] increase their [metric] by [amount] and I think I can do the same for [Business Name]."<br><br>
+                                
+                                <strong>Continue:</strong><br>
+                                "Most [business type] struggle with [problem], but I've developed a system that consistently delivers [result]."<br><br>
+                                
+                                <strong>Close:</strong><br>
+                                "Are you free for 15 minutes on [day] or [day]?"
+                            </div>
+                            <button class="btn btn-outline-success btn-sm" onclick="copyTemplate(this)">
+                                <i class="fas fa-copy me-1"></i>Copy Script
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Social DMs Modal -->
+<div class="modal fade" id="socialDMsModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    <i class="fab fa-facebook-messenger me-2"></i>
+                    DFY Social Media Messages
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-lg-6 mb-4">
+                        <div class="border rounded p-3 h-100">
+                            <h6 class="text-info">LinkedIn Connection Message</h6>
+                            <div class="template-content mb-3">
+                                <strong>Connection Request:</strong><br>
+                                "Hi [Name]! I came across [Business Name] and love what you're doing. I help [business type] with [service]. Would love to connect!"<br><br>
+                                
+                                <strong>Follow-up:</strong><br>
+                                "Thanks for connecting! I really admire [Business Name]. I'd love to share some insights that could help you [benefit]. Worth a brief call?"
+                            </div>
+                            <button class="btn btn-outline-info btn-sm" onclick="copyTemplate(this)">
+                                <i class="fas fa-copy me-1"></i>Copy Message
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="col-lg-6 mb-4">
+                        <div class="border rounded p-3 h-100">
+                            <h6 class="text-primary">Facebook Business Message</h6>
+                            <div class="template-content mb-3">
+                                Hi [Name]!<br><br>
+                                
+                                I've been following [Business Name] and really love [specific thing about their business].<br><br>
+                                
+                                I help [business type] businesses like yours [benefit]. I'd love to share a quick strategy that could help [Business Name] [outcome].<br><br>
+                                
+                                Would you be interested in a brief chat?<br><br>
+                                
+                                Best,<br>
+                                [Your Name]
+                            </div>
+                            <button class="btn btn-outline-primary btn-sm" onclick="copyTemplate(this)">
+                                <i class="fas fa-copy me-1"></i>Copy Message
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+// Quick email function
+function quickEmail(email, businessName) {
+    const subject = encodeURIComponent(`Partnership Opportunity - ${businessName}`);
+    const body = encodeURIComponent(`Hi there,\n\nI came across ${businessName} and would love to discuss a potential partnership opportunity.\n\nBest regards,\n[Your Name]`);
+    
+    window.open(`mailto:${email}?subject=${subject}&body=${body}`);
+}
+
+// Copy template function
+function copyTemplate(button) {
+    const templateDiv = button.previousElementSibling;
+    const text = templateDiv.textContent || templateDiv.innerText;
+    
+    navigator.clipboard.writeText(text).then(function() {
+        const originalText = button.innerHTML;
+        button.innerHTML = '<i class="fas fa-check me-1"></i>Copied!';
+        button.classList.remove('btn-outline-primary', 'btn-outline-success', 'btn-outline-info');
+        button.classList.add('btn-success');
+        
+        setTimeout(function() {
+            button.innerHTML = originalText;
+            button.classList.remove('btn-success');
+            if (originalText.includes('Template')) {
+                button.classList.add('btn-outline-primary');
+            } else if (originalText.includes('Script')) {
+                button.classList.add('btn-outline-success');
+            } else {
+                button.classList.add('btn-outline-info');
+            }
+        }, 2000);
+    }).catch(function() {
+        alert('Failed to copy. Please select and copy manually.');
+    });
+}
+
+// Track outreach metrics (you can implement analytics here)
+function trackOutreach(method, leadName) {
+    console.log(`Outreach via ${method} to ${leadName}`);
+    // Implement tracking logic
+}
+</script>
+{% endblock %}

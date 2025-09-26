@@ -1,0 +1,317 @@
+{% extends "base.html" %}
+
+{% block page_title %}Analytics{% endblock %}
+
+{% block content %}
+<!-- Analytics Overview -->
+<div class="row mb-4">
+    <div class="col-12">
+        <div class="modern-card p-4">
+            <h2 class="mb-3">
+                <i class="fas fa-chart-line me-2 text-primary"></i>
+                Lead Analytics Dashboard
+            </h2>
+            <p class="text-muted mb-0">Comprehensive insights into your lead generation performance and conversion metrics.</p>
+        </div>
+    </div>
+</div>
+
+<!-- Advanced Metrics -->
+<div class="row mb-4">
+    <div class="col-lg-3 col-md-6 mb-3">
+        <div class="stat-card total-leads">
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <h3 class="mb-1">{{ data.total_leads }}</h3>
+                    <p class="mb-0">Total Leads</p>
+                </div>
+                <div class="text-end">
+                    <i class="fas fa-users fa-2x opacity-75"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-lg-3 col-md-6 mb-3">
+        <div class="stat-card sales-ready">
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <h3 class="mb-1">{{ data.conversion_rate }}%</h3>
+                    <p class="mb-0">Conversion Rate</p>
+                </div>
+                <div class="text-end">
+                    <i class="fas fa-percentage fa-2x opacity-75"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-lg-3 col-md-6 mb-3">
+        <div class="stat-card prospects">
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <h3 class="mb-1">{{ data.sales_ready }}</h3>
+                    <p class="mb-0">Sales Ready</p>
+                </div>
+                <div class="text-end">
+                    <i class="fas fa-trophy fa-2x opacity-75"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-lg-3 col-md-6 mb-3">
+        <div class="stat-card social-leads">
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <h3 class="mb-1">{{ data.social_leads }}</h3>
+                    <p class="mb-0">Social Connected</p>
+                </div>
+                <div class="text-end">
+                    <i class="fab fa-facebook fa-2x opacity-75"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Charts Section -->
+<div class="row mb-4">
+    <div class="col-lg-8 mb-4">
+        <div class="modern-card p-4">
+            <h4 class="mb-3">
+                <i class="fas fa-chart-area me-2 text-info"></i>
+                Lead Generation Trend (Last 7 Days)
+            </h4>
+            <canvas id="leadTrendChart" height="300"></canvas>
+        </div>
+    </div>
+    
+    <div class="col-lg-4 mb-4">
+        <div class="modern-card p-4">
+            <h4 class="mb-3">
+                <i class="fas fa-chart-pie me-2 text-warning"></i>
+                Lead Sources
+            </h4>
+            <canvas id="sourceChart" height="300"></canvas>
+        </div>
+    </div>
+</div>
+
+<!-- Performance Metrics -->
+<div class="row mb-4">
+    <div class="col-lg-6 mb-4">
+        <div class="modern-card p-4">
+            <h4 class="mb-3">
+                <i class="fas fa-target me-2 text-success"></i>
+                Lead Quality Metrics
+            </h4>
+            
+            <div class="mb-3">
+                <div class="d-flex justify-content-between align-items-center mb-1">
+                    <span>Sales-Ready Leads</span>
+                    <span class="fw-bold">{{ data.sales_ready }}</span>
+                </div>
+                <div class="progress" style="height: 8px;">
+                    <div class="progress-bar bg-success" style="width: {{ (data.sales_ready / data.total_leads * 100) if data.total_leads > 0 else 0 }}%"></div>
+                </div>
+            </div>
+            
+            <div class="mb-3">
+                <div class="d-flex justify-content-between align-items-center mb-1">
+                    <span>Prospect Leads</span>
+                    <span class="fw-bold">{{ data.prospects }}</span>
+                </div>
+                <div class="progress" style="height: 8px;">
+                    <div class="progress-bar bg-primary" style="width: {{ (data.prospects / data.total_leads * 100) if data.total_leads > 0 else 0 }}%"></div>
+                </div>
+            </div>
+            
+            <div class="mb-3">
+                <div class="d-flex justify-content-between align-items-center mb-1">
+                    <span>Social Connected</span>
+                    <span class="fw-bold">{{ data.social_leads }}</span>
+                </div>
+                <div class="progress" style="height: 8px;">
+                    <div class="progress-bar bg-info" style="width: {{ (data.social_leads / data.total_leads * 100) if data.total_leads > 0 else 0 }}%"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-lg-6 mb-4">
+        <div class="modern-card p-4">
+            <h4 class="mb-3">
+                <i class="fas fa-globe me-2 text-primary"></i>
+                Source Performance
+            </h4>
+            
+            {% if data.sources %}
+                {% for source, count in data.sources.items() %}
+                <div class="d-flex justify-content-between align-items-center mb-3 p-3" style="background: rgba(99, 102, 241, 0.05); border-radius: 8px;">
+                    <div>
+                        <h6 class="mb-1">{{ source.title() }}</h6>
+                        <small class="text-muted">{{ count }} leads generated</small>
+                    </div>
+                    <div class="text-end">
+                        <span class="badge bg-primary">{{ ((count / data.total_leads * 100) | round(1)) if data.total_leads > 0 else 0 }}%</span>
+                    </div>
+                </div>
+                {% endfor %}
+            {% else %}
+                <div class="text-center py-4">
+                    <i class="fas fa-chart-bar fa-3x text-muted mb-3"></i>
+                    <p class="text-muted">No source data available yet.</p>
+                    <a href="{{ url_for('lead_finder') }}" class="btn btn-gradient-primary btn-sm">
+                        Generate Your First Leads
+                    </a>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<!-- Daily Breakdown -->
+<div class="row">
+    <div class="col-12">
+        <div class="modern-card p-4">
+            <h4 class="mb-3">
+                <i class="fas fa-calendar-alt me-2 text-info"></i>
+                Daily Performance (Last 7 Days)
+            </h4>
+            
+            <div class="table-responsive">
+                <table class="table table-modern">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Total Leads</th>
+                            <th>Sales Ready</th>
+                            <th>Conversion Rate</th>
+                            <th>Performance</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for day in data.recent_activity %}
+                        <tr>
+                            <td>
+                                <strong>{{ day.date }}</strong>
+                            </td>
+                            <td>
+                                <span class="badge bg-primary">{{ day.leads }}</span>
+                            </td>
+                            <td>
+                                <span class="badge bg-success">{{ day.sales_ready }}</span>
+                            </td>
+                            <td>
+                                {{ ((day.sales_ready / day.leads * 100) | round(1)) if day.leads > 0 else 0 }}%
+                            </td>
+                            <td>
+                                {% set performance = (day.sales_ready / day.leads * 100) if day.leads > 0 else 0 %}
+                                {% if performance >= 30 %}
+                                    <span class="badge bg-success">Excellent</span>
+                                {% elif performance >= 20 %}
+                                    <span class="badge bg-warning">Good</span>
+                                {% else %}
+                                    <span class="badge bg-secondary">Average</span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+// Lead Trend Chart
+const leadTrendCtx = document.getElementById('leadTrendChart').getContext('2d');
+const leadTrendChart = new Chart(leadTrendCtx, {
+    type: 'line',
+    data: {
+        labels: {{ data.recent_activity | map(attribute='date') | list | tojson }},
+        datasets: [{
+            label: 'Total Leads',
+            data: {{ data.recent_activity | map(attribute='leads') | list | tojson }},
+            borderColor: '#6366f1',
+            backgroundColor: 'rgba(99, 102, 241, 0.1)',
+            borderWidth: 3,
+            fill: true,
+            tension: 0.4
+        }, {
+            label: 'Sales Ready',
+            data: {{ data.recent_activity | map(attribute='sales_ready') | list | tojson }},
+            borderColor: '#10b981',
+            backgroundColor: 'rgba(16, 185, 129, 0.1)',
+            borderWidth: 3,
+            fill: true,
+            tension: 0.4
+        }]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+            legend: {
+                position: 'top',
+            }
+        },
+        scales: {
+            y: {
+                beginAtZero: true,
+                grid: {
+                    color: 'rgba(0, 0, 0, 0.1)'
+                }
+            },
+            x: {
+                grid: {
+                    color: 'rgba(0, 0, 0, 0.1)'
+                }
+            }
+        }
+    }
+});
+
+// Source Chart
+const sourceCtx = document.getElementById('sourceChart').getContext('2d');
+const sourceChart = new Chart(sourceCtx, {
+    type: 'doughnut',
+    data: {
+        labels: {{ data.sources.keys() | list | tojson }},
+        datasets: [{
+            data: {{ data.sources.values() | list | tojson }},
+            backgroundColor: [
+                '#6366f1',
+                '#8b5cf6', 
+                '#06b6d4',
+                '#10b981',
+                '#f59e0b',
+                '#ef4444'
+            ],
+            borderWidth: 2,
+            borderColor: '#fff'
+        }]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+            legend: {
+                position: 'bottom',
+            }
+        }
+    }
+});
+
+// Auto-refresh analytics every 30 seconds
+setInterval(function() {
+    if (document.hasFocus()) {
+        location.reload();
+    }
+}, 30000);
+</script>
+{% endblock %}

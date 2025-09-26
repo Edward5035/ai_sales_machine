@@ -1,0 +1,345 @@
+{% extends "base.html" %}
+
+{% block page_title %}Email Validator{% endblock %}
+
+{% block content %}
+<!-- Email Validator Header -->
+<div class="row mb-4">
+    <div class="col-12">
+        <div class="modern-card p-4">
+            <div class="text-center">
+                <div class="mb-3">
+                    <i class="fas fa-envelope-circle-check fa-4x text-primary mb-3"></i>
+                </div>
+                <h2 class="mb-2">🎁 Email Validator</h2>
+                <p class="text-muted mb-0">Verify email addresses for deliverability, format validation, and business email detection. Bonus tool included with LeadFlow Pro!</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Email Validation Form -->
+<div class="row justify-content-center mb-4">
+    <div class="col-lg-8">
+        <div class="modern-card p-4">
+            <h4 class="mb-3">
+                <i class="fas fa-check-circle me-2 text-success"></i>
+                Email Validation Tool
+            </h4>
+            
+            <form method="POST" id="emailValidatorForm">
+                <div class="row">
+                    <div class="col-md-8 mb-3">
+                        <label for="email" class="form-label">
+                            <i class="fas fa-envelope me-1 text-primary"></i>
+                            Email Address
+                        </label>
+                        <input type="email" 
+                               class="form-control form-control-lg" 
+                               id="email" 
+                               name="email" 
+                               placeholder="Enter email address to validate"
+                               value="{{ result.email if result else '' }}"
+                               required>
+                        <div class="form-text">Enter any email address to check its validity and deliverability.</div>
+                    </div>
+                    
+                    <div class="col-md-4 d-flex align-items-end mb-3">
+                        <button type="submit" class="btn btn-gradient-primary btn-lg w-100" id="validateBtn">
+                            <i class="fas fa-search me-2"></i>
+                            Validate Email
+                            <span class="spinner-border spinner-border-sm ms-2 d-none" role="status"></span>
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Validation Results -->
+{% if result %}
+<div class="row justify-content-center mb-4">
+    <div class="col-lg-8">
+        <div class="modern-card p-4">
+            <h4 class="mb-3">
+                <i class="fas fa-clipboard-check me-2 text-info"></i>
+                Validation Results
+            </h4>
+            
+            <!-- Overall Score -->
+            <div class="text-center mb-4 p-4" style="background: linear-gradient(135deg, 
+                {% if result.score >= 80 %}#10b981 0%, #059669 100%
+                {% elif result.score >= 60 %}#f59e0b 0%, #d97706 100%
+                {% else %}#ef4444 0%, #dc2626 100%{% endif %}); 
+                border-radius: 16px; color: white;">
+                <h1 class="mb-2">{{ result.score }}/100</h1>
+                <h5 class="mb-0">
+                    {% if result.score >= 80 %}Excellent Email
+                    {% elif result.score >= 60 %}Good Email
+                    {% else %}Poor Email{% endif %}
+                </h5>
+            </div>
+            
+            <!-- Detailed Results -->
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <div class="d-flex justify-content-between align-items-center p-3" 
+                         style="background: rgba({{ '16, 185, 129' if result.is_valid else '239, 68, 68' }}, 0.1); border-radius: 8px;">
+                        <div>
+                            <h6 class="mb-0">Format Validation</h6>
+                            <small class="text-muted">Valid email format</small>
+                        </div>
+                        <div class="text-end">
+                            {% if result.is_valid %}
+                                <i class="fas fa-check-circle fa-2x text-success"></i>
+                            {% else %}
+                                <i class="fas fa-times-circle fa-2x text-danger"></i>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-6 mb-3">
+                    <div class="d-flex justify-content-between align-items-center p-3" 
+                         style="background: rgba({{ '16, 185, 129' if result.is_business else '245, 158, 11' }}, 0.1); border-radius: 8px;">
+                        <div>
+                            <h6 class="mb-0">Business Email</h6>
+                            <small class="text-muted">Professional domain</small>
+                        </div>
+                        <div class="text-end">
+                            {% if result.is_business %}
+                                <i class="fas fa-building fa-2x text-success"></i>
+                            {% else %}
+                                <i class="fas fa-user fa-2x text-warning"></i>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Email Details -->
+            <div class="mt-4">
+                <h5 class="mb-3">Email Analysis</h5>
+                
+                <div class="table-responsive">
+                    <table class="table table-borderless">
+                        <tbody>
+                            <tr>
+                                <td class="fw-bold" style="width: 200px;">Email Address:</td>
+                                <td><code>{{ result.email }}</code></td>
+                            </tr>
+                            <tr>
+                                <td class="fw-bold">Domain:</td>
+                                <td><code>{{ result.domain }}</code></td>
+                            </tr>
+                            <tr>
+                                <td class="fw-bold">Format Valid:</td>
+                                <td>
+                                    {% if result.is_valid %}
+                                        <span class="badge bg-success">✓ Valid</span>
+                                    {% else %}
+                                        <span class="badge bg-danger">✗ Invalid</span>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="fw-bold">Email Type:</td>
+                                <td>
+                                    {% if result.is_business %}
+                                        <span class="badge bg-primary">Business Email</span>
+                                    {% else %}
+                                        <span class="badge bg-warning">Personal Email</span>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="fw-bold">Quality Score:</td>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <div class="progress me-3" style="width: 200px; height: 8px;">
+                                            <div class="progress-bar 
+                                                {% if result.score >= 80 %}bg-success
+                                                {% elif result.score >= 60 %}bg-warning
+                                                {% else %}bg-danger{% endif %}" 
+                                                style="width: {{ result.score }}%"></div>
+                                        </div>
+                                        <span class="fw-bold">{{ result.score }}/100</span>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <!-- Recommendations -->
+            <div class="mt-4 p-3" style="background: rgba(99, 102, 241, 0.05); border-radius: 8px;">
+                <h6 class="mb-2">
+                    <i class="fas fa-lightbulb me-1 text-warning"></i>
+                    Recommendations
+                </h6>
+                {% if result.is_valid and result.is_business %}
+                    <p class="mb-0 text-success">
+                        <i class="fas fa-check me-1"></i>
+                        This email looks great for professional outreach! High deliverability expected.
+                    </p>
+                {% elif result.is_valid and not result.is_business %}
+                    <p class="mb-0 text-warning">
+                        <i class="fas fa-exclamation-triangle me-1"></i>
+                        Personal email detected. Consider finding a business email for better professional communication.
+                    </p>
+                {% else %}
+                    <p class="mb-0 text-danger">
+                        <i class="fas fa-times me-1"></i>
+                        Invalid email format. Please check for typos and ensure the email address is correct.
+                    </p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+<!-- Features -->
+<div class="row mb-4">
+    <div class="col-lg-4 mb-3">
+        <div class="modern-card p-4 text-center h-100">
+            <div class="mb-3">
+                <i class="fas fa-shield-alt fa-3x text-success"></i>
+            </div>
+            <h5>Format Validation</h5>
+            <p class="text-muted">Check if email addresses follow proper RFC standards and syntax rules.</p>
+        </div>
+    </div>
+    
+    <div class="col-lg-4 mb-3">
+        <div class="modern-card p-4 text-center h-100">
+            <div class="mb-3">
+                <i class="fas fa-building fa-3x text-primary"></i>
+            </div>
+            <h5>Business Detection</h5>
+            <p class="text-muted">Identify business emails vs personal emails for better targeting.</p>
+        </div>
+    </div>
+    
+    <div class="col-lg-4 mb-3">
+        <div class="modern-card p-4 text-center h-100">
+            <div class="mb-3">
+                <i class="fas fa-chart-line fa-3x text-warning"></i>
+            </div>
+            <h5>Quality Scoring</h5>
+            <p class="text-muted">Get a deliverability score based on multiple validation factors.</p>
+        </div>
+    </div>
+</div>
+
+<!-- Bulk Validation -->
+<div class="row">
+    <div class="col-12">
+        <div class="modern-card p-4">
+            <h4 class="mb-3">
+                <i class="fas fa-list-check me-2 text-info"></i>
+                Bulk Email Validation
+            </h4>
+            
+            <div class="row">
+                <div class="col-lg-8">
+                    <p class="text-muted mb-3">Upload a CSV file or paste multiple email addresses to validate them all at once. Perfect for cleaning your lead lists!</p>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">Upload CSV File</label>
+                        <input type="file" class="form-control" accept=".csv" disabled>
+                        <div class="form-text">Feature coming soon! Upload CSV files with email addresses for bulk validation.</div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">Or Paste Email List</label>
+                        <textarea class="form-control" rows="4" placeholder="Paste email addresses here (one per line)" disabled></textarea>
+                    </div>
+                </div>
+                
+                <div class="col-lg-4">
+                    <div class="p-3" style="background: rgba(99, 102, 241, 0.05); border-radius: 8px;">
+                        <h6 class="mb-2">Bulk Validation Benefits</h6>
+                        <ul class="list-unstyled mb-0">
+                            <li class="mb-1">
+                                <i class="fas fa-check text-success me-2"></i>
+                                Validate up to 1,000 emails
+                            </li>
+                            <li class="mb-1">
+                                <i class="fas fa-check text-success me-2"></i>
+                                Export cleaned lists
+                            </li>
+                            <li class="mb-1">
+                                <i class="fas fa-check text-success me-2"></i>
+                                Detailed reports
+                            </li>
+                            <li class="mb-1">
+                                <i class="fas fa-check text-success me-2"></i>
+                                API integration
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-3">
+                <button class="btn btn-outline-primary" disabled>
+                    <i class="fas fa-upload me-2"></i>Start Bulk Validation (Coming Soon)
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+// Form submission handling
+document.getElementById('emailValidatorForm').addEventListener('submit', function() {
+    const btn = document.getElementById('validateBtn');
+    const spinner = btn.querySelector('.spinner-border');
+    
+    btn.disabled = true;
+    spinner.classList.remove('d-none');
+    btn.innerHTML = '<i class="fas fa-search me-2"></i>Validating... <span class="spinner-border spinner-border-sm ms-2" role="status"></span>';
+});
+
+// Focus email input on load
+document.addEventListener('DOMContentLoaded', function() {
+    document.getElementById('email').focus();
+});
+
+// Auto-format email input
+document.getElementById('email').addEventListener('input', function(e) {
+    // Remove any spaces
+    e.target.value = e.target.value.trim();
+});
+
+// Example email suggestions
+const exampleEmails = [
+    'john.doe@company.com',
+    'sarah@business.org',
+    'contact@example.com',
+    'support@domain.net'
+];
+
+function setExampleEmail() {
+    const randomEmail = exampleEmails[Math.floor(Math.random() * exampleEmails.length)];
+    document.getElementById('email').value = randomEmail;
+}
+
+// Add example button
+document.addEventListener('DOMContentLoaded', function() {
+    const emailInput = document.getElementById('email');
+    const exampleBtn = document.createElement('button');
+    exampleBtn.type = 'button';
+    exampleBtn.className = 'btn btn-outline-secondary btn-sm mt-2';
+    exampleBtn.innerHTML = '<i class="fas fa-random me-1"></i>Try Example';
+    exampleBtn.onclick = setExampleEmail;
+    
+    emailInput.parentNode.appendChild(exampleBtn);
+});
+</script>
+{% endblock %}

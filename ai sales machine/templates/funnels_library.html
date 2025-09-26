@@ -1,0 +1,695 @@
+{% extends "base.html" %}
+
+{% block page_title %}Funnels Library{% endblock %}
+
+{% block content %}
+<!-- Funnels Header -->
+<div class="modern-card p-4 mb-4">
+    <div class="row align-items-center">
+        <div class="col-lg-8">
+            <h2 class="mb-1">
+                <i class="fas fa-layer-group me-2 text-primary"></i>
+                DFY Sales Funnels Library
+            </h2>
+            <p class="mb-0">High-converting sales funnels optimized for specific niches. Download, customize, and deploy in minutes.</p>
+        </div>
+        <div class="col-lg-4 text-end">
+            <button class="btn btn-gradient-primary" data-bs-toggle="modal" data-bs-target="#customFunnelModal">
+                <i class="fas fa-plus me-1"></i>Request Custom Funnel
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- Funnel Categories -->
+<div class="row mb-4">
+    <div class="col-12">
+        <div class="modern-card p-3">
+            <div class="d-flex align-items-center justify-content-between">
+                <div>
+                    <h5 class="mb-0">Filter by Industry:</h5>
+                </div>
+                <div class="btn-group" role="group">
+                    <input type="radio" class="btn-check" name="funnelFilter" id="all" autocomplete="off" checked>
+                    <label class="btn btn-outline-primary" for="all">All Funnels</label>
+                    
+                    <input type="radio" class="btn-check" name="funnelFilter" id="healthcare" autocomplete="off">
+                    <label class="btn btn-outline-primary" for="healthcare">Healthcare</label>
+                    
+                    <input type="radio" class="btn-check" name="funnelFilter" id="fitness" autocomplete="off">
+                    <label class="btn btn-outline-primary" for="fitness">Fitness</label>
+                    
+                    <input type="radio" class="btn-check" name="funnelFilter" id="realestate" autocomplete="off">
+                    <label class="btn btn-outline-primary" for="realestate">Real Estate</label>
+                    
+                    <input type="radio" class="btn-check" name="funnelFilter" id="legal" autocomplete="off">
+                    <label class="btn btn-outline-primary" for="legal">Legal</label>
+                    
+                    <input type="radio" class="btn-check" name="funnelFilter" id="beauty" autocomplete="off">
+                    <label class="btn btn-outline-primary" for="beauty">Beauty</label>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Healthcare Funnels -->
+<div class="funnel-category" data-category="healthcare">
+    <h4 class="mb-3">
+        <i class="fas fa-heartbeat me-2 text-danger"></i>
+        Healthcare Funnels
+    </h4>
+    
+    <div class="row mb-4">
+        <div class="col-lg-6 mb-4">
+            <div class="modern-card">
+                <div class="card-header bg-gradient text-white" style="background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);">
+                    <h5 class="mb-0">
+                        <i class="fas fa-tooth me-2"></i>
+                        Dental Practice Lead Magnet
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <p class="text-muted mb-3">High-converting funnel for dental practices to capture leads with free consultation offers.</p>
+                    
+                    <div class="mb-3">
+                        <strong>Includes:</strong>
+                        <ul class="mt-2">
+                            <li>Landing page with consultation form</li>
+                            <li>Thank you page with appointment booking</li>
+                            <li>Email follow-up sequence (5 emails)</li>
+                            <li>Social proof elements</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="d-flex justify-content-end">
+                        <button class="btn btn-outline-primary btn-sm me-2" onclick="previewTemplate('funnels', 'dental_consultation')">
+                            <i class="fas fa-eye me-1"></i>Preview
+                        </button>
+                        <button class="btn btn-gradient-primary btn-sm" onclick="downloadTemplate('funnels', 'dental_consultation')">
+                            <i class="fas fa-download me-1"></i>Download
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-lg-6 mb-4">
+            <div class="modern-card">
+                <div class="card-header bg-gradient text-white" style="background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);">
+                    <h5 class="mb-0">
+                        <i class="fas fa-user-md me-2"></i>
+                        Medical Clinic Webinar Funnel
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <p class="text-muted mb-3">Educational webinar funnel for medical clinics to build trust and generate qualified leads.</p>
+                    
+                    <div class="mb-3">
+                        <strong>Includes:</strong>
+                        <ul class="mt-2">
+                            <li>Webinar registration page</li>
+                            <li>Email reminder sequence</li>
+                            <li>Live webinar template</li>
+                            <li>Follow-up sales sequence</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="d-flex justify-content-end">
+                        <button class="btn btn-outline-primary btn-sm me-2" onclick="previewTemplate('funnels', 'dental_consultation')">
+                            <i class="fas fa-eye me-1"></i>Preview
+                        </button>
+                        <button class="btn btn-gradient-primary btn-sm" onclick="downloadTemplate('funnels', 'dental_consultation')">
+                            <i class="fas fa-download me-1"></i>Download
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Fitness Funnels -->
+<div class="funnel-category" data-category="fitness">
+    <h4 class="mb-3">
+        <i class="fas fa-dumbbell me-2 text-warning"></i>
+        Fitness & Wellness Funnels
+    </h4>
+    
+    <div class="row mb-4">
+        <div class="col-lg-6 mb-4">
+            <div class="modern-card">
+                <div class="card-header bg-gradient text-white" style="background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%);">
+                    <h5 class="mb-0">
+                        <i class="fas fa-dumbbell me-2"></i>
+                        Gym Membership Funnel
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <p class="text-muted mb-3">Convert visitors into gym members with free trial offers and transformation stories.</p>
+                    
+                    <div class="mb-3">
+                        <strong>Includes:</strong>
+                        <ul class="mt-2">
+                            <li>Free trial landing page</li>
+                            <li>Member success stories</li>
+                            <li>Facility tour booking</li>
+                            <li>Membership upgrade sequence</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="d-flex justify-content-end">
+                        <button class="btn btn-outline-primary btn-sm me-2" onclick="previewTemplate('funnels', 'fitness_trial')">
+                            <i class="fas fa-eye me-1"></i>Preview
+                        </button>
+                        <button class="btn btn-gradient-primary btn-sm" onclick="downloadTemplate('funnels', 'fitness_trial')">
+                            <i class="fas fa-download me-1"></i>Download
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-lg-6 mb-4">
+            <div class="modern-card">
+                <div class="card-header bg-gradient text-white" style="background: linear-gradient(135deg, #27ae60 0%, #229954 100%);">
+                    <h5 class="mb-0">
+                        <i class="fas fa-leaf me-2"></i>
+                        Nutrition Coaching Funnel
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <p class="text-muted mb-3">Lead generation funnel for nutrition coaches with free meal plan downloads.</p>
+                    
+                    <div class="mb-3">
+                        <strong>Includes:</strong>
+                        <ul class="mt-2">
+                            <li>Free meal plan opt-in</li>
+                            <li>Nutrition assessment quiz</li>
+                            <li>Coaching program presentation</li>
+                            <li>Client transformation gallery</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="d-flex justify-content-end">
+                        <button class="btn btn-outline-primary btn-sm me-2" onclick="previewTemplate('funnels', 'fitness_trial')">
+                            <i class="fas fa-eye me-1"></i>Preview
+                        </button>
+                        <button class="btn btn-gradient-primary btn-sm" onclick="downloadTemplate('funnels', 'fitness_trial')">
+                            <i class="fas fa-download me-1"></i>Download
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Real Estate Funnels -->
+<div class="funnel-category" data-category="realestate">
+    <h4 class="mb-3">
+        <i class="fas fa-home me-2 text-info"></i>
+        Real Estate Funnels
+    </h4>
+    
+    <div class="row mb-4">
+        <div class="col-lg-6 mb-4">
+            <div class="modern-card">
+                <div class="card-header bg-gradient text-white" style="background: linear-gradient(135deg, #17a2b8 0%, #138496 100%);">
+                    <h5 class="mb-0">
+                        <i class="fas fa-home me-2"></i>
+                        Home Valuation Funnel
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <p class="text-muted mb-3">Capture seller leads with instant home valuation tool and market reports.</p>
+                    
+                    <div class="mb-3">
+                        <strong>Includes:</strong>
+                        <ul class="mt-2">
+                            <li>Home valuation calculator</li>
+                            <li>Market report delivery</li>
+                            <li>Seller consultation booking</li>
+                            <li>Property marketing showcase</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="d-flex justify-content-end">
+                        <button class="btn btn-outline-primary btn-sm me-2" onclick="previewTemplate('funnels', 'legal_consultation')">
+                            <i class="fas fa-eye me-1"></i>Preview
+                        </button>
+                        <button class="btn btn-gradient-primary btn-sm" onclick="downloadTemplate('funnels', 'legal_consultation')">
+                            <i class="fas fa-download me-1"></i>Download
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-lg-6 mb-4">
+            <div class="modern-card">
+                <div class="card-header bg-gradient text-white" style="background: linear-gradient(135deg, #6f42c1 0%, #5a2a8a 100%);">
+                    <h5 class="mb-0">
+                        <i class="fas fa-key me-2"></i>
+                        Buyer Lead Funnel
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <p class="text-muted mb-3">Generate qualified buyer leads with property alerts and first-time buyer guides.</p>
+                    
+                    <div class="mb-3">
+                        <strong>Includes:</strong>
+                        <ul class="mt-2">
+                            <li>Property search portal</li>
+                            <li>First-time buyer guide</li>
+                            <li>Mortgage calculator</li>
+                            <li>Buyer consultation scheduler</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="d-flex justify-content-end">
+                        <button class="btn btn-outline-primary btn-sm me-2" onclick="previewTemplate('funnels', 'legal_consultation')">
+                            <i class="fas fa-eye me-1"></i>Preview
+                        </button>
+                        <button class="btn btn-gradient-primary btn-sm" onclick="downloadTemplate('funnels', 'legal_consultation')">
+                            <i class="fas fa-download me-1"></i>Download
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Legal Funnels -->
+<div class="funnel-category" data-category="legal">
+    <h4 class="mb-3">
+        <i class="fas fa-gavel me-2 text-dark"></i>
+        Legal Services Funnels
+    </h4>
+    
+    <div class="row mb-4">
+        <div class="col-lg-6 mb-4">
+            <div class="modern-card">
+                <div class="card-header bg-gradient text-white" style="background: linear-gradient(135deg, #343a40 0%, #212529 100%);">
+                    <h5 class="mb-0">
+                        <i class="fas fa-gavel me-2"></i>
+                        Personal Injury Lawyer Funnel
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <p class="text-muted mb-3">Generate personal injury leads with case evaluation forms and settlement calculators.</p>
+                    
+                    <div class="mb-3">
+                        <strong>Includes:</strong>
+                        <ul class="mt-2">
+                            <li>Case evaluation form</li>
+                            <li>Settlement calculator</li>
+                            <li>Attorney bio and results</li>
+                            <li>Free consultation booking</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="d-flex justify-content-end">
+                        <button class="btn btn-outline-primary btn-sm me-2" onclick="previewTemplate('funnels', 'dental_consultation')">
+                            <i class="fas fa-eye me-1"></i>Preview
+                        </button>
+                        <button class="btn btn-gradient-primary btn-sm" onclick="downloadTemplate('funnels', 'dental_consultation')">
+                            <i class="fas fa-download me-1"></i>Download
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Beauty Funnels -->
+<div class="funnel-category" data-category="beauty">
+    <h4 class="mb-3">
+        <i class="fas fa-cut me-2 text-success"></i>
+        Beauty & Wellness Funnels
+    </h4>
+    
+    <div class="row mb-4">
+        <div class="col-lg-6 mb-4">
+            <div class="modern-card">
+                <div class="card-header bg-gradient text-white" style="background: linear-gradient(135deg, #e91e63 0%, #ad1457 100%);">
+                    <h5 class="mb-0">
+                        <i class="fas fa-cut me-2"></i>
+                        Salon Booking Funnel
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <p class="text-muted mb-3">Convert website visitors into salon bookings with online scheduling and service showcases.</p>
+                    
+                    <div class="mb-3">
+                        <strong>Includes:</strong>
+                        <ul class="mt-2">
+                            <li>Online booking system</li>
+                            <li>Service menu showcase</li>
+                            <li>Stylist profile gallery</li>
+                            <li>First-visit discount offer</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="d-flex justify-content-end">
+                        <button class="btn btn-outline-primary btn-sm me-2" onclick="previewTemplate('funnels', 'fitness_trial')">
+                            <i class="fas fa-eye me-1"></i>Preview
+                        </button>
+                        <button class="btn btn-gradient-primary btn-sm" onclick="downloadTemplate('funnels', 'fitness_trial')">
+                            <i class="fas fa-download me-1"></i>Download
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Custom Funnel Request Modal -->
+<div class="modal fade" id="customFunnelModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Request Custom Funnel</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form id="customFunnelForm">
+                    <div class="mb-3">
+                        <label class="form-label">Business Type</label>
+                        <input type="text" class="form-control" placeholder="e.g., Accounting Firm, Pet Grooming">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Target Audience</label>
+                        <input type="text" class="form-control" placeholder="e.g., Small business owners, Pet owners">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Main Goal</label>
+                        <select class="form-select">
+                            <option>Lead Generation</option>
+                            <option>Appointment Booking</option>
+                            <option>Product Sales</option>
+                            <option>Consultation Requests</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Additional Requirements</label>
+                        <textarea class="form-control" rows="3" placeholder="Describe any specific features or integrations needed"></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-gradient-primary" onclick="submitCustomRequest()">
+                    <i class="fas fa-paper-plane me-1"></i>Submit Request
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Resource Preview Modal -->
+<div class="modal fade" id="resourcePreviewModal" tabindex="-1" aria-labelledby="resourcePreviewModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="resourcePreviewModalLabel">
+                    <i class="fas fa-eye me-2"></i>Resource Preview
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body p-0">
+                <iframe id="resourcePreviewFrame" src="" style="width: 100%; height: 70vh; border: none;"></iframe>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                    <i class="fas fa-times me-1"></i>Close
+                </button>
+                <button type="button" class="btn btn-gradient-primary" id="downloadFromPreview">
+                    <i class="fas fa-download me-1"></i>Download Resource
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<style>
+@keyframes slideIn {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideOut {
+    from {
+        transform: translateX(0);
+        opacity: 1;
+    }
+    to {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+}
+</style>
+<script>
+// Filter funnels by category
+document.querySelectorAll('input[name="funnelFilter"]').forEach(radio => {
+    radio.addEventListener('change', function() {
+        const categories = document.querySelectorAll('.funnel-category');
+        
+        if (this.id === 'all') {
+            categories.forEach(cat => cat.style.display = 'block');
+        } else {
+            categories.forEach(cat => {
+                cat.style.display = cat.dataset.category === this.id ? 'block' : 'none';
+            });
+        }
+    });
+});
+
+// Preview template (unified function for txt resources)
+function previewTemplate(templateType, templateName) {
+    // Use new resource routes for txt resources
+    const previewUrl = `/preview-resource/${templateType}/${templateName}`;
+    
+    // Set up the iframe preview modal
+    const iframe = document.getElementById('resourcePreviewFrame');
+    const modal = new bootstrap.Modal(document.getElementById('resourcePreviewModal'));
+    const modalTitle = document.getElementById('resourcePreviewModalLabel');
+    const downloadBtn = document.getElementById('downloadFromPreview');
+    
+    // Update modal title
+    const displayName = templateName.replace('_', ' ').replace(/\b\w/g, l => l.toUpperCase());
+    modalTitle.innerHTML = `<i class="fas fa-eye me-2"></i>${displayName} - ${templateType.charAt(0).toUpperCase() + templateType.slice(1)} Template`;
+    
+    // Set iframe source
+    iframe.src = previewUrl;
+    
+    // Set up download button for this specific resource
+    downloadBtn.onclick = () => downloadTemplate(templateType, templateName);
+    
+    // Show modal
+    modal.show();
+    
+    // Clear iframe when modal is hidden to prevent resource leaks
+    document.getElementById('resourcePreviewModal').addEventListener('hidden.bs.modal', function () {
+        iframe.src = '';
+    }, { once: true });
+}
+
+// Download template (unified function for txt resources)
+function downloadTemplate(templateType, templateName) {
+    // Use new resource routes for txt resources
+    const downloadUrl = `/download-resource/${templateType}/${templateName}`;
+    
+    // Create temporary link element and trigger download
+    const a = document.createElement('a');
+    a.href = downloadUrl;
+    a.download = `${templateName}_${templateType}.txt`;
+    a.style.display = 'none';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    
+    // Show success message
+    const displayName = templateName.replace('_', ' ').replace(/\b\w/g, l => l.toUpperCase());
+    showNotification(`${displayName} resource downloaded successfully!`, 'success');
+}
+
+// Legacy functions for backward compatibility
+function previewFunnel(type) {
+    previewTemplate('funnels', type);
+}
+
+function downloadFunnel(type) {
+    downloadTemplate('funnels', type);
+}
+
+// Show notification helper
+function showNotification(message, type = 'info') {
+    const notification = document.createElement('div');
+    notification.className = `alert alert-${type} position-fixed`;
+    notification.style.cssText = `
+        top: 20px; 
+        right: 20px; 
+        z-index: 9999; 
+        min-width: 300px;
+        animation: slideIn 0.3s ease-out;
+    `;
+    notification.innerHTML = `
+        <div class="d-flex align-items-center">
+            <i class="fas fa-${type === 'success' ? 'check-circle' : 'info-circle'} me-2"></i>
+            ${message}
+        </div>
+    `;
+    
+    document.body.appendChild(notification);
+    
+    // Auto remove after 3 seconds
+    setTimeout(() => {
+        notification.style.animation = 'slideOut 0.3s ease-in';
+        setTimeout(() => {
+            if (notification.parentNode) {
+                notification.parentNode.removeChild(notification);
+            }
+        }, 300);
+    }, 3000);
+}
+
+// Generate funnel HTML
+function generateFunnelHTML(type) {
+    const templates = {
+        dental: `<!DOCTYPE html>
+<html>
+<head>
+    <title>Free Dental Consultation - [Practice Name]</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        body { font-family: Arial, sans-serif; margin: 0; padding: 20px; background: #f8f9fa; }
+        .container { max-width: 600px; margin: 0 auto; background: white; padding: 40px; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+        .header { text-align: center; margin-bottom: 30px; }
+        .form-group { margin-bottom: 20px; }
+        label { display: block; margin-bottom: 5px; font-weight: bold; }
+        input, textarea { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px; }
+        .btn { background: #007bff; color: white; padding: 15px 30px; border: none; border-radius: 5px; cursor: pointer; font-size: 16px; }
+        .btn:hover { background: #0056b3; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Free Dental Consultation</h1>
+            <p>Get a comprehensive dental examination worth $200 - absolutely free!</p>
+        </div>
+        <form>
+            <div class="form-group">
+                <label>Full Name</label>
+                <input type="text" required>
+            </div>
+            <div class="form-group">
+                <label>Email Address</label>
+                <input type="email" required>
+            </div>
+            <div class="form-group">
+                <label>Phone Number</label>
+                <input type="tel" required>
+            </div>
+            <div class="form-group">
+                <label>Preferred Appointment Time</label>
+                <input type="datetime-local" required>
+            </div>
+            <div class="form-group">
+                <label>What brings you to our practice?</label>
+                <textarea rows="3"></textarea>
+            </div>
+            <button type="submit" class="btn">Book My Free Consultation</button>
+        </form>
+    </div>
+</body>
+</html>`,
+        // Add more templates for other funnel types
+        gym: `<!DOCTYPE html>
+<html>
+<head>
+    <title>Free 7-Day Gym Trial - [Gym Name]</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        body { font-family: Arial, sans-serif; margin: 0; padding: 20px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+        .container { max-width: 600px; margin: 0 auto; background: white; padding: 40px; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+        .header { text-align: center; margin-bottom: 30px; }
+        .form-group { margin-bottom: 20px; }
+        label { display: block; margin-bottom: 5px; font-weight: bold; }
+        input, select { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px; }
+        .btn { background: #28a745; color: white; padding: 15px 30px; border: none; border-radius: 5px; cursor: pointer; font-size: 16px; width: 100%; }
+        .btn:hover { background: #218838; }
+        .benefits { background: #f8f9fa; padding: 20px; border-radius: 5px; margin: 20px 0; }
+        .benefits ul { margin: 0; padding-left: 20px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Start Your Fitness Journey Today!</h1>
+            <p>Get 7 days of unlimited access to our gym, classes, and personal training - FREE!</p>
+        </div>
+        <div class="benefits">
+            <h3>What's Included:</h3>
+            <ul>
+                <li>Full gym access for 7 days</li>
+                <li>All group fitness classes</li>
+                <li>1 complimentary personal training session</li>
+                <li>Fitness assessment and goal planning</li>
+                <li>No commitment required</li>
+            </ul>
+        </div>
+        <form>
+            <div class="form-group">
+                <label>Full Name</label>
+                <input type="text" required>
+            </div>
+            <div class="form-group">
+                <label>Email Address</label>
+                <input type="email" required>
+            </div>
+            <div class="form-group">
+                <label>Phone Number</label>
+                <input type="tel" required>
+            </div>
+            <div class="form-group">
+                <label>Fitness Goal</label>
+                <select required>
+                    <option value="">Select your primary goal</option>
+                    <option>Weight Loss</option>
+                    <option>Muscle Building</option>
+                    <option>General Fitness</option>
+                    <option>Athletic Performance</option>
+                </select>
+            </div>
+            <button type="submit" class="btn">Start My Free Trial</button>
+        </form>
+    </div>
+</body>
+</html>`
+    };
+    
+    return templates[type] || templates.dental;
+}
+
+// Submit custom funnel request
+function submitCustomRequest() {
+    alert('Custom funnel request submitted! We\'ll contact you within 24 hours.');
+    document.getElementById('customFunnelModal').querySelector('.btn-close').click();
+}
+</script>
+{% endblock %}

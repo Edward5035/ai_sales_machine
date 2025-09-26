@@ -1,0 +1,28 @@
+
+Searching Bing (Primary): dentist in delaware
+Bing search: "best dentist" delaware phone hours reviews website
+Bing search found 0 businesses so far
+Bing search: dentist near delaware contact information address
+Bing search found 0 businesses so far
+Bing search: top rated dentist delaware phone email social media
+Bing search found 0 businesses so far
+Bing search: dentist delaware business hours reviews contact
+Bing search found 0 businesses so far
+Trying Yellow Pages fallback for additional results...
+403 Forbidden, clearing session and retrying (attempt 1/1)
+127.0.0.1 - - [26/Sep/2025:07:38:46 +0000] "POST /search HTTP/1.1" 200 54503 "https://ai-sales-machine.onrender.com/lead-finder" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36 OPR/120.0.0.0"
+127.0.0.1 - - [26/Sep/2025:07:38:47 +0000] "GET /static/images/logo.png HTTP/1.1" 304 0 "https://ai-sales-machine.onrender.com/search" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36 OPR/120.0.0.0"
+127.0.0.1 - - [26/Sep/2025:07:39:04 +0000] "GET /lead-finder?ajax=1 HTTP/1.1" 200 54171 "https://ai-sales-machine.onrender.com/search" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36 OPR/120.0.0.0"
+Searching Bing (Primary): dentist in Boston, MA
+Bing search: "best dentist" Boston, MA phone hours reviews website
+Bing search found 0 businesses so far
+Bing search: dentist near Boston, MA contact information address
+Bing search found 0 businesses so far
+Bing search: top rated dentist Boston, MA phone email social media
+Bing search found 0 businesses so far
+Bing search: dentist Boston, MA business hours reviews contact
+Bing search found 0 businesses so far
+Trying Yellow Pages fallback for additional results...
+403 Forbidden, clearing session and retrying (attempt 1/1)
+127.0.0.1 - - [26/Sep/2025:07:39:29 +0000] "POST /search HTTP/1.1" 200 54503 "https://ai-sales-machine.onrender.com/lead-finder" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36 OPR/120.0.0.0"
+127.0.0.1 - - [26/Sep/2025:07:39:30 +0000] "GET /static/images/logo.png HTTP/1.1" 304 0 "https://ai-sales-machine.onrender.com/search" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36 OPR/120.0.0.0"
