@@ -2088,88 +2088,42 @@ class LeadScraper:
             return False
     
     def _is_valid_business_email(self, email):
-        """Check if email looks like a valid business email with improved validation"""
-        if not email or '@' not in email:
-            print(f"    Email validation failed - no @ symbol: '{email}'")
-            return False
-        
-        # Basic format validation
-        if email.count('@') != 1:
-            print(f"    Email validation failed - multiple @ symbols: '{email}'")
+        """Check if email looks like a valid business email - optimized for speed"""
+        if not email or '@' not in email or email.count('@') != 1:
             return False
             
         try:
             local, domain = email.split('@')
-            local = local.strip()
-            domain = domain.strip().lower()
+            local, domain = local.strip(), domain.strip().lower()
             
-            # Check local part (before @)
-            if len(local) < 1:
-                print(f"    Email validation failed - empty local part: '{email}'")
-                return False
-            if len(local) > 64:
-                print(f"    Email validation failed - local part too long: '{email}'")
+            # Quick validation checks
+            if len(local) < 1 or len(local) > 64 or len(domain) < 4 or '.' not in domain:
                 return False
             
-            # Check domain part (after @)
-            if len(domain) < 4:
-                print(f"    Email validation failed - domain too short: '{email}' (domain: '{domain}')")
-                return False
-            if '.' not in domain:
-                print(f"    Email validation failed - no dot in domain: '{email}'")
-                return False
-            
-            # Allow all emails - small businesses often use gmail, yahoo, etc
-            # Just exclude obvious test/invalid domains
-            invalid_domains = [
+            # Exclude obvious test/invalid domains
+            invalid_domains = {
                 'example.com', 'test.com', 'localhost', 'domain.com',
                 'email.com', 'sample.com', 'demo.com', 'your-email.com',
                 'yourdomain.com', 'yoursite.com', 'website.com'
-            ]
+            }
             
-            # Check for invalid patterns
-            if domain in invalid_domains:
-                print(f"    Email validation failed - invalid domain: '{email}'")
-                return False
-            if domain.startswith('www.'):
-                print(f"    Email validation failed - domain starts with www: '{email}'")
-                return False
-            if domain.endswith('.local'):
-                print(f"    Email validation failed - local domain: '{email}'")
-                return False
-            if 'noreply' in local.lower() or 'no-reply' in local.lower():
-                print(f"    Email validation failed - noreply address: '{email}'")
+            if (domain in invalid_domains or domain.startswith('www.') or 
+                domain.endswith('.local') or 'noreply' in local.lower() or 
+                re.search(r'[<>()\[\]\\,;:\s@"\']', local)):
                 return False
             
-            # Check for invalid characters in local part
-            if re.search(r'[<>()\[\]\\,;:\s@"\']', local):
-                print(f"    Email validation failed - invalid characters in local part: '{email}'")
-                return False
-            
-            # Stricter domain validation
-            # Domain must be: letters/numbers, optional hyphens/dots, then dot and TLD
-            domain_pattern = r'^[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*\.[a-zA-Z]{2,}$'
-            if not re.match(domain_pattern, domain):
-                print(f"    Email validation failed - invalid domain format: '{email}' (domain: '{domain}')")
-                return False
-            
-            # Additional checks for malformed domains
+            # Quick domain validation
             domain_parts = domain.split('.')
             if len(domain_parts) < 2:
-                print(f"    Email validation failed - domain needs at least one dot: '{email}'")
                 return False
             
-            # Last part should be a valid TLD (2-6 characters)
             tld = domain_parts[-1]
             if not re.match(r'^[a-zA-Z]{2,6}$', tld):
-                print(f"    Email validation failed - invalid TLD: '{email}' (TLD: '{tld}')")
                 return False
                 
-            print(f"    ✓ Email validation passed: '{email}'")
             return True
             
-        except Exception as e:
-            print(f"    Email validation error for '{email}': {e}")
+        except:
             return False
     
     def _format_phone_number(self, phone_text):
