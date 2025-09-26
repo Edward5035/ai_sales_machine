@@ -497,7 +497,7 @@ class LeadScraper:
         if leads_with_websites:
             print(f"Processing {len(leads_with_websites)} leads concurrently for enhanced contact info...")
             try:
-                with ThreadPoolExecutor(max_workers=3) as executor:
+                with ThreadPoolExecutor(max_workers=6) as executor:
                     # Submit tasks for concurrent processing
                     future_to_lead = {}
                     for lead in leads_with_websites:
@@ -506,7 +506,7 @@ class LeadScraper:
                     
                     # Collect results as they complete with reduced timeout for production
                     try:
-                        for future in as_completed(future_to_lead, timeout=10):
+                        for future in as_completed(future_to_lead, timeout=8):
                             lead = future_to_lead[future]
                             try:
                                 enhanced_contact = future.result()
