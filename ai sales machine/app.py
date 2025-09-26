@@ -187,66 +187,10 @@ class LeadScraper:
         ]
     
     def _get_undetected_driver(self):
-        """Initialize undetected Chrome driver with advanced stealth settings"""
-        if not self.advanced_libs_available:
-            return None
-            
-        try:
-            options = self.uc.ChromeOptions()
-            
-            # Critical: Enable JavaScript for anti-bot challenges
-            # Realistic browser configuration
-            options.add_argument('--no-sandbox')
-            options.add_argument('--disable-dev-shm-usage')
-            options.add_argument('--disable-blink-features=AutomationControlled')
-            options.add_argument('--disable-extensions')
-            options.add_argument('--no-first-run')
-            options.add_argument('--no-default-browser-check')
-            options.add_argument('--disable-default-apps')
-            options.add_argument('--disable-popup-blocking')
-            options.add_argument('--disable-translate')
-            options.add_argument('--disable-background-timer-throttling')
-            options.add_argument('--disable-renderer-backgrounding')
-            options.add_argument('--disable-backgrounding-occluded-windows')
-            options.add_argument('--disable-ipc-flooding-protection')
-            options.add_argument('--headless=new')  # Use new headless mode
-            options.add_argument('--window-size=1920,1080')  # Realistic window size
-            
-            # Proper image blocking using Chrome preferences (not invalid arguments)
-            prefs = {
-                "profile.managed_default_content_settings.images": 2,  # Block images properly
-                "profile.default_content_setting_values.notifications": 2,
-                "profile.default_content_settings.popups": 0
-            }
-            options.add_experimental_option("prefs", prefs)
-            
-            # Memory optimization
-            options.add_argument('--memory-pressure-off')
-            options.add_argument('--max_old_space_size=4096')
-            
-            # Initialize driver with dynamic user agent
-            user_agent = self.ua.random if self.advanced_libs_available else random.choice(self.user_agents)
-            options.add_argument(f'--user-agent={user_agent}')
-            
-            driver = self.uc.Chrome(options=options, version_main=None)
-            
-            # Apply stealth patches
-            self.stealth(
-                driver,
-                languages=["en-US", "en"],
-                vendor="Google Inc.",
-                platform="Win32",
-                webgl_vendor="Intel Inc.",
-                renderer="Intel Iris OpenGL Engine",
-                fix_hairline=True,
-            )
-            
-            print(f"✅ Undetected ChromeDriver initialized with JavaScript enabled")
-            return driver
-            
-        except Exception as e:
-            print(f"Failed to initialize undetected driver: {e}")
-            return None
+        """Initialize undetected Chrome driver - DISABLED for performance optimization"""
+        # PERFORMANCE FIX: ChromeDriver causes timeouts and binary location errors
+        print("⚡ ChromeDriver disabled for performance - using lightweight requests only")
+        return None
     
     def _get_enhanced_session(self):
         """Create enhanced session with CloudScraper for better success rate"""
@@ -331,14 +275,12 @@ class LeadScraper:
         return headers
     
     def _respect_rate_limit(self, domain):
-        """Implement per-domain rate limiting with jitter"""
+        """Implement lightweight rate limiting for performance"""
         if domain in self.last_request_time:
             elapsed = time.time() - self.last_request_time[domain]
-            min_interval = random.uniform(0.5, 1.5)  # Optimized human-like processing - 0.5-1.5 second intervals
+            min_interval = 0.2  # Reduced from 0.5-1.5 to 0.2 seconds for speed
             if elapsed < min_interval:
-                sleep_time = min_interval - elapsed
-                print(f"Rate limiting: sleeping {sleep_time:.2f}s for {domain}")
-                time.sleep(sleep_time)
+                time.sleep(min_interval - elapsed)
         
         self.last_request_time[domain] = time.time()
     
@@ -352,8 +294,8 @@ class LeadScraper:
         
         for attempt in range(max_retries):
             try:
-                # Human-like delay with jitter
-                time.sleep(random.uniform(0.8, 2.5))
+                # Reduced delay for performance
+                time.sleep(random.uniform(0.1, 0.3))
                 
                 # Method 1: CloudScraper (85% success rate against Cloudflare)
                 if self.advanced_libs_available and not self.fallback_mode:
@@ -376,62 +318,7 @@ class LeadScraper:
                     except Exception as e:
                         print(f"CloudScraper failed: {e}, trying undetected Chrome...")
                 
-                # Method 2: Undetected ChromeDriver (90% success rate)
-                if self.advanced_libs_available and not self.fallback_mode:
-                    try:
-                        print(f"🚀 Attempting undetected ChromeDriver request to {domain}")
-                        
-                        if not self.driver:
-                            self.driver = self._get_undetected_driver()
-                            
-                        if self.driver:
-                            # Build full URL with parameters
-                            if params:
-                                url_parts = list(urlparse(url))
-                                query = dict(parse.parse_qsl(url_parts[4]))
-                                query.update(params)
-                                url_parts[4] = parse.urlencode(query)
-                                full_url = parse.urlunparse(url_parts)
-                            else:
-                                full_url = url
-                            
-                            # Navigate with human-like behavior
-                            self.driver.get(full_url)
-                            
-                            # Random human behavior simulation
-                            time.sleep(random.uniform(1, 3))
-                            self.driver.execute_script("window.scrollTo(0, document.body.scrollHeight/2);")
-                            time.sleep(random.uniform(0.5, 1.5))
-                            
-                            # Create response-like object
-                            response_content = self.driver.page_source
-                            current_url = self.driver.current_url
-                            
-                            # Check if we got redirected or blocked
-                            if "blocked" not in response_content.lower() and "access denied" not in response_content.lower():
-                                # Create mock response object
-                                class MockResponse:
-                                    def __init__(self, content, url):
-                                        self.content = content.encode('utf-8')
-                                        self.text = content
-                                        self.status_code = 200
-                                        self.url = url
-                                
-                                print(f"✅ Undetected ChromeDriver success")
-                                return MockResponse(response_content, current_url)
-                            else:
-                                print(f"⚠️ ChromeDriver blocked, falling back to basic requests...")
-                                
-                    except Exception as e:
-                        print(f"Undetected ChromeDriver failed: {e}")
-                        
-                        # Clean up failed driver
-                        if self.driver:
-                            try:
-                                self.driver.quit()
-                            except:
-                                pass
-                            self.driver = None
+                # Skip ChromeDriver for performance optimization - use basic requests only
                 
                 # Method 3: Enhanced basic requests (fallback)
                 print(f"🔄 Falling back to enhanced basic requests for {domain}")

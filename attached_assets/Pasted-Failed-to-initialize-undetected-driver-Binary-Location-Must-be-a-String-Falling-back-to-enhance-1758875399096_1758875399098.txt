@@ -1,0 +1,104 @@
+Failed to initialize undetected driver: Binary Location Must be a String
+🔄 Falling back to enhanced basic requests for www.wordreference.com
+HTTP 404 for https://www.wordreference.com/definition/best/contact
+  Checking page: https://www.wordreference.com/definition/best/contact-us
+🚀 Attempting CloudScraper request to www.wordreference.com (attempt 1)
+CloudScraper HTTP 404
+🚀 Attempting undetected ChromeDriver request to www.wordreference.com
+Failed to initialize undetected driver: Binary Location Must be a String
+🔄 Falling back to enhanced basic requests for www.wordreference.com
+[2025-09-26 08:23:19 +0000] [57] [CRITICAL] WORKER TIMEOUT (pid:58)
+[2025-09-26 08:23:19 +0000] [58] [ERROR] Error handling request /search
+Traceback (most recent call last):
+  File "/opt/render/project/src/.venv/lib/python3.13/site-packages/gunicorn/workers/sync.py", line 134, in handle
+    self.handle_request(listener, req, client, addr)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/render/project/src/.venv/lib/python3.13/site-packages/gunicorn/workers/sync.py", line 177, in handle_request
+    respiter = self.wsgi(environ, resp.start_response)
+  File "/opt/render/project/src/.venv/lib/python3.13/site-packages/flask/app.py", line 1536, in __call__
+    return self.wsgi_app(environ, start_response)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/render/project/src/.venv/lib/python3.13/site-packages/flask/app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/opt/render/project/src/.venv/lib/python3.13/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/opt/render/project/src/.venv/lib/python3.13/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/opt/render/project/src/app.py", line 123, in decorated_function
+    return f(*args, **kwargs)
+  File "/opt/render/project/src/app.py", line 2506, in search
+    leads = scraper.search_business_listings(business_type, location, num_results)
+  File "/opt/render/project/src/app.py", line 504, in search_business_listings
+    results = self._search_bing_business_listings(business_type, location, num_results)
+  File "/opt/render/project/src/app.py", line 1018, in _search_bing_business_listings
+HTTP 404 for https://www.wordreference.com/definition/best/contact-us
+    business_data = self._extract_enhanced_bing_result(result, business_type, location)
+  File "/opt/render/project/src/app.py", line 1089, in _extract_enhanced_bing_result
+Added Bing result: best - https://www.wordreference.com/definition/best
+Decoded Bing URL: https://www.bing.com/ck/a?!&&p=ead2a72814745ba979c38f3c6d986477ace8c5ad29bd7b3cf6aa6f2101415837JmltdHM9MTc1ODg0NDgwMA&ptn=3&ver=2&hsh=4&fclid=1dd02128-c14b-6a2e-3849-375bc0976bd1&u=a1aHR0cHM6Ly93d3cub3hmb3JkbGVhcm5lcnNkaWN0aW9uYXJpZXMuY29tL2RlZmluaXRpb24vZW5nbGlzaC9iZXN0XzE&ntb=1 -> https://www.oxfordlearnersdictionaries.com/definition/english/best_1
+Extracting contact info and social media from: https://www.oxfordlearnersdictionaries.com/definition/english/best_1
+  Checking page: https://www.oxfordlearnersdictionaries.com/definition/english/best_1
+🚀 Attempting CloudScraper request to www.oxfordlearnersdictionaries.com (attempt 1)
+✅ CloudScraper success: 200
+    No emails found on this page
+  Checking page: https://www.oxfordlearnersdictionaries.com/definition/english/best_1/contact
+🚀 Attempting CloudScraper request to www.oxfordlearnersdictionaries.com (attempt 1)
+CloudScraper HTTP 404
+🚀 Attempting undetected ChromeDriver request to www.oxfordlearnersdictionaries.com
+Failed to initialize undetected driver: Binary Location Must be a String
+🔄 Falling back to enhanced basic requests for www.oxfordlearnersdictionaries.com
+HTTP 404 for https://www.oxfordlearnersdictionaries.com/definition/english/best_1/contact
+  Checking page: https://www.oxfordlearnersdictionaries.com/definition/english/best_1/contact-us
+    enhanced_contact = self._extract_enhanced_contact_info(resolved_url)
+  File "/opt/render/project/src/app.py", line 1718, in _extract_enhanced_contact_info
+    response = self._make_request_with_retry(page_url)
+  File "/opt/render/project/src/app.py", line 479, in _make_request_with_retry
+    return self._make_advanced_request(url, params, max_retries)
+🚀 Attempting CloudScraper request to www.oxfordlearnersdictionaries.com (attempt 1)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/render/project/src/app.py", line 356, in _make_advanced_request
+    time.sleep(random.uniform(0.8, 2.5))
+    ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/render/project/src/.venv/lib/python3.13/site-packages/gunicorn/workers/base.py", line 204, in handle_abort
+    sys.exit(1)
+    ~~~~~~~~^^^
+SystemExit: 1
+CloudScraper HTTP 404
+🚀 Attempting undetected ChromeDriver request to www.oxfordlearnersdictionaries.com
+Failed to initialize undetected driver: Binary Location Must be a String
+🔄 Falling back to enhanced basic requests for www.oxfordlearnersdictionaries.com
+HTTP 404 for https://www.oxfordlearnersdictionaries.com/definition/english/best_1/contact-us
+Added Bing result: bestadjective - https://www.oxfordlearnersdictionaries.com/definition/english/best_1
+Decoded Bing URL: https://www.bing.com/ck/a?!&&p=260ed0f19b455f8a18fef08396ce702581ca773e1b9cdae835315dad05d17566JmltdHM9MTc1ODg0NDgwMA&ptn=3&ver=2&hsh=4&fclid=1dd02128-c14b-6a2e-3849-375bc0976bd1&u=a1aHR0cHM6Ly93d3cuZGljdGlvbmFyeS5jb20vYnJvd3NlL2Jlc3Q&ntb=1 -> https://www.dictionary.com/browse/best
+Extracting contact info and social media from: https://www.dictionary.com/browse/best
+  Checking page: https://www.dictionary.com/browse/best
+🚀 Attempting CloudScraper request to www.dictionary.com (attempt 1)
+✅ CloudScraper success: 200
+    No emails found on this page
+  Checking page: https://www.dictionary.com/browse/best/contact
+🚀 Attempting CloudScraper request to www.dictionary.com (attempt 1)
+CloudScraper HTTP 404
+🚀 Attempting undetected ChromeDriver request to www.dictionary.com
+Failed to initialize undetected driver: Binary Location Must be a String
+🔄 Falling back to enhanced basic requests for www.dictionary.com
+HTTP 404 for https://www.dictionary.com/browse/best/contact
+  Checking page: https://www.dictionary.com/browse/best/contact-us
+🚀 Attempting CloudScraper request to www.dictionary.com (attempt 1)
+CloudScraper HTTP 404
+🚀 Attempting undetected ChromeDriver request to www.dictionary.com
+Failed to initialize undetected driver: Binary Location Must be a String
+🔄 Falling back to enhanced basic requests for www.dictionary.com
+HTTP 404 for https://www.dictionary.com/browse/best/contact-us
+Added Bing result: BESTDefinition & Meaning - https://www.dictionary.com/browse/best
+Decoded Bing URL: https://www.bing.com/ck/a?!&&p=0da4f5a497dd10d305ed0174d54aae60e13ca5fb6e47524b4eb84692436795f2JmltdHM9MTc1ODg0NDgwMA&ptn=3&ver=2&hsh=4&fclid=1dd02128-c14b-6a2e-3849-375bc0976bd1&u=a1aHR0cHM6Ly93d3cuY29sbGluc2RpY3Rpb25hcnkuY29tL2RpY3Rpb25hcnkvZW5nbGlzaC9iZXN0&ntb=1 -> https://www.collinsdictionary.com/dictionary/english/best
+Extracting contact info and social media from: https://www.collinsdictionary.com/dictionary/english/best
+  Checking page: https://www.collinsdictionary.com/dictionary/english/best
+127.0.0.1 - - [26/Sep/2025:08:23:19 +0000] "POST /search HTTP/1.1" 500 0 "-" "-"
+[2025-09-26 08:23:19 +0000] [58] [INFO] Worker exiting (pid: 58)
+[2025-09-26 08:23:20 +0000] [57] [ERROR] Worker (pid:58) was sent SIGKILL! Perhaps out of memory?
+[2025-09-26 08:23:20 +0000] [60] [INFO] Booting worker with pid: 60
+✅ Advanced anti-bot detection libraries loaded successfully
+127.0.0.1 - - [26/Sep/2025:08:23:20 +0000] "GET /api/leads HTTP/1.1" 200 153199 "https://ai-sales-machine.onrender.com/lead-finder" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36 OPR/120.0.0.0"
+127.0.0.1 - - [26/Sep/2025:08:23:20 +0000] "GET /api/leads HTTP/1.1" 200 153199 "https://ai-sales-machine.onrender.com/lead-finder" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36 OPR/120.0.0.0"
+     ==> Detected service running on port 10000
