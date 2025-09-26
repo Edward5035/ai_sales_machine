@@ -278,7 +278,7 @@ class LeadScraper:
         """Implement lightweight rate limiting for performance"""
         if domain in self.last_request_time:
             elapsed = time.time() - self.last_request_time[domain]
-            min_interval = 0.2  # Reduced from 0.5-1.5 to 0.2 seconds for speed
+            min_interval = 0.1  # Ultra-fast rate limiting for speed
             if elapsed < min_interval:
                 time.sleep(min_interval - elapsed)
         
@@ -294,8 +294,8 @@ class LeadScraper:
         
         for attempt in range(max_retries):
             try:
-                # Reduced delay for performance
-                time.sleep(random.uniform(0.1, 0.3))
+                # Minimal delay for maximum speed
+                time.sleep(random.uniform(0.05, 0.15))
                 
                 # Method 1: Enhanced CloudScraper with advanced anti-bot detection
                 if self.advanced_libs_available and not self.fallback_mode:
@@ -304,11 +304,11 @@ class LeadScraper:
                         # Create new scraper instance with dynamic parameters for each request
                         scraper = self.cloudscraper.create_scraper(
                             browser={
-                                'browser': random.choice(['chrome', 'firefox', 'safari']),
-                                'platform': random.choice(['windows', 'darwin', 'linux']),
+                                'browser': random.choice(['chrome', 'firefox']),  # Removed safari - not supported
+                                'platform': random.choice(['windows', 'linux']),
                                 'mobile': False
                             },
-                            delay=random.uniform(0.5, 1.5),
+                            delay=random.uniform(0.1, 0.5),  # Reduced delay for speed
                             debug=False
                         )
                         
@@ -1641,11 +1641,10 @@ class LeadScraper:
         
         print(f"Extracting contact info and social media from: {url}")
         
-        # Reduced list of pages for production speed - check only main page and contact
+        # Optimized for maximum speed - check only main page and one contact page
         pages_to_check = [
-            url,  # Main page first
-            f"{url.rstrip('/')}/contact",
-            f"{url.rstrip('/')}/contact-us"
+            url,  # Main page first - most likely to have contact info
+            f"{url.rstrip('/')}/contact"  # Only one contact page for speed
         ]
         
         # Try each page until we find good contact info
