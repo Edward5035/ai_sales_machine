@@ -297,39 +297,89 @@ class LeadScraper:
                 # Reduced delay for performance
                 time.sleep(random.uniform(0.1, 0.3))
                 
-                # Method 1: CloudScraper (85% success rate against Cloudflare)
+                # Method 1: Enhanced CloudScraper with advanced anti-bot detection
                 if self.advanced_libs_available and not self.fallback_mode:
-                    print(f"🚀 Attempting CloudScraper request to {domain} (attempt {attempt + 1})")
+                    print(f"🚀 Attempting Enhanced CloudScraper request to {domain} (attempt {attempt + 1})")
                     try:
-                        headers = self._get_request_headers(url)
-                        response = enhanced_session.get(url, params=params, headers=headers, timeout=15)
+                        # Create new scraper instance with dynamic parameters for each request
+                        scraper = self.cloudscraper.create_scraper(
+                            browser={
+                                'browser': random.choice(['chrome', 'firefox', 'safari']),
+                                'platform': random.choice(['windows', 'darwin', 'linux']),
+                                'mobile': False
+                            },
+                            delay=random.uniform(0.5, 1.5),
+                            debug=False
+                        )
                         
+                        headers = self._get_request_headers(url)
+                        
+                        # Enhanced anti-fingerprinting headers
+                        headers.update({
+                            'Cache-Control': random.choice(['no-cache', 'max-age=0', 'no-store']),
+                            'Pragma': 'no-cache',
+                            'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+                            'Accept-Charset': 'utf-8,ISO-8859-1;q=0.7,*;q=0.7',
+                            'Accept-Encoding': 'gzip, deflate, br',
+                            'Keep-Alive': '300',
+                            'X-Forwarded-For': f"{random.randint(1, 255)}.{random.randint(1, 255)}.{random.randint(1, 255)}.{random.randint(1, 255)}",
+                            'X-Real-IP': f"{random.randint(1, 255)}.{random.randint(1, 255)}.{random.randint(1, 255)}.{random.randint(1, 255)}"
+                        })
+                        
+                        response = scraper.get(url, params=params, headers=headers, timeout=15)
                         self._last_url = url
                         
                         if response.status_code == 200:
-                            print(f"✅ CloudScraper success: {response.status_code}")
+                            print(f"✅ Enhanced CloudScraper success: {response.status_code}")
                             return response
                         elif response.status_code == 403:
-                            print(f"⚠️ CloudScraper got 403, trying undetected Chrome...")
-                            # Fall through to method 2
+                            print(f"⚠️ CloudScraper got 403, trying enhanced fallback methods...")
                         else:
                             print(f"CloudScraper HTTP {response.status_code}")
                             
                     except Exception as e:
-                        print(f"CloudScraper failed: {e}, trying undetected Chrome...")
+                        print(f"CloudScraper failed: {e}, trying enhanced fallback methods...")
                 
                 # Skip ChromeDriver for performance optimization - use basic requests only
                 
-                # Method 3: Enhanced basic requests (fallback)
-                print(f"🔄 Falling back to enhanced basic requests for {domain}")
+                # Method 2: Advanced basic requests with sophisticated anti-detection
+                print(f"🔄 Attempting advanced basic requests for {domain}")
+                
+                # Create fresh session with advanced configuration for each attempt
+                if attempt > 0 or not hasattr(self, '_current_session'):
+                    if hasattr(self, '_current_session'):
+                        self._current_session.close()
+                    
+                    self._current_session = requests.Session()
+                    
+                    # Configure session with anti-detection measures
+                    adapter = requests.adapters.HTTPAdapter(
+                        pool_connections=10,
+                        pool_maxsize=20,
+                        max_retries=0
+                    )
+                    self._current_session.mount('http://', adapter)
+                    self._current_session.mount('https://', adapter)
+                
                 headers = self._get_request_headers(url)
                 
-                # Randomize session to avoid tracking
-                if attempt > 0:
-                    self.session.close()
-                    self.session = requests.Session()
+                # Advanced anti-detection headers
+                headers.update({
+                    'Cache-Control': 'no-cache',
+                    'Pragma': 'no-cache',
+                    'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
+                    'Accept-Language': random.choice(self.accept_languages),
+                    'Accept-Charset': 'utf-8,ISO-8859-1;q=0.7,*;q=0.7',
+                    'Keep-Alive': str(random.randint(100, 320)),
+                    'Origin': f"https://{random.choice(['google.com', 'bing.com', 'duckduckgo.com'])}",
+                    'X-Forwarded-Proto': 'https',
+                    'X-Requested-With': random.choice(['XMLHttpRequest', '']),
+                })
                 
-                response = self.session.get(url, params=params, headers=headers, timeout=10)
+                # Remove empty headers
+                headers = {k: v for k, v in headers.items() if v}
+                
+                response = self._current_session.get(url, params=params, headers=headers, timeout=12)
                 self._last_url = url
                 
                 if response.status_code == 200:
